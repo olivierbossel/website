@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/tests/dist
+.DS_Store
+/yarn-error.log
+/dist
+/.env

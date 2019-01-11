@@ -1,0 +1,176 @@
+{
+  "name": "coffeekraken-html-boilerplate",
+  "version": "1.0.0",
+  "description": "Base HTML files and folder structure with complete build process (js, sass, image compression, etc...) built in",
+  "homepage": "https://coffeekraken.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coffeekraken/html-boilerplate"
+  },
+  "watch": {
+    "dist:css": {
+      "paths": [
+        "src/sass/**/*.{scss,sass,css}",
+        "app/views/**/*.{scss,sass,css}"
+      ]
+    },
+    "dist:js": {
+      "paths": [
+        "src/js/**/*.js",
+        "app/views/**/*.js"
+      ]
+    },
+    "dist:img": {
+      "paths": "src/img/**/*.{jpg,jpeg,png,gif,bmp,svg}"
+    },
+    "dist:fonts": {
+      "paths": "src/fonts/**/*.{eot,woff,woff2,ttf,otf,svg,svgz}"
+    },
+    "dist:icons": {
+      "paths": "src/icons/**/*.{svg,svgz}"
+    },
+    "dist:views": {
+      "paths": "app/views/**/*.twig"
+    },
+    "data": {
+      "paths": "data-src/**/*"
+    }
+  },
+  "scripts": {
+    "dist": "npm run dist:fonts && npm run dist:css && npm run dist:js && npm run dist:img && npm run dist:icons && npm run dist:favicons && npm run dist:views",
+    "dist:js": "rm -rf public/dist/js && webpack",
+    "dist:css": "rm -rf public/dist/css && node-sass src/sass/style.scss public/dist/css/style.css --importer node_modules/node-sass-glob-importer/dist/cli.js --include-path node_modules --output-style expanded && npm run dist:css:autoprefixr",
+    "dist:css:autoprefixr": "postcss public/dist/css/style.css --use autoprefixer -d public/dist/css --no-map",
+    "dist:img": "rm -rf public/dist/img && coffeekraken-imagemin -s src/img -o public/dist/img -q 90",
+    "dist:fonts": "rm -rf public/dist/fonts && cp -R src/fonts public/dist/fonts",
+    "dist:icons": "rm -rf public/dist/icons && cp -R src/icons public/dist/icons",
+    "dist:favicons": "coffeekraken-favicons --source src/img/favicon.png --output public/dist/favicons --html-output public/dist/favicons/favicons.html --path '/dist/favicons' --theme '#fff' --background '#fff'",
+    "dist:criticalcss": "coffeekraken-criticalcss -o public/dist/css/critical.css -c public/dist/css/style.css -h http://localhost:8080",
+    "dist:views": "fractal export -o public/dist/views",
+    "dist:prod": "npm run dist:fonts && npm run dist:prod:css && npm run dist:prod:js && npm run dist:img && npm run dist:icons && npm run dist:favicons && npm run dist:views",
+    "dist:prod:js": "rm -rf public/dist/js && webpack --config webpack.prod.config.js",
+    "dist:prod:css": "rm -rf public/dist/css && node-sass src/sass/style.scss public/dist/css/style.css --importer node_modules/node-sass-glob-importer/dist/cli.js --include-path node_modules --output-style compressed && npm run dist:css:autoprefixr",
+    "data": "rm -rf public/data && cp -R data-src public/data && npm run data:img && npm run data:img:placeholder",
+    "data:img": "coffeekraken-imagemin -s data-src -o public/data",
+    "data:img:placeholder": "resize ./data-src/*.{jpg,png,gif} -w 2 -o ./public/data/ -s \".placeholder\"",
+    "fractal": "fractal start --sync",
+    "browsersync": "browser-sync start --proxy \"localhost:8181\" --port 8080 --files='public/dist/css/*.css,public/dist/js/*.js' --no-open",
+    "start": "coffeekraken-scripts-stack server fractal browsersync -i start -i dist",
+    "server": "php -S 0.0.0.0:8181 -t public/",
+    "pretty-quick": "pretty-quick",
+    "pretty-quick-commit": "pretty-quick --staged > /dev/null 2>&1",
+    "prettier": "prettier --write src/**/*.{scss,js}",
+    "test": "jest",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "eslint 'src/**/*.js'",
+    "lint:css": "stylelint 'src/sass/**/*.scss'",
+    "webpack:stats": "webpack --json > stats.json"
+  },
+  "pre-commit": [
+    "pretty-quick-commit",
+    "test",
+    "lint"
+  ],
+  "keywords": [
+    "coffee",
+    "kraken",
+    "coffeekraken"
+  ],
+  "author": "Coffeekraken <hello@coffeekraken.io>",
+  "contributors": [
+    {
+      "name": "Olivier Bossel",
+      "email": "olivier.bossel@gmail.com",
+      "url": "http://olivierbossel.com"
+    }
+  ],
+  "license": "MIT",
+  "jest": {
+    "roots": [
+      "tests"
+    ]
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.2.5",
+    "@webcomponents/webcomponentsjs": "^2.2.3",
+    "axios": "^0.18.0",
+    "coffeekraken-gridle": "^3.0.0",
+    "coffeekraken-s-activate-component": "^1.1.5",
+    "coffeekraken-s-atv-card-component": "^1.0.3",
+    "coffeekraken-s-button-component": "^1.0.1",
+    "coffeekraken-s-dropdown-component": "^1.0.2",
+    "coffeekraken-s-form-component": "^1.0.1",
+    "coffeekraken-s-icon-component": "^1.0.4",
+    "coffeekraken-s-one-time-display-component": "^1.0.5",
+    "coffeekraken-s-slideshow-component": "^1.0.11",
+    "coffeekraken-s-table-component": "^1.0.1",
+    "coffeekraken-s-tooltip-component": "^1.0.2",
+    "coffeekraken-s-typography-component": "^1.0.2",
+    "coffeekraken-s-validator-component": "^1.0.8",
+    "coffeekraken-sugar": "^1.0.38",
+    "coffeekraken-template-stack": "git+https://git@github.com/Coffeekraken/template-stack.git#master",
+    "coffeekraken-ww-axios": "^1.0.4",
+    "cssuseragent": "^2.1.31",
+    "fastclick": "^1.0.6",
+    "lodash": "^4.17.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.2.3",
+    "@babel/plugin-proposal-decorators": "^7.2.3",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/preset-env": "^7.2.3",
+    "@frctl/fractal": "^1.1.7",
+    "@frctl/twig": "^1.0.0-beta.5",
+    "autoprefixer": "^9.4.4",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^23.4.2",
+    "babel-loader": "^8.0.5",
+    "browser-sync": "^2.26.3",
+    "coffeekraken-criticalcss": "^1.0.0",
+    "coffeekraken-favicons": "^1.0.0",
+    "coffeekraken-imagemin": "^1.0.2",
+    "coffeekraken-scripts-stack": "^1.0.3",
+    "copyfiles": "^2.1.0",
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.2",
+    "eslint-plugin-react": "^7.12.3",
+    "faker": "^4.1.0",
+    "favicons": "^5.2.0",
+    "glob-all": "^3.1.0",
+    "img-resize-cli": "^1.1.2",
+    "jest": "^23.6.0",
+    "node-sass": "^4.11.0",
+    "node-sass-glob-importer": "^5.3.0",
+    "postcss-cli": "^6.1.1",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.15.2",
+    "pretty-quick": "^1.8.0",
+    "resize-cli": "^0.0.4",
+    "stylelint": "^9.8.0",
+    "stylelint-config-standard": "^18.2.0",
+    "webpack": "^4.28.4",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.2.1",
+    "webpack-visualizer-plugin": "^0.1.11",
+    "worker-loader": "^2.0.0"
+  }
+}

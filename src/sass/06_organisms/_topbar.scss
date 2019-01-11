@@ -1,0 +1,30 @@
+.topbar {
+  background: white;
+  padding: s-space(big) 0;
+}
+
+.topbar__title {
+  @include s-font(
+    $family: bold,
+    $size: s-rem(14px)
+  );
+}
+
+.topbar__description {
+  @extend .p;
+}
+
+.topbar__nav {
+  float: right;
+  margin: 0 s-rem(-10px);
+}
+
+  .topbar__nav-item {
+    display: inline-block;
+    margin: 0 s-rem(10px);
+
+    a {
+      text-decoration: none;
+      color: s-color(default, -lighten 20%);
+    }
+  }

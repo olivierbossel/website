@@ -1,0 +1,71 @@
+{% embed '@default' with layout %}
+
+  {% block body %}
+
+    <section class="topbar">
+      <div class="container">
+        <div class="row">
+          <div class="gr-12 gr-4@tablet">
+            <h1 class="topbar__title">Olivier Bossel</h1>
+          </div>
+          <div class="gr-12 gr-4@tablet">
+            <p class="topbar__description">
+              Passionate interactive web developer from Switzerland. To be always in research of new technologies, improving workflows and contributing to the open source community are my primary motivations.
+            </p>
+          </div>
+          <div class="gr-12 gr-4@tablet">
+              <ul class="topbar__nav">
+                <li class="topbar__nav-item">
+                  <a href="https://github.com/coffeekraken" title="Coffeekraken Github" target="_blank">
+                    <s-icon icon="fab fa-github"></s-icon> Github
+                  </a>
+                </li>
+                <li class="topbar__nav-item">
+                  <a href="https://twitter.com/olivierbossel" title="Olivier Bossel Twitter profile" target="_blank">
+                    <s-icon icon="fab fa-twitter"></s-icon> Twitter
+                  </a>
+                </li>
+                <li class="topbar__nav-item">
+                  <a href="https://www.linkedin.com/in/olivierbossel" title="Olivier Bossel LinkedIn profile" target="_blank">
+                    <s-icon icon="fab fa-linkedin"></s-icon> LinkedIn
+                  </a>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects">
+      <div class="container">
+        <div class="row">
+          <div class="gr-12">
+            <s-slideshow timeout="5000" pause-on-hover loop>
+              <div class="projects__grid">
+                {% for project in projects %}
+                  <div class="projects__grid-item" s-slideshow-slide>
+                    <s-atv-card amount=".6" perspective="700">
+                      <article class="project">
+                        <figure class="project__img">
+                          <img src="{{ project.image.src }}" alt="Coffeekraken Sugar" />
+                        </figure>
+                        <div class="project__metas">
+                          <h2 class="project__title m-b-small">{{ project.title }}</h2>
+                          <p class="p">
+                            {{ project.description }}
+                          </p>
+                        </div>
+                      </article>
+                    </s-atv-card>
+                  </div>
+                {% endfor %}
+              </div>
+            </s-slideshow>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  {% endblock %}
+
+{% endembed %}

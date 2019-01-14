@@ -6,14 +6,73 @@
   background-color: white;
   padding: s-rem(20px) !important;
   height: auto;
-
-  @include s-depth(5);
+  transition: all 0.4s cubic-bezier(1, 0, 0, 1) 0s;
+  border-left: s-color(white, -darken 10%) s-rem(2px) solid;
 
   @include s-placeholder() {
     color: s-color(white, -darken 50%);
+  }
+
+  &[dirty][invalid] {
+    border-left: s-color(error) s-rem(2px) solid;
+  }
+
+  &[dirty][valid] {
+    border-left: s-color(success) s-rem(2px) solid;
   }
 }
 
 textarea.form-input {
   height: s-rem(150px);
+}
+
+.form-input,
+s-recaptcha,
+input[type="submit"].btn {
+  @include s-depth(10);
+}
+
+s-validator {
+  display: block;
+  color: s-color(error);
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(1, 0, 0, 1) 0s;
+
+  &[active] {
+    padding: s-lnf(padding-horizontal) 0;
+    max-height: s-rem(50px);
+  }
+}
+
+s-recaptcha {
+  line-height: 0;
+}
+
+form[loading] {
+  input[type="submit"] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+}
+
+[s-ajax-form-success] {
+  background-color: s-color(success);
+}
+[s-ajax-form-error] {
+  background-color: s-color(error);
+}
+[s-ajax-form-success],
+[s-ajax-form-error] {
+  color: white;
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 s-lnf(padding-vertical);
+  transition: all 0.4s cubic-bezier(1, 0, 0, 1) 0s;
+
+  &[active] {
+    padding: s-lnf(padding-horizontal) s-lnf(padding-vertical);
+    max-height: s-rem(50px);
+  }
 }

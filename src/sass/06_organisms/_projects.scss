@@ -7,14 +7,38 @@
   display: grid;
   grid-gap: s-rem(10px);
   grid-template-areas:
-    'a a z'
-    'b c z'
-    'd e z'
-    'f g z';
+    'a'
+    'b'
+    'c'
+    'd'
+    'e'
+    'f'
+    'g';
+
+  @include g-state(tablet) {
+    grid-template-areas:
+      'a a z'
+      'b c f'
+      'd e g';
+  }
 }
 .projects__grid-item {
   @include s-ratio(21/9);
   overflow: visible;
+  opacity: 0;
+
+  @include s-translate(0,50%);
+
+  body.ready & {
+    opacity: 1;
+    @include s-translate(0,0);
+
+    @for $i from 0 through 10 {
+      &:nth-child(#{$i}) {
+        transition: all 0.6s cubic-bezier(0.190, 1.000, 0.220, 1.000) $i * 0.05s + 1s;
+      }
+    }
+  }
 
   &[active] {
     s-atv-card {
@@ -49,6 +73,9 @@
   }
   &:nth-child(6) {
     grid-area: f;
+  }
+  &:nth-child(7) {
+    grid-area: g;
   }
 }
 
@@ -91,6 +118,11 @@
 
   .projects__grid-item[active] &,
   .projects__grid-item:hover & {
+    @include s-translate(0, 0);
+  }
+  @include g-state((
+    max-width: g-state-var(min-width, tablet)
+  )) {
     @include s-translate(0, 0);
   }
 }

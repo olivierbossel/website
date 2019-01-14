@@ -4,6 +4,7 @@
       "id": "sugar",
       "title": "Sugar",
       "description": "A little sugar in your codebase",
+      "url": "http://codebook.coffeekraken.io/coffeekraken-sugar",
       "image": {
         "src": "/data/sugar.jpg",
         "alt": "Sugar illustration"
@@ -13,15 +14,27 @@
       "id": "thorin",
       "title": "Thorin",
       "description": "Size doesn't always matter",
+      "url": "https://github.com/dwarvesforge/thorin",
       "image": {
         "src": "/data/thorin.jpg",
         "alt": "Thorin illustration"
       }
     },
     {
+      "id": "gridle",
+      "title": "Gridle",
+      "description": "One grid system to rule them all",
+      "url": "http://codebook.coffeekraken.io/coffeekraken-gridle",
+      "image": {
+        "src": "/data/gridle.jpg",
+        "alt": "Gridle illustration"
+      }
+    },
+    {
       "id": "webcomponents",
       "title": "Webcomponents",
       "description": "A bunch of cool webcomponents",
+      "url": "https://github.com/coffeekraken?q=s-",
       "image": {
         "src": "/data/webcomponents.jpg",
         "alt": "Webcomponents illustration"
@@ -31,6 +44,7 @@
       "id": "code-playground",
       "title": "Code playground",
       "description": "Play with your code with ease",
+      "url": "http://codebook.coffeekraken.io/coffeekraken-code-playground",
       "image": {
         "src": "/data/code-playground.jpg",
         "alt": "Code playground illustration"
@@ -40,6 +54,7 @@
       "id": "codebook",
       "title": "Codebook",
       "description": "Sneak peak of Coffeekraken features",
+      "url": "https://codebook.coffeekraken.io",
       "image": {
         "src": "/data/codebook.jpg",
         "alt": "Codebook illustration"
@@ -49,6 +64,7 @@
       "id": "boilerplates",
       "title": "Boilerplates",
       "description": "Start your project with ease",
+      "url": "https://github.com/coffeekraken?q=boilerplate",
       "image": {
         "src": "/data/boilerplate.jpg",
         "alt": "Code editor illustration"

@@ -3,15 +3,9 @@
   position: relative;
   z-index: 10;
 
-  .topbar__title,
-  .topbar__description {
-    transition: all 0.6s cubic-bezier(1, 0, 0, 1) 0s;
-  }
-
   a[href=''] {
     display: none;
   }
-
   .page-contact & {
     a[href=''] {
       display: inline-block;
@@ -19,16 +13,16 @@
     a[href='contact'] {
       display: none;
     }
-
-    .topbar__title,
-    .topbar__description {
-      @extend .cs-light;
-    }
   }
 }
 
 .topbar__title {
   @include s-font($family: bold, $size: s-rem(14px));
+
+  s-bodymovin {
+    height: s-rem(14px);
+    width: s-rem(100px);
+  }
 }
 
 .topbar__description {
@@ -36,7 +30,7 @@
 }
 
 .topbar__nav {
-  float: right;
+  display: block;
   margin: 0 s-rem(-10px);
 }
 

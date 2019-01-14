@@ -2,69 +2,78 @@
 
   {% block body %}
 
-    <section class="topbar">
-      <div class="container">
-        <div class="row">
-          <div class="gr-12 gr-4@tablet">
-            <h1 class="topbar__title">Olivier Bossel</h1>
+    <s-slideshow apply-slide-height class="content">
+
+      <img src="/dist/img/urban-bkg.png" class="contact__bkg" />
+      <section class="contact" id="contact" s-slideshow-slide>
+        <div class="container contact__content">
+          <div class="row">
+            <div class="gr-8">
+              <h1 class="h1 m-b">Contact me</h1>
+            </div>
           </div>
-          <div class="gr-12 gr-4@tablet">
-            <p class="topbar__description">
-              Passionate interactive web developer from Switzerland. To be always in research of new technologies, improving workflows and contributing to the open source community are my primary motivations.
-            </p>
-          </div>
-          <div class="gr-12 gr-4@tablet">
-              <ul class="topbar__nav">
-                <li class="topbar__nav-item">
-                  <a href="https://github.com/coffeekraken" title="Coffeekraken Github" target="_blank">
-                    <s-icon icon="fab fa-github"></s-icon> Github
-                  </a>
-                </li>
-                <li class="topbar__nav-item">
-                  <a href="https://twitter.com/olivierbossel" title="Olivier Bossel Twitter profile" target="_blank">
-                    <s-icon icon="fab fa-twitter"></s-icon> Twitter
-                  </a>
-                </li>
-                <li class="topbar__nav-item">
-                  <a href="https://www.linkedin.com/in/olivierbossel" title="Olivier Bossel LinkedIn profile" target="_blank">
-                    <s-icon icon="fab fa-linkedin"></s-icon> LinkedIn
-                  </a>
-                </li>
-              </ul>
+          <div class="row">
+            <div class="gr-12 gr-4@tablet gutter">
+              <s-spring-snap style="width:100%">
+                <label>
+                  <input class="form-input" type="text" name="firstname" placeholder="John">
+                </label>
+              </s-spring-snap>
+            </div>
+            <div class="gr-12 gr-4@tablet gutter">
+              <s-spring-snap style="width:100%">
+                <label>
+                  <input class="form-input" type="text" name="lastname" placeholder="Doe">
+                </label>
+              </s-spring-snap>
+            </div>
+            <div class="gr-12 gr-8@tablet gutter">
+              <s-spring-snap style="width:100%">
+                <label>
+                  <textarea name="message" class="form-input" placeholder="Your message"></textarea>
+                </label>
+              </s-spring-snap>
+            </div>
+            <div class="gr-12 gr-8@tablet gutter">
+              <s-spring-snap style="width:100%">
+                <input type="submit" class="btn btn--primary btn--block" value="Send" />
+              </s-spring-snap>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="projects">
-      <div class="container">
-        <div class="row">
-          <div class="gr-12">
-            <s-slideshow timeout="5000" pause-on-hover loop>
+      <section class="projects" id="projects" s-slideshow-slide>
+        <div class="container">
+          <div class="row">
+            <div class="gr-12">
               <div class="projects__grid">
                 {% for project in projects %}
-                  <div class="projects__grid-item" s-slideshow-slide>
-                    <s-atv-card amount=".6" perspective="700">
-                      <article class="project">
-                        <figure class="project__img">
-                          <img src="{{ project.image.src }}" alt="Coffeekraken Sugar" />
-                        </figure>
-                        <div class="project__metas">
-                          <h2 class="project__title m-b-small">{{ project.title }}</h2>
-                          <p class="p">
-                            {{ project.description }}
-                          </p>
-                        </div>
-                      </article>
+                  <div class="projects__grid-item">
+                    <s-atv-card amount="0" perspective="{{ (loop.index == 1) ? '700' : '400' }}">
+                      <a class="project" href="/project/{{ project.id }}" title="{{ project.title }}">
+                        <article class="project">
+                          <figure class="project__img">
+                            <img src="{{ project.image.src }}" alt="Coffeekraken Sugar" />
+                          </figure>
+                          <div class="project__metas">
+                            <h2 class="project__title m-b-small">{{ project.title }}</h2>
+                            <p class="p">
+                              {{ project.description }}
+                            </p>
+                          </div>
+                        </article>
+                      </a>
                     </s-atv-card>
                   </div>
                 {% endfor %}
               </div>
-            </s-slideshow>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+    </s-slideshow>
 
   {% endblock %}
 

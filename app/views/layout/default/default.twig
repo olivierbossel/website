@@ -133,7 +133,67 @@
     <!-- End Google Tag Manager (noscript) -->
   {% endif %}
 
-  {% block body %}{% endblock %}
+  <img src="/data/olivier-bossel.jpg" alt="Olivier Bossel picture" class="body__bkg" />
+
+  <main class="content">
+
+    <section class="topbar">
+      <div class="container">
+        <div class="row">
+          <div class="gr-12 gr-4@tablet">
+            <h1 class="topbar__title m-b">Olivier Bossel</h1>
+             <p class="topbar__description">
+              Passionate interactive web developer from Switzerland. To be always in research of new technologies, improving workflows and contributing to the open source community are my primary motivations.
+            </p>
+          </div>
+          <div class="gr-12 gr-4@tablet">
+            <ul class="topbar__nav">
+              <li class="topbar__nav-item">
+                <a href="https://github.com/coffeekraken" title="Coffeekraken Github" target="_blank">
+                  <s-icon icon="fab fa-github"></s-icon> Github
+                </a>
+              </li>
+              <li class="topbar__nav-item">
+                <a href="https://twitter.com/olivierbossel" title="Olivier Bossel Twitter profile" target="_blank">
+                  <s-icon icon="fab fa-twitter"></s-icon> Twitter
+                </a>
+              </li>
+              <li class="topbar__nav-item">
+                <a href="https://www.linkedin.com/in/olivierbossel" title="Olivier Bossel LinkedIn profile" target="_blank">
+                  <s-icon icon="fab fa-linkedin"></s-icon> LinkedIn
+                </a>
+              </li>
+            </ul>
+
+            <a href="contact" class="clear btn btn--secondary pull-right m-t" data-navigo>
+              Contact me
+            </a>
+            <a href="" class="clear btn btn--secondary pull-right m-t" data-navigo>
+              My projects
+            </a>
+
+          </div>
+          <div class="gr-12 gr-4@tablet">
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% block body %}{% endblock %}
+
+  </main><!-- end content -->
+
+  {# <s-blink-transition></s-blink-transition> #}
+  <s-sprite-transition id="transition" src="/dist/img/urban-full-480x270@60.png" color="#2b3438" frame-width="480" still-frame="30"></s-sprite-transition>
+
+  {# <svg id="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.18 125">
+    <filter id="displacementFilter">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence" style="transform: scale(1);"></feTurbulence>
+      <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+    <polygon points="69.59,0 70.88,83.76 139.18,125 69.59,86.34 0,125 68.3,83.76" style="filter: url(#displacementFilter)" fill="currentColor" />
+  </svg> #}
 
   {% if foot %}
 

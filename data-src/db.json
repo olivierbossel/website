@@ -1,0 +1,58 @@
+{
+  "projects": [
+    {
+      "id": "sugar",
+      "title": "Sugar",
+      "description": "A little sugar in your codebase",
+      "image": {
+        "src": "/data/sugar.jpg",
+        "alt": "Sugar illustration"
+      }
+    },
+    {
+      "id": "thorin",
+      "title": "Thorin",
+      "description": "Size doesn't always matter",
+      "image": {
+        "src": "/data/thorin.jpg",
+        "alt": "Thorin illustration"
+      }
+    },
+    {
+      "id": "webcomponents",
+      "title": "Webcomponents",
+      "description": "A bunch of cool webcomponents",
+      "image": {
+        "src": "/data/webcomponents.jpg",
+        "alt": "Webcomponents illustration"
+      }
+    },
+    {
+      "id": "code-playground",
+      "title": "Code playground",
+      "description": "Play with your code with ease",
+      "image": {
+        "src": "/data/code-playground.jpg",
+        "alt": "Code playground illustration"
+      }
+    },
+    {
+      "id": "codebook",
+      "title": "Codebook",
+      "description": "Sneak peak of Coffeekraken features",
+      "image": {
+        "src": "/data/codebook.jpg",
+        "alt": "Codebook illustration"
+      }
+    },
+    {
+      "id": "boilerplates",
+      "title": "Boilerplates",
+      "description": "Start your project with ease",
+      "image": {
+        "src": "/data/boilerplate.jpg",
+        "alt": "Code editor illustration"
+      }
+    }
+  ]
+}

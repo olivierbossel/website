@@ -1,3 +1,19 @@
-@import "node_modules/coffeekraken-s-form-component/index";
+.form-input {
+  outline: none;
+  border: none;
+  display: block;
+  width: 100%;
+  background-color: white;
+  padding: s-rem(20px) !important;
+  height: auto;
 
-@include s-form-classes($colors: default);
+  @include s-depth(5);
+
+  @include s-placeholder() {
+    color: s-color(white, -darken 50%);
+  }
+}
+
+textarea.form-input {
+  height: s-rem(150px);
+}

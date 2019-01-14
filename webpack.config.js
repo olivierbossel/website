@@ -42,9 +42,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.IgnorePlugin(/vertx/),
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false
-    })
+    new webpack.IgnorePlugin(/vertx/)
+    // new BundleAnalyzerPlugin({
+    //   openAnalyzer: false
+    // })
   ]
 }

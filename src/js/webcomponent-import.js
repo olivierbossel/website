@@ -4,4 +4,8 @@ import 'coffeekraken-s-validator-component'
 import 'coffeekraken-s-slideshow-component'
 import 'coffeekraken-s-one-time-display-component'
 import 'coffeekraken-s-atv-card-component'
+import 'coffeekraken-s-spring-snap-component'
+import 'coffeekraken-s-blink-transition-component'
+import 'coffeekraken-s-sprite-transition-component'
+import 'coffeekraken-s-label-material-component'
 // check out https://github.com/coffeekraken for more components

@@ -1,26 +1,33 @@
 .projects {
-
+  position: relative;
+  z-index: 1;
 }
 
 .projects__grid {
   display: grid;
   grid-gap: s-rem(10px);
-  grid-template-areas: "a a b"
-                       "a a c"
-                       "d e f";
+  grid-template-areas:
+    'a a z'
+    'b c z'
+    'd e z'
+    'f g z';
 }
 .projects__grid-item {
-  background-color: white;
   @include s-ratio(21/9);
   overflow: visible;
 
-  &:hover,
   &[active] {
     s-atv-card {
       z-index: 10;
     }
   }
+  &:hover {
+    s-atv-card {
+      z-index: 11;
+    }
+  }
 
+  s-spring-snap,
   s-atv-card {
     @include s-fit(absolute);
   }
@@ -45,60 +52,64 @@
   }
 }
 
-  .project {
-    @include s-fit(absolute);
-    @include s-depth(0);
-    @include s-transition(fast);
-    transform: scale(1);
-    overflow: hidden;
+.project {
+  @include s-fit(absolute);
+  @include s-depth(10);
+  @include s-transition(fast);
+  transform: scale(1);
+  overflow: hidden;
 
-    .projects__grid-item[active] & .project__img img,
-    &:hover .project__img img {
-      filter: grayscale(0);
-      opacity: 1;
-    }
-  }
+  // .projects__grid-item[active] & .project__img img,
+  // &:hover .project__img img {
+  //   filter: grayscale(0);
+  //   opacity: 1;
+  // }
+}
 
-  .project__metas {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    padding: s-space(default);
-    background: s-color(secondary);
-    color: white;
-    transition: transform .3s cubic-bezier(1.000, 0.000, 0.000, 1.000) 0s;
+.project__metas {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: s-space(default);
+  background: s-color(secondary);
+  color: white;
+  transition: transform 0.3s cubic-bezier(1, 0, 0, 1) 0s;
+  @include s-translate(0, 100%);
 
-    @include s-translate(0,100%);
-
-    .projects__grid-item[active] &,
-    .projects__grid-item:hover & {
-      @include s-translate(0,0);
-    }
-  }
-
-  .project__img {
-    @include s-fit(absolute);
-
-    img {
-      @include s-fit();
-      object-fit: cover;
-      filter: grayscale(100%);
-      opacity: .05;
-      @include s-transition(fast);
-    }
-  }
-
-  .project__scope {
-    @include s-font(
-      $size: s-rem(12px),
-      $color: s-color(default, -lighten 60%)
-    );
-  }
-
-  .project__title {
-    @include s-font(
-      $family: code,
-      $size: s-rem(22px)
-    );
+  &:after {
+    content: '';
     display: block;
+    width: s-rem(50px);
+    height: 100%;
+    position: absolute;
+    left: calc(100% - 30px);
+    top: 0;
+    background: s-color(secondary);
+    transform: skewX(25deg);
+    z-index: -1;
   }
+
+  .projects__grid-item[active] &,
+  .projects__grid-item:hover & {
+    @include s-translate(0, 0);
+  }
+}
+
+.project__img {
+  @include s-fit(absolute);
+
+  img {
+    @include s-fit();
+    object-fit: cover;
+    @include s-transition(fast);
+  }
+}
+
+.project__scope {
+  @include s-font($size: s-rem(12px), $color: s-color(default, -lighten 60%));
+}
+
+.project__title {
+  @include s-font($family: code, $size: s-rem(22px));
+  display: block;
+}

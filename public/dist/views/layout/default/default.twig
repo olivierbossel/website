@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="{{ lang | default('en') }}">
+	<head>
+		<!-- Config -->
+		<meta charset="{{ charset | default('utf8') }}">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta http-equiv="content-type" content="text/html">
+    <meta name="distribution" content="web">
+    {% if noindex %}
+      <meta name="robots" content="noindex,nofollow">
+    {% else %}
+      <meta name="robots" content="index,follow">
+    {% endif %}
+    <meta name="viewport" content="{{ viewport | default('width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no') }}">
+
+		<!-- Metas -->
+		{% if title %}
+			<title>{{ title }}</title>
+		{% endif %}
+		{% if description %}
+			<meta name="description" content="{{ description }}">
+		{% endif %}
+		{% if keywords %}
+			<meta name="keywords" content="{{ keywords | join(',') }}">
+		{% endif %}
+
+		{% if og is not same as(false) %}
+			<!-- Schema.org markup for Facebook -->
+			{% if current_url %}
+				<meta property="og:url" content="{{ current_url }}" />
+			{% endif %}
+			<meta property="og:type" content="website" />
+			{% if title %}
+				<meta property="og:title" content="{{ title }}" />
+			{% endif %}
+			{% if description %}
+				<meta property="og:description" content="{{ description }}" />
+			{% endif %}
+			{% if sharing_image %}
+				<meta property="og:image" content="{{ sharing_image }}" />
+			{% endif %}
+		{% endif %}
+
+		{% if twitter is not same as(false) %}
+			<!-- Schema.org markup for Twitter -->
+			{% if current_url %}
+				<meta name="twitter:url" content="{{ current_url }}">
+			{% endif %}
+			{% if title %}
+				<meta name="twitter:title" content="{{ title }}">
+			{% endif %}
+			{% if description %}
+				<meta name="twitter:description" content="{{ description }}">
+			{% endif %}
+			{% if sharing_image %}
+				<meta name="twitter:image:src" content="{{ sharing_image }}">
+			{% endif %}
+		{% endif %}
+
+		<!-- Schema.org markup for Google+ -->
+		{% if title %}
+			<meta itemprop="name" content="{{ title }}">
+		{% endif %}
+		{% if description %}
+			<meta itemprop="description" content="{{ description }}">
+		{% endif %}
+		{% if sharing_image %}
+			<meta itemprop="image" content="{{ sharing_image }}">
+		{% endif %}
+
+		{% if critical_css %}
+			<style>
+				{{ critical_css | raw }}
+			</style>
+		{% endif %}
+
+    {% include 'layout/favicons/favicons.twig' %}
+
+    {% if head.js_variables %}
+      <script>
+        {% for key, value in head.js_variables %}
+          window.{{ key }} = {{ value | json_encode }};
+        {% endfor %}
+      </script>
+    {% endif %}
+
+		{% if head.stylesheets %}
+			<!-- Stylesheets -->
+      {% for stylesheet in head.stylesheets %}
+				{% if stylesheet %}
+					<link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+		{% if head.scripts %}
+			<!-- Scripts -->
+      {% for script in head.scripts %}
+				{% if script %}
+					<script src="{{ script }}"></script>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+
+    {% block head %}{% endblock %}
+
+		{% if google_tag_manager_id %}
+			<!-- Google Tag Manager -->
+			<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','{{ google_tag_manager_id }}');</script>
+			<!-- End Google Tag Manager -->
+		{% endif %}
+
+    {% if google_analytics_id %}
+      <!-- Global Site Tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ google_analytics_id }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ google_analytics_id }}');
+      </script>
+    {% endif %}
+
+	</head>
+	<body class="{{ body_class }}">
+
+  {% if google_tag_manager_id %}
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ google_tag_manager_id }}"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  {% endif %}
+
+  <img src="/data/olivier-bossel.jpg" alt="Olivier Bossel picture" class="body__bkg" />
+
+  <main class="content">
+
+    <section class="topbar">
+      <div class="container">
+        <div class="row">
+          <div class="gr-12 gr-8@tablet gr-4@desktop">
+            <h1 class="topbar__title m-b">
+              <s-bodymovin id="logo" src="/data/logo.json"></s-bodymovin>
+            </h1>
+            <p class="topbar__description m-b">
+              Passionate interactive web developer from Switzerland. To be always in research of new technologies, improving workflows and contributing to the open source community are my primary motivations.
+            </p>
+          </div>
+          <div class="gr-12 gr-8@tablet gr-4@desktop t-left t-right@desktop">
+            <ul class="topbar__nav">
+              <li class="topbar__nav-item">
+                <a href="https://github.com/coffeekraken" title="Coffeekraken Github" target="_blank">
+                  <s-icon icon="fab fa-github"></s-icon> Github
+                </a>
+              </li>
+              <li class="topbar__nav-item">
+                <a href="https://twitter.com/olivierbossel" title="Olivier Bossel Twitter profile" target="_blank">
+                  <s-icon icon="fab fa-twitter"></s-icon> Twitter
+                </a>
+              </li>
+              <li class="topbar__nav-item">
+                <a href="https://www.linkedin.com/in/olivierbossel" title="Olivier Bossel LinkedIn profile" target="_blank">
+                  <s-icon icon="fab fa-linkedin"></s-icon> LinkedIn
+                </a>
+              </li>
+            </ul>
+
+            <a href="contact" class="clear btn btn--secondary m-t" data-navigo>
+              Contact me
+            </a>
+            <a href="" class="clear btn btn--secondary m-t" data-navigo>
+              My projects
+            </a>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% block body %}{% endblock %}
+
+  </main><!-- end content -->
+
+  {# <s-blink-transition></s-blink-transition> #}
+  <s-sprite-transition id="transition" src="/dist/img/urban-full-480x270@60.png" color="#2b3438" frame-width="480" still-frame="30"></s-sprite-transition>
+
+  {# <svg id="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.18 125">
+    <filter id="displacementFilter">
+      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence" style="transform: scale(1);"></feTurbulence>
+      <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
+    </filter>
+    <polygon points="69.59,0 70.88,83.76 139.18,125 69.59,86.34 0,125 68.3,83.76" style="filter: url(#displacementFilter)" fill="currentColor" />
+  </svg> #}
+
+  {% if foot %}
+
+    {% if foot.js_variables %}
+      <script>
+        {% for key, value in foot.js_variables %}
+          window.{{ key }} = {{ value | json_encode }};
+        {% endfor %}
+      </script>
+    {% endif %}
+
+    {% if foot.stylesheets %}
+      <!-- Stylesheets -->
+      {% for stylesheet in foot.stylesheets %}
+        {% if stylesheet %}
+          <link rel="stylesheet" href="{{ stylesheet }}" type="text/css">
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if foot.scripts %}
+      <!-- Scripts -->
+      {% for script in foot.scripts %}
+        {% if script %}
+          <script src="{{ script }}"></script>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    {% if foot.webfonts %}
+      <!-- Webfonts -->
+      <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
+      <script>
+        WebFont.load({
+          google: {
+            families: [
+              {% for webfont in foot.webfonts %}
+                '{{ webfont }}',
+              {% endfor %}
+            ]
+          }
+        });
+      </script>
+    {% endif %}
+
+    {% block foot %}{% endblock %}
+
+  {% endif %}
+
+	</body>
+</html>

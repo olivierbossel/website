@@ -1,0 +1,82 @@
+{% embed 'layout/default/default.twig' with layout %}
+
+  {% block body %}
+
+    <s-slideshow apply-slide-height keyboard-enabled="false" class="content">
+
+      <s-motion-blur for="projects" amount="1"></s-motion-blur>
+      <section class="projects" id="projects" s-slideshow-slide>
+        <div class="container">
+          <div class="row">
+            <div class="gr-12">
+              <div class="projects__grid">
+                {% for project in projects %}
+                  <div class="projects__grid-item">
+                    <s-atv-card amount="1" perspective="{{ (loop.index == 1) ? '700' : '400' }}">
+                      <a class="project" href="{{ project.url }}" target="_blank">
+                        <article class="project">
+                          <figure class="project__img">
+                            <img src="{{ project.image.src }}" alt="Coffeekraken Sugar" />
+                          </figure>
+                          <div class="project__metas">
+                            <h2 class="project__title m-b-smaller">{{ project.title }}</h2>
+                            <p class="p">
+                              {{ project.description }}
+                            </p>
+                          </div>
+                        </article>
+                      </a>
+                    </s-atv-card>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <s-motion-blur for="contact" amount="1"></s-motion-blur>
+      <section class="contact" id="contact" s-slideshow-slide>
+        <div class="container contact__content">
+          <div class="row">
+            <div class="gr-8">
+              <h1 class="h1 m-b hide show@tablet">Contact me</h1>
+              <p class="p p--lead m-b hide show@tablet">
+                Don't hesitate to drop me a line here and I will contact you asap.
+              </p>
+              <div id="contact-error" class="reply reply--error"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="gr-12 gr-8@tablet">
+              <s-codemirror id="contact-code"
+                title="json"
+                theme="material"
+                language="json"
+                copy-enabled="false"
+                auto-format="false"
+                update-on="run"
+                run-label="Send"
+                display-actions="always"
+                compiling-label="Sending..."
+                compiled-label="Sent! Thanks"
+                process-code-at-start="false"
+              >
+<template>
+{
+  "name": "",
+  "email": "",
+  "message": ""
+}
+</template>
+              </s-codemirror>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </s-slideshow>
+
+  {% endblock %}
+
+{% endembed %}

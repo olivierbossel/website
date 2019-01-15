@@ -1,9 +1,9 @@
 .topbar {
-  padding: s-space(big) 0;
+  padding: s-space(big) 0 s-space(medium) 0;
   position: relative;
   z-index: 10;
   opacity: 0;
-  transition: opacity .6s ease-in-out 1s;
+  transition: opacity 0.6s ease-in-out 1s;
 
   body.ready & {
     opacity: 1;

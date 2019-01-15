@@ -16,7 +16,7 @@ return [
   'twitter' => true,
   'critical_css' => null,
   'google_tag_manager_id' => null,
-  'google_analytics_id' => null,
+  'google_analytics_id' => 'UA-41993246-1',
   'webfonts' => [
 		'Roboto:300,400,800'
 	],

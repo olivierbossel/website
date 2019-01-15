@@ -15836,52 +15836,52 @@ body.preview {
   z-index: 11;
 }
 
-body.ready .projects__grid-item {
+body.loaded .projects__grid-item {
   opacity: 1;
   transform: translateX(0) translateY(0) translateZ(0);
 }
 
-body.ready .projects__grid-item:nth-child(0) {
+body.loaded .projects__grid-item:nth-child(0) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1s;
 }
 
-body.ready .projects__grid-item:nth-child(1) {
+body.loaded .projects__grid-item:nth-child(1) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.05s;
 }
 
-body.ready .projects__grid-item:nth-child(2) {
+body.loaded .projects__grid-item:nth-child(2) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.1s;
 }
 
-body.ready .projects__grid-item:nth-child(3) {
+body.loaded .projects__grid-item:nth-child(3) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.15s;
 }
 
-body.ready .projects__grid-item:nth-child(4) {
+body.loaded .projects__grid-item:nth-child(4) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.2s;
 }
 
-body.ready .projects__grid-item:nth-child(5) {
+body.loaded .projects__grid-item:nth-child(5) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.25s;
 }
 
-body.ready .projects__grid-item:nth-child(6) {
+body.loaded .projects__grid-item:nth-child(6) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.3s;
 }
 
-body.ready .projects__grid-item:nth-child(7) {
+body.loaded .projects__grid-item:nth-child(7) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.35s;
 }
 
-body.ready .projects__grid-item:nth-child(8) {
+body.loaded .projects__grid-item:nth-child(8) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.4s;
 }
 
-body.ready .projects__grid-item:nth-child(9) {
+body.loaded .projects__grid-item:nth-child(9) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.45s;
 }
 
-body.ready .projects__grid-item:nth-child(10) {
+body.loaded .projects__grid-item:nth-child(10) {
   transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) 1.5s;
 }
 
@@ -16022,7 +16022,7 @@ body.ready .projects__grid-item:nth-child(10) {
   transition: opacity 0.6s ease-in-out 1s;
 }
 
-body.ready .topbar {
+body.loaded .topbar {
   opacity: 1;
 }
 

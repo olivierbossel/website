@@ -185,18 +185,11 @@
 
   </main><!-- end content -->
 
-  {# <s-blink-transition></s-blink-transition> #}
+  <!-- transition -->
   <s-sprite-transition id="transition" src="/dist/img/urban-full-480x270@60.png" color="#2b3438" frame-width="480" still-frame="30"></s-sprite-transition>
 
+  <!-- loader -->
   <img src="/dist/img/loader.gif" alt="Loader gif" class="loader" />
-
-  {# <svg id="loader" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 139.18 125">
-    <filter id="displacementFilter">
-      <feTurbulence type="turbulence" baseFrequency="0.05" numOctaves="2" result="turbulence" style="transform: scale(1);"></feTurbulence>
-      <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap>
-    </filter>
-    <polygon points="69.59,0 70.88,83.76 139.18,125 69.59,86.34 0,125 68.3,83.76" style="filter: url(#displacementFilter)" fill="currentColor" />
-  </svg> #}
 
   {% if foot %}
 

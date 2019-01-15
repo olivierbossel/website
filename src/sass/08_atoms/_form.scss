@@ -28,7 +28,7 @@ textarea.form-input {
 
 .form-input,
 s-recaptcha,
-input[type="submit"].btn {
+input[type='submit'].btn {
   @include s-depth(10);
 }
 
@@ -51,7 +51,7 @@ s-recaptcha {
 }
 
 form[loading] {
-  input[type="submit"] {
+  input[type='submit'] {
     opacity: 0.3;
     pointer-events: none;
   }
@@ -60,9 +60,11 @@ form[loading] {
 [s-ajax-form-success] {
   background-color: s-color(success);
 }
+
 [s-ajax-form-error] {
   background-color: s-color(error);
 }
+
 [s-ajax-form-success],
 [s-ajax-form-error] {
   color: white;

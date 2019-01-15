@@ -10,13 +10,42 @@ $app->get('/[{path:.*}]', function($request, $response, array $args) {
 
 $app->post('/contact', function($request, $response, array $args) {
 
+  $data = file_get_contents('php://input');
+  $data = json_decode($data);
+
+  // validate data
+  if (empty($data->name)) {
+    $data = [
+      'status' => 'error',
+      'message' => 'Please provide me a name...'
+    ];
+    $newResponse = $response->withJson($data, 406);
+    return $newResponse;
+  }
+  if (empty($data->email) || !Thorin::is_email($data->email)) {
+    $data = [
+      'status' => 'error',
+      'message' => 'A valid email has to be provided...'
+    ];
+    $newResponse = $response->withJson($data, 406);
+    return $newResponse;
+  }
+  if (empty($data->message)) {
+    $data = [
+      'status' => 'error',
+      'message' => 'If you want to contact me, provide at least a small message...'
+    ];
+    $newResponse = $response->withJson($data, 406);
+    return $newResponse;
+  }
+
   $mailer = Thorin::mailer('mailgun');
   $mailer->addAddress('olivier.bossel@gmail.com', 'John Doe');
-  $mailer->setFrom($_POST['email']);
-  $mailer->addReplyTo($_POST['email']);
+  $mailer->setFrom($data->email);
+  $mailer->addReplyTo($data->email);
   $mailer->isHTML(true);
-  $mailer->Subject = 'A message from the website! : ' . $_POST['fullname'];
-  $mailer->Body = $_POST['message'];
+  $mailer->Subject = 'A message from the website! : ' . $data->name;
+  $mailer->Body = $data->message;
   if ($mailer->send()) {
     $data = [
       'status' => 'ok',
@@ -30,7 +59,7 @@ $app->post('/contact', function($request, $response, array $args) {
       'message' => 'An error has occured. Please try again later...',
       'info' => $mailer->ErrorInfo
     ];
-    $newResponse = $response->withJson($data);
+    $newResponse = $response->withJson($data, 406);
     return $newResponse;
   }
 });

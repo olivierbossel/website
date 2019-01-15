@@ -7,6 +7,8 @@ import 'coffeekraken-s-sprite-transition-component'
 import 'coffeekraken-s-ajax-form-component'
 import 'coffeekraken-s-recaptcha-component'
 import 'coffeekraken-s-bodymovin-component'
+import 'coffeekraken-s-codemirror-component'
+import 'coffeekraken-s-notification-component'
 
 if (!isMobile()) {
   import('coffeekraken-s-atv-card-component')

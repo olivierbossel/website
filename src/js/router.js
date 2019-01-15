@@ -10,8 +10,7 @@ const router = new Navigo(root, useHash, hash)
 router.hooks({
   before: done => {
     if (window.isIntroRunning) {
-      console.log('running')
-      document.body.addEventListener('app:ready', e => {
+      document.body.addEventListener('app:ready', () => {
         done()
       })
       return

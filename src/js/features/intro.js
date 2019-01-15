@@ -1,5 +1,4 @@
 import dispatchEvent from 'coffeekraken-sugar/js/dom/dispatchEvent'
-
 ;(() => {
   // const $loader = document.querySelector('#loader')
   // const $polygon = $loader.querySelector('polygon')

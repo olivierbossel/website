@@ -2,7 +2,7 @@
 
   {% block body %}
 
-    <s-slideshow apply-slide-height class="content">
+    <s-slideshow apply-slide-height keyboard-enabled="false" class="content">
 
       <s-motion-blur for="projects" amount="1"></s-motion-blur>
       <section class="projects" id="projects" s-slideshow-slide>
@@ -37,58 +37,42 @@
 
       <s-motion-blur for="contact" amount="1"></s-motion-blur>
       <section class="contact" id="contact" s-slideshow-slide>
-        <form is="s-ajax-form" action="/contact" method="POST">
-          <div class="container contact__content">
-            <div class="row">
-              <div class="gr-8">
-                <h1 class="h1 m-b hide show@tablet">Contact me</h1>
-                <p class="p p--lead m-b hide show@tablet">
-                  Don't hesitate to drop me a line here and I will contact you asap.
-                </p>
-                <div s-ajax-form-success="message" timeout="4000"></div>
-                <div s-ajax-form-error="error"></div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="gr-12 gr-4@tablet gutter">
-                <s-spring-snap style="width:100%">
-                  <label>
-                    <input class="form-input" type="text" name="fullname" placeholder="John Doe*" required>
-                    <s-validator for="fullname"></s-validator>
-                  </label>
-                </s-spring-snap>
-              </div>
-              <div class="gr-12 gr-4@tablet gutter">
-                <s-spring-snap style="width:100%">
-                  <label>
-                    <input class="form-input" type="email" name="email" placeholder="john.doe@gmail.com" required>
-                    <s-validator for="email"></s-validator>
-                  </label>
-                </s-spring-snap>
-              </div>
-              <div class="clear gr-12 gr-8@tablet gutter">
-                <s-spring-snap style="width:100%">
-                  <label>
-                    <textarea name="message" class="form-input" placeholder="Your message" required></textarea>
-                    <s-validator for="message"></s-validator>
-                  </label>
-                </s-spring-snap>
-              </div>
-              <div class="gr-12 gr-8@tablet gutter">
-                <s-spring-snap>
-                  <input type="checkbox" name="recaptcha" class="visually-hidden" />
-                  <s-recaptcha for="recaptcha"></s-recaptcha>
-                  <s-validator for="recaptcha" required></s-validator>
-                </s-spring-snap>
-              </div>
-              <div class="gr-12 gr-8@tablet gutter">
-                <s-spring-snap style="width:100%">
-                  <input type="submit" class="btn btn--primary btn--block" value="Send" />
-                </s-spring-snap>
-              </div>
+        <div class="container contact__content">
+          <div class="row">
+            <div class="gr-8">
+              <h1 class="h1 m-b hide show@tablet">Contact me</h1>
+              <p class="p p--lead m-b hide show@tablet">
+                Don't hesitate to drop me a line here and I will contact you asap.
+              </p>
+              <div id="contact-error" class="reply reply--error"></div>
             </div>
           </div>
-        </form>
+          <div class="row">
+            <div class="gr-12 gr-8@tablet">
+              <s-codemirror id="contact-code"
+                title="json"
+                theme="material"
+                language="json"
+                copy-enabled="false"
+                auto-format="false"
+                update-on="run"
+                run-label="Send"
+                display-actions="always"
+                compiling-label="Sending..."
+                compiled-label="Sent! Thanks"
+                process-code-at-start="false"
+              >
+<template>
+{
+  "name": "",
+  "email": "",
+  "message": ""
+}
+</template>
+              </s-codemirror>
+            </div>
+          </div>
+        </div>
       </section>
 
     </s-slideshow>

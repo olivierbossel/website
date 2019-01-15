@@ -22,20 +22,33 @@
       'd e g';
   }
 }
+
 .projects__grid-item {
   @include s-ratio(21/9);
+
   overflow: visible;
   opacity: 0;
 
-  @include s-translate(0,50%);
+  @include s-translate(0, 50%);
+
+  s-atv-card {
+    @include s-fit(absolute);
+  }
+
+  &:hover {
+    s-atv-card {
+      z-index: 11;
+    }
+  }
 
   body.ready & {
     opacity: 1;
-    @include s-translate(0,0);
+
+    @include s-translate(0, 0);
 
     @for $i from 0 through 10 {
       &:nth-child(#{$i}) {
-        transition: all 0.6s cubic-bezier(0.190, 1.000, 0.220, 1.000) $i * 0.05s + 1s;
+        transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1) $i * 0.05s + 1s;
       }
     }
   }
@@ -45,35 +58,31 @@
       z-index: 10;
     }
   }
-  &:hover {
-    s-atv-card {
-      z-index: 11;
-    }
-  }
-
-  s-spring-snap,
-  s-atv-card {
-    @include s-fit(absolute);
-  }
 
   &:nth-child(1) {
     grid-area: a;
   }
+
   &:nth-child(2) {
     grid-area: b;
   }
+
   &:nth-child(3) {
     grid-area: c;
   }
+
   &:nth-child(4) {
     grid-area: d;
   }
+
   &:nth-child(5) {
     grid-area: e;
   }
+
   &:nth-child(6) {
     grid-area: f;
   }
+
   &:nth-child(7) {
     grid-area: g;
   }
@@ -83,6 +92,7 @@
   @include s-fit(absolute);
   @include s-depth(10);
   @include s-transition(fast);
+
   transform: scale(1);
   overflow: hidden;
 
@@ -101,9 +111,10 @@
   background: s-color(secondary);
   color: white;
   transition: transform 0.3s cubic-bezier(1, 0, 0, 1) 0s;
+
   @include s-translate(0, 100%);
 
-  &:after {
+  &::after {
     content: '';
     display: block;
     width: s-rem(50px);
@@ -120,9 +131,12 @@
   .projects__grid-item:hover & {
     @include s-translate(0, 0);
   }
-  @include g-state((
-    max-width: g-state-var(min-width, tablet)
-  )) {
+
+  @include g-state(
+    (
+      max-width: g-state-var(min-width, tablet)
+    )
+  ) {
     @include s-translate(0, 0);
   }
 }
@@ -132,7 +146,9 @@
 
   img {
     @include s-fit();
+
     object-fit: cover;
+
     @include s-transition(fast);
   }
 }
@@ -143,5 +159,6 @@
 
 .project__title {
   @include s-font($family: code, $size: s-rem(22px));
+
   display: block;
 }

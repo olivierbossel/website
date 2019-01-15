@@ -1,0 +1,5 @@
+@import 'node_modules/codemirror/theme/material';
+
+s-codemirror {
+  @include s-depth(10);
+}

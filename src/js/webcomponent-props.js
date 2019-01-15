@@ -10,20 +10,31 @@ SWebComponent.setDefaultProps(
 )
 
 // transition start on slideshow items
-SWebComponent.setDefaultProps({
-  onChange: (comp) => {
-    Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(($slide) => {
-      dispatchEvent($slide, 'transitionstart')
-    })
-  }
-}, 's-slideshow')
+SWebComponent.setDefaultProps(
+  {
+    onChange: comp => {
+      Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(
+        $slide => {
+          dispatchEvent($slide, 'transitionstart')
+        }
+      )
+    }
+  },
+  's-slideshow'
+)
 
 // s-validator
-SWebComponent.setDefaultProps({
-  on: 'keyup'
-}, 's-validator')
+SWebComponent.setDefaultProps(
+  {
+    on: 'keyup'
+  },
+  's-validator'
+)
 
 // recaptcha
-SWebComponent.setDefaultProps({
-  sitekey: '6LfLqYkUAAAAADaAhZIBuIcnIR8EoCzccIPcQslj'
-}, 's-recaptcha')
+SWebComponent.setDefaultProps(
+  {
+    sitekey: '6LfLqYkUAAAAADaAhZIBuIcnIR8EoCzccIPcQslj'
+  },
+  's-recaptcha'
+)

@@ -18,13 +18,23 @@
   @include g-state(tablet) {
     grid-template-areas:
       'a a z'
+      'b b z'
+      'c c z'
+      'd d z'
+      'e e z'
+      'f f z'
+      'g g z';
+  }
+  @include g-state(desktop) {
+    grid-template-areas:
+      'a a z'
       'b c f'
       'd e g';
   }
 }
 
 .projects__grid-item {
-  @include s-ratio(21/9);
+  @include s-ratio(21/14);
 
   overflow: visible;
   opacity: 0;
@@ -86,6 +96,11 @@
   &:nth-child(7) {
     grid-area: g;
   }
+
+  @include g-state(tablet) {
+    @include s-ratio(21/9);
+    overflow: visible;
+  }
 }
 
 .project {
@@ -95,12 +110,6 @@
 
   transform: scale(1);
   overflow: hidden;
-
-  // .projects__grid-item[active] & .project__img img,
-  // &:hover .project__img img {
-  //   filter: grayscale(0);
-  //   opacity: 1;
-  // }
 }
 
 .project__metas {
@@ -137,6 +146,8 @@
       max-width: g-state-var(min-width, tablet)
     )
   ) {
+    width: 100%;
+
     @include s-translate(0, 0);
   }
 }
@@ -150,6 +161,14 @@
     object-fit: cover;
 
     @include s-transition(fast);
+  }
+
+  @include g-state(
+    (
+      max-width: g-state-var(min-width, tablet)
+    )
+  ) {
+    height: calc(100% - 80px);
   }
 }
 

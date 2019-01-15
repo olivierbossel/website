@@ -1,3 +1,65 @@
 @import 'node_modules/coffeekraken-s-notification-component/index';
 
-@include s-notification-classes($colors: default primary secondary);
+// @include s-notification-classes($colors: default primary secondary);
+
+.s-notification-container {
+  width: 100%;
+}
+
+@keyframes notification-in {
+  from {
+    padding: 0;
+    max-height: 0;
+  }
+
+  to {
+    padding: s-space(default);
+    max-height: s-rem(100px);
+  }
+}
+
+@keyframes notification-out {
+  from {
+    padding: s-space(default);
+    max-height: s-rem(100px);
+  }
+
+  to {
+    padding: 0;
+    max-height: 0;
+  }
+}
+
+.s-notification {
+  overflow: hidden;
+  padding: s-space(default);
+  animation: notification-in 0.4s cubic-bezier(1, 0, 0, 1) forwards 0s;
+
+  @include s-depth(10);
+}
+
+.s-notification--out {
+  animation: notification-out 0.4s cubic-bezier(1, 0, 0, 1) forwards 0s;
+}
+
+.s-notification__metas {
+  @extend .container;
+}
+
+.s-notification__title {
+  margin-bottom: 0.5em;
+
+  @include s-font(
+    $family: bold
+  );
+}
+
+.s-notification--error {
+  background: s-color(error);
+  color: white;
+}
+
+.s-notification--success {
+  background: s-color(success);
+  color: white;
+}

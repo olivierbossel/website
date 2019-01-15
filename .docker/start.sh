@@ -1,5 +1,5 @@
 echo "Creating network..."
-docker network create html-boilerplate-network
+docker network create nginx-proxy-network
 echo "Network created!"
 
 # start the container

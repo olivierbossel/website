@@ -74,6 +74,8 @@
 			</style>
 		{% endif %}
 
+    {% include '@favicons' %}
+
     {% if head.js_variables %}
       <script>
         {% for key, value in head.js_variables %}
@@ -140,7 +142,7 @@
     <section class="topbar">
       <div class="container">
         <div class="row">
-          <div class="gr-12 gr-4@tablet">
+          <div class="gr-12 gr-8@tablet gr-4@desktop">
             <h1 class="topbar__title m-b">
               <s-bodymovin id="logo" src="/data/logo.json"></s-bodymovin>
             </h1>
@@ -148,7 +150,7 @@
               Passionate interactive web developer from Switzerland. To be always in research of new technologies, improving workflows and contributing to the open source community are my primary motivations.
             </p>
           </div>
-          <div class="gr-12 gr-4@tablet t-left t-right@tablet">
+          <div class="gr-12 gr-8@tablet gr-4@desktop t-left t-right@desktop">
             <ul class="topbar__nav">
               <li class="topbar__nav-item">
                 <a href="https://github.com/coffeekraken" title="Coffeekraken Github" target="_blank">
@@ -173,9 +175,6 @@
             <a href="" class="clear btn btn--secondary m-t" data-navigo>
               My projects
             </a>
-
-          </div>
-          <div class="gr-12 gr-4@tablet">
 
           </div>
         </div>

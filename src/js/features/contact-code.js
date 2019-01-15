@@ -8,24 +8,46 @@ axios.interceptors.response.use(
 
 const $code = document.querySelector('s-codemirror#contact-code')
 
+let codeInitialValue = ''
+setTimeout(() => {
+  codeInitialValue = $code.value
+})
+
 $code.setProps({
   updateOn: 'run',
   compile: value =>
     new Promise((resolve, reject) => {
-      const values = JSON.parse(value)
+      let values = {}
+      try {
+        values = JSON.parse(value)
+      } catch(e) {
+        SNotificationComponent.notify({
+          title: 'Woops',
+          body: e,
+          dismissable: true,
+          timeout: 10000,
+          side: 't',
+          type: 'error'
+        })
+        reject()
+        return
+      }
       axios
         .post('/contact', values)
-        .then(() => {
+        .then((response) => {
           resolve({
             data: value
           })
+          $code.setProp('value', `{ "message": "${response.data.message}" }`)
         })
         .catch(error => {
           SNotificationComponent.notify({
             title: 'Woops',
             body: error.data.message,
             dismissable: true,
-            timeout: 5000
+            timeout: 10000,
+            side: 't',
+            type: 'error'
           })
 
           reject()

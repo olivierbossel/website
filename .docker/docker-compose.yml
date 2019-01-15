@@ -4,8 +4,11 @@ services:
     build: .
     container_name: html-boilerplate-web
     command: bash -c "./up.sh"
+    environment:
+      VIRTUAL_HOST: olivierbossel.com
+      VIRTUAL_PORT: 8888
     ports:
-      - "8080:80"
+      - "8888:80"
     env_file:
       - ./.env
     volumes:
@@ -16,4 +19,4 @@ services:
 networks:
   default:
     external:
-      name: html-boilerplate-network
+      name: nginx-proxy-network

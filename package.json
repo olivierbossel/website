@@ -1,11 +1,11 @@
 {
-  "name": "coffeekraken-html-boilerplate",
+  "name": "olivier-bossel-website",
   "version": "1.0.0",
-  "description": "Base HTML files and folder structure with complete build process (js, sass, image compression, etc...) built in",
-  "homepage": "https://coffeekraken.io",
+  "description": "Olivier Bossel's website",
+  "homepage": "https://olivierbossel.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/coffeekraken/html-boilerplate"
+    "url": "https://github.com/olivierbossel/website"
   },
   "watch": {
     "dist:css": {
@@ -44,7 +44,7 @@
     "dist:img": "rm -rf public/dist/img && coffeekraken-imagemin -s src/img -o public/dist/img -q 90",
     "dist:fonts": "rm -rf public/dist/fonts && cp -R src/fonts public/dist/fonts",
     "dist:icons": "rm -rf public/dist/icons && cp -R src/icons public/dist/icons",
-    "dist:favicons": "coffeekraken-favicons --source src/img/favicon.png --output public/dist/favicons --html-output public/dist/favicons/favicons.html --path '/dist/favicons' --theme '#fff' --background '#fff'",
+    "dist:favicons": "coffeekraken-favicons --source src/img/favicon.png --output public/dist/favicons --html-output app/views/layout/favicons/favicons.twig --path '/dist/favicons' --theme '#fff' --background '#fff'",
     "dist:criticalcss": "coffeekraken-criticalcss -o public/dist/css/critical.css -c public/dist/css/style.css -h http://localhost:8080",
     "dist:views": "fractal export -o public/dist/views",
     "dist:prod": "npm run dist:fonts && npm run dist:prod:css && npm run dist:prod:js && npm run dist:img && npm run dist:icons && npm run dist:favicons && npm run dist:views",
@@ -102,6 +102,7 @@
     "coffeekraken-gridle": "^3.0.0",
     "coffeekraken-s-activate-component": "^1.1.5",
     "coffeekraken-s-ajax-form-component": "^1.0.1",
+    "coffeekraken-s-animation-component": "^1.0.1",
     "coffeekraken-s-atv-card-component": "^1.0.3",
     "coffeekraken-s-blink-transition-component": "^1.0.1",
     "coffeekraken-s-bodymovin-component": "^1.0.5",

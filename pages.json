@@ -2,9 +2,5 @@
   "home": {
     "title": "Homepage",
     "url": "/"
-  },
-  "404": {
-    "title": "404",
-    "url": "/404"
   }
 }

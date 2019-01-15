@@ -10,14 +10,18 @@ SWebComponent.setDefaultProps(
 )
 
 // transition start on slideshow items
+let isFirst = true
 SWebComponent.setDefaultProps(
   {
     onChange: comp => {
-      Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(
-        $slide => {
-          dispatchEvent($slide, 'transitionstart')
-        }
-      )
+      if (!isFirst) { // avoid trigger motion blur on first change event
+        Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(
+          $slide => {
+            dispatchEvent($slide, 'transitionstart')
+          }
+        )
+      }
+      isFirst = false
     }
   },
   's-slideshow'

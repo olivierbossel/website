@@ -1,3 +1,11 @@
+# composer update
+echo ""
+echo "======================================"
+echo "Composer update"
+echo "======================================"
+php composer.phar update
+echo ""
+
 # start php
 echo ""
 echo "======================================"

@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     build: .
-    container_name: html-boilerplate-web
+    container_name: olivierbossel_website
     command: bash -c "./up.sh"
     environment:
       VIRTUAL_HOST: olivierbossel.com

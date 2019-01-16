@@ -10,7 +10,7 @@ module.exports = {
       './src/js/app.js',
       ...glob.sync(['./app/views/**/*.js', '!./app/views/**/_*.js'])
     ],
-    'template-stack': './src/js/template-stack.js'
+    loader: './src/js/loader.js'
   },
   output: {
     path: path.resolve(__dirname, 'public/dist/js'),

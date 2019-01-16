@@ -8,11 +8,6 @@ axios.interceptors.response.use(
 
 const $code = document.querySelector('s-codemirror#contact-code')
 
-let codeInitialValue = ''
-setTimeout(() => {
-  codeInitialValue = $code.value
-})
-
 $code.setProps({
   updateOn: 'run',
   compile: value =>

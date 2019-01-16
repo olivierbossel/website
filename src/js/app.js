@@ -1,5 +1,4 @@
 // import some dependencies like polyfills, etc...
-import '@babel/polyfill'
 import 'cssuseragent'
 import 'fastclick'
 

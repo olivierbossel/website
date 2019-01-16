@@ -39,7 +39,7 @@
   "scripts": {
     "dist": "npm run dist:fonts && npm run dist:css && npm run dist:js && npm run dist:img && npm run dist:icons && npm run dist:favicons && npm run dist:views",
     "dist:js": "rm -rf public/dist/js && mkdir -p public/dist/js && webpack",
-    "dist:css": "rm -rf public/dist/css && mkdir -p public/dist/css && node-sass src/sass/style.scss public/dist/css/style.css --importer node_modules/node-sass-glob-importer/dist/cli.js --include-path node_modules --output-style expanded && npm run dist:css:autoprefixr",
+    "dist:css": "rm -rf public/dist/css && mkdir -p public/dist/css && node-sass src/sass/ -o public/dist/css/ --importer node_modules/node-sass-glob-importer/dist/cli.js --include-path node_modules --output-style expanded && npm run dist:css:autoprefixr",
     "dist:css:autoprefixr": "postcss public/dist/css/style.css --use autoprefixer -d public/dist/css --no-map",
     "dist:img": "rm -rf public/dist/img && coffeekraken-imagemin -s src/img -o public/dist/img -q 90",
     "dist:fonts": "rm -rf public/dist/fonts && mkdir -p public/dist/fonts && cp -R src/fonts public/dist/fonts",
@@ -123,7 +123,7 @@
     "coffeekraken-s-tooltip-component": "^1.0.2",
     "coffeekraken-s-typography-component": "^1.0.2",
     "coffeekraken-s-validator-component": "^1.0.8",
-    "coffeekraken-sugar": "^1.0.40",
+    "coffeekraken-sugar": "^1.0.42",
     "coffeekraken-template-stack": "git+https://git@github.com/Coffeekraken/template-stack.git#master",
     "coffeekraken-ww-axios": "^1.0.4",
     "cssuseragent": "^2.1.31",

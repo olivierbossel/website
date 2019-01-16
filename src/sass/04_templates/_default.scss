@@ -31,19 +31,7 @@ body {
   }
 }
 
-.loader {
-  @include s-position(fixed, middle, center);
 
-  z-index: 100;
-  opacity: 0.3;
-  pointer-events: none;
-
-  @include s-transition(fast);
-
-  body.loaded & {
-    opacity: 0;
-  }
-}
 
 @keyframes content-in {
   0% {
@@ -92,18 +80,4 @@ s-slideshow.content {
       @include s-translate(100vw);
     }
   }
-}
-
-s-blink-transition {
-  @include s-fit(fixed);
-
-  z-index: 100;
-  color: s-color(secondary);
-  //7 transform: rotate(-20deg) scale(2);
-}
-
-s-sprite-transition {
-  @include s-fit(fixed);
-
-  z-index: 100;
 }

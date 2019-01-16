@@ -15676,6 +15676,22 @@ body.ready .body__bkg {
   opacity: 0.7;
 }
 
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%) translateZ(0);
+  z-index: 100;
+  opacity: 0.3;
+  pointer-events: none;
+  transition: all 0.1s ease-in-out 0s, outline-color 0s linear 0s;
+  outline-color: black;
+}
+
+body.loaded .loader {
+  opacity: 0;
+}
+
 @keyframes content-in {
   0% {
     transform: scale(0.9) translateY(5vh);
@@ -15720,6 +15736,25 @@ s-slideshow.content [s-slideshow-slide][before-active] {
 
 s-slideshow.content [s-slideshow-slide][after-active] {
   transform: translateX(100vw) translateY(0) translateZ(0);
+}
+
+s-blink-transition {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  color: #2b3438;
+}
+
+s-sprite-transition {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
 body.preview {
@@ -15778,7 +15813,7 @@ body.preview {
   position: relative;
   overflow: hidden;
   overflow: visible;
-  opacity: 0.0001;
+  opacity: 0;
   transform: translateX(0) translateY(50%) translateZ(0);
 }
 

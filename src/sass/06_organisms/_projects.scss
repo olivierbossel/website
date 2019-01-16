@@ -37,7 +37,7 @@
   @include s-ratio(21/14);
 
   overflow: visible;
-  opacity: 0.0001;
+  opacity: 0;
 
   @include s-translate(0, 50%);
 

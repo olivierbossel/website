@@ -22,7 +22,7 @@ return [
 	],
   'head' => [
     'stylesheets' => [
-      Thorin::asset_url('css/loader.css')
+      Thorin::asset_url('css/style.css')
     ],
     'scripts' => [],
     'js_variables' => []
@@ -30,7 +30,8 @@ return [
   'foot' => [
     'stylesheets' => [],
     'scripts' => [
-      Thorin::asset_url('js/loader.js')
+      Thorin::asset_url('js/app.js'),
+      (Thorin::is_environment('development','testing')) ? Thorin::asset_url('js/template-stack.js') : null
     ],
     'js_variables' => []
   ],

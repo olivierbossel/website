@@ -1,213 +1,4 @@
-/******/ (function(modules) { // webpackBootstrap
-/******/ 	// install a JSONP callback for chunk loading
-/******/ 	function webpackJsonpCallback(data) {
-/******/ 		var chunkIds = data[0];
-/******/ 		var moreModules = data[1];
-/******/
-/******/
-/******/ 		// add "moreModules" to the modules object,
-/******/ 		// then flag all "chunkIds" as loaded and fire callback
-/******/ 		var moduleId, chunkId, i = 0, resolves = [];
-/******/ 		for(;i < chunkIds.length; i++) {
-/******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
-/******/ 				resolves.push(installedChunks[chunkId][0]);
-/******/ 			}
-/******/ 			installedChunks[chunkId] = 0;
-/******/ 		}
-/******/ 		for(moduleId in moreModules) {
-/******/ 			if(Object.prototype.hasOwnProperty.call(moreModules, moduleId)) {
-/******/ 				modules[moduleId] = moreModules[moduleId];
-/******/ 			}
-/******/ 		}
-/******/ 		if(parentJsonpFunction) parentJsonpFunction(data);
-/******/
-/******/ 		while(resolves.length) {
-/******/ 			resolves.shift()();
-/******/ 		}
-/******/
-/******/ 	};
-/******/
-/******/
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// object to store loaded and loading chunks
-/******/ 	// undefined = chunk not loaded, null = chunk preloaded/prefetched
-/******/ 	// Promise = chunk loading, 0 = chunk loaded
-/******/ 	var installedChunks = {
-/******/ 		"app": 0
-/******/ 	};
-/******/
-/******/
-/******/
-/******/ 	// script path function
-/******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({}[chunkId]||chunkId) + "." + "92fa739975ab350f1e41" + ".js"
-/******/ 	}
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/ 	// This file contains only the entry chunk.
-/******/ 	// The chunk loading function for additional chunks
-/******/ 	__webpack_require__.e = function requireEnsure(chunkId) {
-/******/ 		var promises = [];
-/******/
-/******/
-/******/ 		// JSONP chunk loading for javascript
-/******/
-/******/ 		var installedChunkData = installedChunks[chunkId];
-/******/ 		if(installedChunkData !== 0) { // 0 means "already installed".
-/******/
-/******/ 			// a Promise means "currently loading".
-/******/ 			if(installedChunkData) {
-/******/ 				promises.push(installedChunkData[2]);
-/******/ 			} else {
-/******/ 				// setup Promise in chunk cache
-/******/ 				var promise = new Promise(function(resolve, reject) {
-/******/ 					installedChunkData = installedChunks[chunkId] = [resolve, reject];
-/******/ 				});
-/******/ 				promises.push(installedChunkData[2] = promise);
-/******/
-/******/ 				// start chunk loading
-/******/ 				var script = document.createElement('script');
-/******/ 				var onScriptComplete;
-/******/
-/******/ 				script.charset = 'utf-8';
-/******/ 				script.timeout = 120;
-/******/ 				if (__webpack_require__.nc) {
-/******/ 					script.setAttribute("nonce", __webpack_require__.nc);
-/******/ 				}
-/******/ 				script.src = jsonpScriptSrc(chunkId);
-/******/
-/******/ 				onScriptComplete = function (event) {
-/******/ 					// avoid mem leaks in IE.
-/******/ 					script.onerror = script.onload = null;
-/******/ 					clearTimeout(timeout);
-/******/ 					var chunk = installedChunks[chunkId];
-/******/ 					if(chunk !== 0) {
-/******/ 						if(chunk) {
-/******/ 							var errorType = event && (event.type === 'load' ? 'missing' : event.type);
-/******/ 							var realSrc = event && event.target && event.target.src;
-/******/ 							var error = new Error('Loading chunk ' + chunkId + ' failed.\n(' + errorType + ': ' + realSrc + ')');
-/******/ 							error.type = errorType;
-/******/ 							error.request = realSrc;
-/******/ 							chunk[1](error);
-/******/ 						}
-/******/ 						installedChunks[chunkId] = undefined;
-/******/ 					}
-/******/ 				};
-/******/ 				var timeout = setTimeout(function(){
-/******/ 					onScriptComplete({ type: 'timeout', target: script });
-/******/ 				}, 120000);
-/******/ 				script.onerror = script.onload = onScriptComplete;
-/******/ 				document.head.appendChild(script);
-/******/ 			}
-/******/ 		}
-/******/ 		return Promise.all(promises);
-/******/ 	};
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "dist/js/";
-/******/
-/******/ 	// on error function for async loading
-/******/ 	__webpack_require__.oe = function(err) { console.error(err); throw err; };
-/******/
-/******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
-/******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
-/******/ 	jsonpArray.push = webpackJsonpCallback;
-/******/ 	jsonpArray = jsonpArray.slice();
-/******/ 	for(var i = 0; i < jsonpArray.length; i++) webpackJsonpCallback(jsonpArray[i]);
-/******/ 	var parentJsonpFunction = oldJsonpFunction;
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./node_modules/@ungap/custom-elements-builtin/esm/index.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/@ungap/custom-elements-builtin/esm/index.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/*! (c) Andrea Giammarchi - ISC */\n(function (document, customElements, Object) {\n  'use strict';\n  if (customElements.get('ungap-li') || typeof Reflect == typeof EXTENDS)\n    return;\n  var EXTENDS = 'extends';\n  try {\n    // class LI extends HTMLLIElement {}\n    var desc = {};\n    desc[EXTENDS] = 'li';\n    var HtmlLI = HTMLLIElement;\n    var LI = function () {\n      return Reflect.construct(HtmlLI, [], LI);\n    };\n    LI.prototype = Object.create(HtmlLI.prototype);\n    customElements.define('ungap-li', LI, desc);\n    if (!/is=\"ungap-li\"/.test((new LI).outerHTML))\n      throw {};\n  } catch (o_O) {\n    var ATTRIBUTE_CHANGED_CALLBACK = 'attributeChangedCallback';\n    var CONNECTED_CALLBACK = 'connectedCallback';\n    var DISCONNECTED_CALLBACK = 'disconnectedCallback';\n    var assign = Object.assign;\n    var create = Object.create;\n    var defineProperties = Object.defineProperties;\n    var setPrototypeOf = Object.setPrototypeOf;\n    var define = customElements.define;\n    var get = customElements.get;\n    var upgrade = customElements.upgrade;\n    var whenDefined = customElements.whenDefined;\n    var registry = create(null);\n    new MutationObserver(function (changes) {\n      for (var i = 0, length = changes.length; i < length; i++) {\n        var change = changes[i];\n        var addedNodes = change.addedNodes;\n        var removedNodes = change.removedNodes;\n        for (var j = 0, len = addedNodes.length; j < len; j++)\n          setupIfNeeded(addedNodes[j]);\n        for (var j = 0, len = removedNodes.length; j < len; j++)\n          disconnectIfNeeded(removedNodes[j]);\n      }\n    }).observe(\n      document,\n      {childList: true, subtree: true}\n    );\n    defineProperties(\n      customElements,\n      {\n        define: {\n          value: function (name, Class, options) {\n            name = name.toLowerCase();\n            if (options && EXTENDS in options) {\n              // currently options is not used but preserved for the future\n              registry[name] = assign({}, options, {Class: Class});\n              var query = options[EXTENDS] + '[is=\"' + name + '\"]';\n              var changes = document.querySelectorAll(query);\n              for (var i = 0, length = changes.length; i < length; i++)\n                setupIfNeeded(changes[i]);\n            }\n            else\n              define.apply(customElements, arguments);\n          }\n        },\n        get: {\n          value: function (name) {\n            return name in registry ?\n              registry[name].Class :\n              get.call(customElements, name);\n          }\n        },\n        upgrade: {\n          value: function (node) {\n            var info = getInfo(node);\n            if (info && !(node instanceof info.Class))\n              setup(node, info);\n            else\n              upgrade.call(customElements, node);\n          }\n        },\n        whenDefined: {\n          value: function (name) {\n            return name in registry ?\n              Promise.resolve() :\n              whenDefined.call(customElements, name);\n          }\n        }\n      }\n    );\n    var createElement = document.createElement;\n    defineProperties(\n      document,\n      {\n        createElement: {\n          value: function (name, options) {\n            var node = createElement.call(document, name);\n            if (options && 'is' in options) {\n              node.setAttribute('is', options.is);\n              customElements.upgrade(node);\n            }\n            return node;\n          }\n        }\n      }\n    );\n    function attributeChanged(changes) {\n      for (var i = 0, length = changes.length; i < length; i++) {\n        var change = changes[i];\n        var attributeName = change.attributeName;\n        var oldValue = change.oldValue;\n        var target = change.target;\n        var newValue = target.getAttribute(attributeName);\n        if (\n          ATTRIBUTE_CHANGED_CALLBACK in target &&\n          !(oldValue == newValue && newValue == null)\n        )\n          target[ATTRIBUTE_CHANGED_CALLBACK](\n            attributeName,\n            oldValue,\n            target.getAttribute(attributeName),\n            // TODO: add getAttributeNS if the node is XML\n            null\n          );\n      }\n    }\n    function disconnectIfNeeded(node) {\n      if (node.nodeType !== 1)\n        return;\n      setupSubNodes(node, disconnectIfNeeded);\n      var info = getInfo(node);\n      if (\n        info &&\n        node instanceof info.Class &&\n        DISCONNECTED_CALLBACK in node\n      )\n        node[DISCONNECTED_CALLBACK]();\n    }\n    function getInfo(node) {\n      var is = node.getAttribute('is');\n      if (is) {\n        is = is.toLowerCase();\n        if (is in registry)\n          return registry[is];\n      }\n      return null;\n    }\n    function setup(node, info) {\n      var Class = info.Class;\n      var oa = Class.observedAttributes || [];\n      setPrototypeOf(node, Class.prototype);\n      if (oa.length) {\n        new MutationObserver(attributeChanged).observe(\n          node,\n          {\n            attributes: true,\n            attributeFilter: oa,\n            attributeOldValue: true\n          }\n        );\n        var changes = [];\n        for (var i = 0, length = oa.length; i < length; i++)\n          changes.push({attributeName: oa[i], oldValue: null, target: node});\n        attributeChanged(changes);\n      }\n    }\n    function setupIfNeeded(node) {\n      if (node.nodeType !== 1)\n        return;\n      setupSubNodes(node, setupIfNeeded);\n      var info = getInfo(node);\n      if (info) {\n        if (!(node instanceof info.Class))\n          setup(node, info);\n        if (CONNECTED_CALLBACK in node)\n          node[CONNECTED_CALLBACK]();\n      }\n    }\n    function setupSubNodes(node, setup) {\n      var nodes = node.querySelectorAll('[is]');\n      for (var i = 0, length = nodes.length; i < length; i++)\n        setup(nodes[i]);\n    }\n  }\n}(document, customElements, Object));\n\n\n//# sourceURL=webpack:///./node_modules/@ungap/custom-elements-builtin/esm/index.js?");
-
-/***/ }),
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[0],{
 
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
@@ -1132,30 +923,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/classes/SEvent.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/classes/SEvent.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = undefined;\n\nvar _customEvent = __webpack_require__(/*! custom-event */ \"./node_modules/custom-event/index.js\");\n\nvar _customEvent2 = _interopRequireDefault(_customEvent);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nexports.default = _customEvent2.default;\n\n/**\n * @constructor\n * @param  \t\t{String} \tname \t\tThe event name\n * @param \t\t{Object} \tsettings \tThe event settings\n */\n\n/**\n * Set if the event is cancelable or not\n * @setting\n * @name \t\tcancelable\n * @type \t\t{Boolean}\n * @default \ttrue\n */\n\n/**\n * Set if the event will bubble or not\n * @setting\n * @name \t\tbubbles\n * @type \t\t{Boolean}\n * @default \ttrue\n */\n\n/**\n * Pass an object that will be sent with the event\n * @setting\n * @name \t\tdetail\n * @type \t\t{Object}\n * @default \tnull\n */\n/**\n * @name \t\tSEvent\n * Proxy class to create custom events that can be dispatched\n * through the standard dispatch method on any HTMLElement\n *\n * @example \tjs\n * let myEvent = new SEvent('myCoolEvent', {\n * \t\tcancelable : true,\n * \t\tbubbles : false,\n * \t\tdetail : {\n * \t\t\t// some datas to send with the event\n * \t\t}\n * });\n * // dispatch the event from an HTMLElement\n * myHTMLElement.dispatch(myEvent);\n *\n * @see \t\thttps://www.npmjs.com/package/customevent\n * @author \t\tOlivier Bossel<olivier.bossel@gmail.com>\n */\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/classes/SEvent.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/classes/STimer.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/classes/STimer.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/**\n * @name \t\tSTimer\n * Class that let you create and handle timer with ease.\n * With this class you can set some callback function that will be\n * called each x ms or tell that you want your callbacks to be called\n * a certain number of time during the timer time.\n *\n * @example \tjs\n * const myTimer = new STimer(2000, {\n * \t\ttickCount : 5\n * })\n * myTimer.onTick((myTimer) => {\n * \t\t// do something here...\n * })\n * myTimer.start()\n *\n * @author \t\tOlivier Bossel<olivier.bossel@gmail.com>\n */\nvar STimer = function () {\n\n\t/**\n  * @constructor\n  * @param \t{number} \t[duration=1000] \t\tThe duration of the timer in ms\n  * @param \t{Object} \tsettings \t\tThe settings for the timer\n  * @return \t{STimer} \t\t\t\t\tThe STimer instance\n  */\n\n\n\t/**\n  * Store the last tick time\n  *\n  * @type \t{Date}\n  */\n\n\n\t/**\n  * Store the setInterval instance\n  *\n  * @type \t{Number}\n  */\n\n\n\t/**\n  * Store all the functions to call on tick\n  *\n  * @type \t{Array}\n  */\n\n\n\t/**\n  * How many ticks wanted during the timeout\n  *\n  * @type    {Integer}\n  */\n\n\n\t/**\n  * Store the timer duration wanted\n  *\n  * @type \t{Number}\n  */\n\tfunction STimer(duration) {\n\t\tvar settings = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};\n\n\t\t_classCallCheck(this, STimer);\n\n\t\tthis._settings = {\n\n\t\t\t/**\n    * Store the interval between ticks\n    *\n    * @setting\n    * @type \t\t{Number}\n    * @default \t1000\n    */\n\t\t\ttickInterval: 1000,\n\n\t\t\t/**\n    * Set the number of tick wanted\n    *\n    * @setting\n    * @type \t\t{Integer}\n    * @default \tnull\n    */\n\t\t\ttickCount: null,\n\n\t\t\t/**\n    * Set if the timer has to loop\n    *\n    * @setting\n    * @type \t\t{Boolean}\n    * @default \tfalse\n    */\n\t\t\tloop: false };\n\t\tthis._duration = 0;\n\t\tthis._remaining = 0;\n\t\tthis._tickCount = null;\n\t\tthis._tickInterval = 1000;\n\t\tthis._ticks = [];\n\t\tthis._completes = [];\n\t\tthis._tickSetTimeout = null;\n\t\tthis._startTime = null;\n\t\tthis._tickTime = null;\n\t\tthis._pauseTime = null;\n\n\t\tthis._duration = duration;\n\n\t\t// updating settings\n\t\tthis._settings = Object.assign(this._settings, settings);\n\n\t\t// calculate the tickInterval\n\t\tif (this._settings.tickCount) {\n\t\t\tthis._tickCount = this._settings.tickCount;\n\t\t\tthis._tickInterval = this._duration / this._tickCount; // remove 1 cause the first tick is always the start time\n\t\t} else {\n\t\t\tthis._tickInterval = this._settings.tickInterval;\n\t\t}\n\t}\n\n\t/**\n  * Internal tick function\n  * @return \t{void}\n  */\n\n\n\t/**\n  * Store the pause time\n  *\n  * @type \t{Date}\n  */\n\n\n\t/**\n  * Store the time when the timer is started\n  *\n  * @type \t{Date}\n  */\n\n\n\t/**\n  * Store all the functions to call on complete\n  *\n  * @type \t{Array}\n  */\n\n\n\t/**\n  * Computed value depending on the settings\n  *\n  * @type \t{Number}\n  */\n\n\n\t/**\n  * Store the remaining time\n  *\n  * @type \t{Number}\n  */\n\n\n\t/**\n  * Store the settings for the timer\n  *\n  * @type \t\t{Object}\n  */\n\n\n\t_createClass(STimer, [{\n\t\tkey: \"_tick\",\n\t\tvalue: function _tick() {\n\t\t\tvar _this = this;\n\n\t\t\t// save the remaining timeout\n\t\t\tthis._tickTime = new Date();\n\n\t\t\t// update remaing\n\t\t\tthis._remaining -= this._tickInterval;\n\n\t\t\t// loop on each ticks functions\n\t\t\tthis._ticks.forEach(function (tick) {\n\t\t\t\ttick(_this);\n\t\t\t});\n\n\t\t\t// if we are at the end of the timer\n\t\t\tif (this.remaining() <= 0) {\n\t\t\t\t// stop the timer\n\t\t\t\tthis.stop();\n\t\t\t\t// loop on each completes functions\n\t\t\t\tthis._completes.forEach(function (complete) {\n\t\t\t\t\tcomplete(_this);\n\t\t\t\t});\n\t\t\t\t// check if need to loop\n\t\t\t\tif (this._settings.loop) {\n\t\t\t\t\tthis.start();\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\t// launch another tick\n\t\t\t\tclearTimeout(this._tickSetTimeout);\n\t\t\t\tthis._tickSetTimeout = setTimeout(function () {\n\t\t\t\t\t_this._tick();\n\t\t\t\t}, this._tickInterval);\n\t\t\t}\n\t\t}\n\n\t\t/**\n   * Return the remaining time in ms\n   * @return \t{Number} \tThe remaining time in ms\n   */\n\n\t}, {\n\t\tkey: \"remaining\",\n\t\tvalue: function remaining() {\n\t\t\treturn this._remaining;\n\t\t}\n\n\t\t/**\n   * Set or get the duration\n   * @param\t{Number} \t[duration=null]\t\tSet the duration\n   * @return \t{Number} \t\t\t\t\t\tThe duration\n   */\n\n\t}, {\n\t\tkey: \"duration\",\n\t\tvalue: function duration() {\n\t\t\tvar _duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n\n\t\t\tif (_duration) {\n\t\t\t\tthis._duration = _duration;\n\t\t\t\tif (this._tickCount) {\n\t\t\t\t\tthis._tickInterval = this._duration / this._tickCount; // remove 1 cause the first tick is always the start time\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn this._duration;\n\t\t}\n\n\t\t/**\n   * Set of get the tickCount\n   * @param    {Inreger}    [tickCount=null]    Set the tickCount\n   * @return    {Inreger}    The tickCount\n   */\n\n\t}, {\n\t\tkey: \"tickCount\",\n\t\tvalue: function tickCount() {\n\t\t\tvar _tickCount = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n\n\t\t\tif (_tickCount) {\n\t\t\t\tthis._tickCount = _tickCount;\n\t\t\t\tthis._tickInterval = this._duration / this._tickCount;\n\t\t\t}\n\t\t}\n\n\t\t/**\n   * Register a function called on tick\n   * @param \t{Function} \tA function to call on tick\n   * @return \t{STimer} \tThe timer instance\n   */\n\n\t}, {\n\t\tkey: \"onTick\",\n\t\tvalue: function onTick(fn) {\n\t\t\t// add the function if not already\n\t\t\tif (this._ticks.indexOf(fn) !== -1) return;\n\t\t\tthis._ticks.push(fn);\n\t\t}\n\n\t\t/**\n   * Register a function called on complete\n   * @param \t{Function} \tA function to call on complete\n   * @retun \t{STimer} \tThe timer instance\n   */\n\n\t}, {\n\t\tkey: \"onComplete\",\n\t\tvalue: function onComplete(fn) {\n\t\t\t// add the function if not already\n\t\t\tif (this._completes.indexOf(fn) !== -1) return;\n\t\t\tthis._completes.push(fn);\n\t\t}\n\n\t\t/**\n   * Reset the timer\n   * @param \t{Boolean} \tstart \tIf the timer has to start after reseting or not\n   * @return \t{STimer}\n   */\n\n\t}, {\n\t\tkey: \"reset\",\n\t\tvalue: function reset() {\n\t\t\tvar start = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;\n\n\n\t\t\t// stop the timeout\n\t\t\tclearTimeout(this._tickSetTimeout);\n\n\t\t\t// reset the different timer elements\n\t\t\tthis._pauseTime = null;\n\t\t\tthis._startTime = null;\n\t\t\tthis._remaining = this._duration;\n\n\t\t\t// check if need to start again\n\t\t\tif (start) this.start();\n\n\t\t\t// maintain chainability\n\t\t\treturn this;\n\t\t}\n\n\t\t/**\n   * Start the timer\n   * @return \t{STimer}\n   */\n\n\t}, {\n\t\tkey: \"start\",\n\t\tvalue: function start() {\n\t\t\tvar _this2 = this;\n\n\t\t\tvar duration = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n\n\n\t\t\t// clear the timeout to be sure\n\t\t\tclearTimeout(this._tickSetTimeout);\n\n\t\t\t// set the duration\n\t\t\tif (duration) this.duration(duration);\n\n\t\t\t// if no tick time\n\t\t\tif (!this._tickTime) {\n\t\t\t\tthis._tickTime = new Date();\n\t\t\t}\n\n\t\t\t// if is a pausetime\n\t\t\t// mean that we resume the timer\n\t\t\tif (this._pauseTime) {\n\n\t\t\t\t// calculate time before new tick\n\t\t\t\tvar elapsed = this._pauseTime.getTime() - this._tickTime.getTime();\n\t\t\t\tvar remaining = this._tickInterval - elapsed;\n\t\t\t\tclearTimeout(this._tickSetTimeout);\n\t\t\t\tthis._tickSetTimeout = setTimeout(function () {\n\t\t\t\t\t_this2._tick();\n\t\t\t\t}, remaining);\n\n\t\t\t\t// reset pauseTime\n\t\t\t\tthis._pauseTime = null;\n\t\t\t} else {\n\t\t\t\t// save the start time\n\t\t\t\tthis._startTime = new Date();\n\t\t\t\tthis._remaining = this._duration;\n\n\t\t\t\t// first time tick\n\t\t\t\tclearTimeout(this._tickSetTimeout);\n\t\t\t\tthis._tickSetTimeout = setTimeout(function () {\n\t\t\t\t\t_this2._tick();\n\t\t\t\t}, this._tickInterval);\n\t\t\t}\n\n\t\t\t// maintain chainability\n\t\t\treturn this;\n\t\t}\n\n\t\t/**\n   * Pause the timer\n   * @return \t{STimer}\n   */\n\n\t}, {\n\t\tkey: \"pause\",\n\t\tvalue: function pause() {\n\n\t\t\t// set the pauseTime\n\t\t\tthis._pauseTime = new Date();\n\n\t\t\t// clean the interval\n\t\t\tclearTimeout(this._tickSetTimeout);\n\n\t\t\t// maintain chainability\n\t\t\treturn this;\n\t\t}\n\n\t\t/**\n   * Stop the timer\n   * @return \t{STimer}\n   */\n\n\t}, {\n\t\tkey: \"stop\",\n\t\tvalue: function stop() {\n\t\t\t// reset\n\t\t\tthis.reset();\n\n\t\t\t// maintain chainability\n\t\t\treturn this;\n\t\t}\n\n\t\t/**\n   * Destroy the timer\n   */\n\n\t}, {\n\t\tkey: \"destroy\",\n\t\tvalue: function destroy() {\n\t\t\tthis.stop();\n\t\t\tthis._completes = [];\n\t\t\tthis._ticks = [];\n\t\t}\n\n\t\t/**\n   * Check if the timer is started\n   * @return    {Boolean}    true if is started, false if not\n   */\n\n\t}, {\n\t\tkey: \"isStarted\",\n\t\tvalue: function isStarted() {\n\t\t\treturn this._startTime && !this._pauseTime;\n\t\t}\n\t}]);\n\n\treturn STimer;\n}();\n\nexports.default = STimer;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/classes/STimer.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/classes/SWatcher.js":
 /*!****************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/classes/SWatcher.js ***!
@@ -1165,114 +932,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _constructorName = __webpack_require__(/*! ../utils/objects/constructorName */ \"./node_modules/coffeekraken-sugar/js/utils/objects/constructorName.js\");\n\nvar _constructorName2 = _interopRequireDefault(_constructorName);\n\nvar _get2 = __webpack_require__(/*! lodash/get */ \"./node_modules/lodash/get.js\");\n\nvar _get3 = _interopRequireDefault(_get2);\n\nvar _set2 = __webpack_require__(/*! lodash/set */ \"./node_modules/lodash/set.js\");\n\nvar _set3 = _interopRequireDefault(_set2);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\n/**\n * @name \t\tSWatcher\n * This class allows you to easily monitor some object properties and get the new and old value of it\n *\n * @example \tjs\n * // create the watcher instance\n * const watcher = new SWatcher();\n *\n * // object to watch\n * let myObject = {\n * \t\ttitle : 'Hello World'\n * };\n *\n * // watch the object\n * watcher.watch(myObject, 'title', (newVal, oldVal) => {\n *  \t// do something when the title changes\n * });\n *\n * // update the title\n * myObject.title = 'Hello Universe';\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nvar SWatcher = function () {\n\n\t/**\n  * @constructor\n  */\n\tfunction SWatcher() {\n\t\t_classCallCheck(this, SWatcher);\n\n\t\tthis._watchStack = {};\n\t}\n\n\t/**\n  * Destroy the watcher\n  */\n\n\n\t/**\n  * Watch stack\n  * @type \t\t{Object}\n  */\n\n\n\t_createClass(SWatcher, [{\n\t\tkey: 'destroy',\n\t\tvalue: function destroy() {\n\t\t\t// destroy the watchStack\n\t\t\tthis._watchStack = {};\n\t\t}\n\n\t\t/**\n   * Internal implementation of the defineProp\n   * @param \t\t{Object} \tobj \t\tThe object to watch\n   * @param \t\t{String} \tproperty \tThe property of the object to watch\n   * @param \t\t{Mixed} \tvalue \t\tThe initial value of the property\n   * @param \t\t{String} \tobjPath \tThe object property path to watch\n   */\n\n\t}, {\n\t\tkey: '_defineProp',\n\t\tvalue: function _defineProp(obj, property, value, objPath) {\n\t\t\tvar _this2 = this;\n\n\t\t\tvar descriptor = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : null;\n\n\n\t\t\t// do not define multiple time the description\n\t\t\tif (this._watchStack[objPath]) return;\n\n\t\t\t// store the current value\n\t\t\tvar val = value;\n\t\t\tvar currentDescriptor = Object.getOwnPropertyDescriptor(obj.prototype || obj, property);\n\n\t\t\t// custom setter check\n\t\t\tvar _set = function _set(value) {\n\t\t\t\t// descriptor\n\t\t\t\tif (currentDescriptor && currentDescriptor.set) {\n\t\t\t\t\tvar ret = currentDescriptor.set(value);\n\t\t\t\t\tif (ret) {\n\t\t\t\t\t\tval = ret;\n\t\t\t\t\t} else {\n\t\t\t\t\t\tval = currentDescriptor.get();\n\t\t\t\t\t}\n\t\t\t\t} else {\n\t\t\t\t\tval = value;\n\t\t\t\t}\n\n\t\t\t\t// apply the proxy for arrays, etc...\n\t\t\t\tval = _this2._applyProxy(val, objPath, function (newVal) {\n\t\t\t\t\tval = newVal;\n\t\t\t\t});\n\t\t\t};\n\n\t\t\t// set the value\n\t\t\t_set(value);\n\n\t\t\t// make sure we have the good currentDescriptor\n\t\t\tvar d = Object.getOwnPropertyDescriptor(obj, property);\n\t\t\tObject.defineProperty(obj, property, {\n\t\t\t\tget: function get() {\n\t\t\t\t\tvar _val = val;\n\t\t\t\t\tif (currentDescriptor && currentDescriptor.get) {\n\t\t\t\t\t\t_val = currentDescriptor.get();\n\t\t\t\t\t}\n\t\t\t\t\tif (descriptor && descriptor.get) {\n\t\t\t\t\t\t_val = descriptor.get(_val);\n\t\t\t\t\t}\n\t\t\t\t\treturn _val;\n\t\t\t\t},\n\t\t\t\tset: function set(v) {\n\t\t\t\t\tvar oldValue = val;\n\t\t\t\t\tif (descriptor && descriptor.set) {\n\t\t\t\t\t\tv = descriptor.set(v);\n\t\t\t\t\t}\n\t\t\t\t\t// internal set to use the good setter\n\t\t\t\t\t_set(v);\n\t\t\t\t\t// _notify of new update\n\t\t\t\t\t_this2._notify(objPath, val, oldValue);\n\t\t\t\t},\n\t\t\t\tconfigurable: descriptor && descriptor.configurable !== undefined ? descriptor.configurable : currentDescriptor && currentDescriptor.configurable !== undefined ? currentDescriptor.configurable : false,\n\t\t\t\tenumarable: descriptor && descriptor.enumarable !== undefined ? descriptor.enumarable : currentDescriptor && currentDescriptor.enumarable !== undefined ? currentDescriptor.enumarable : true\n\t\t\t\t// writable : currentDescriptor && currentDescriptor.writable !== undefined ? currentDescriptor.writable : true\n\t\t\t});\n\t\t}\n\n\t\t/**\n   * Override some array methods to be able to notify of changes\n   * @param \t\t{Array} \tarray \t\t\tThe array to process\n   * @param \t\t{Array} \tmethods \t\tThe methods to override\n   * @param \t\t{String} \tobjPath \t\tThe object property path to watch\n   * @param \t\t{Function} \tsetValueCb \t\tA callback function that will set the updated value\n   */\n\n\t}, {\n\t\tkey: '_overrideArrayMethod',\n\t\tvalue: function _overrideArrayMethod(array, methods, objPath, setValueCb) {\n\t\t\tvar _this = this;\n\n\t\t\t// grab the old value\n\t\t\tvar oldVal = array.slice(0);\n\n\t\t\t// loop on each methods to override\n\t\t\tmethods.forEach(function (method) {\n\t\t\t\tarray[method] = function () {\n\t\t\t\t\t// array items info object\n\t\t\t\t\tvar updateInfo = {\n\t\t\t\t\t\ttype: Array,\n\t\t\t\t\t\tmethod: method\n\t\t\t\t\t};\n\t\t\t\t\tif (method === 'push' || method === 'unshift' || method === 'concat') {\n\t\t\t\t\t\tupdateInfo.addedItems = Array.prototype.slice.call(arguments);\n\t\t\t\t\t} else if (method === 'pop') {\n\t\t\t\t\t\tupdateInfo.removedItems = [oldVal[oldVal.length - 1]];\n\t\t\t\t\t} else if (method === 'shift') {\n\t\t\t\t\t\tupdateInfo.removedItems = [oldVal[0]];\n\t\t\t\t\t}\n\t\t\t\t\t// @TODO Check and add missed methods to watch array\n\t\t\t\t\t// apply the push\n\t\t\t\t\tvar ret = Array.prototype[method].apply(this, arguments);\n\t\t\t\t\t// set value callback\n\t\t\t\t\tsetValueCb(this);\n\t\t\t\t\t// _notify\n\t\t\t\t\t_this._notify(objPath, this, oldVal, updateInfo);\n\t\t\t\t\t// return the new value\n\t\t\t\t\treturn ret;\n\t\t\t\t};\n\t\t\t});\n\t\t}\n\n\t\t/**\n   * Apply a proxy on the variable to detect changes\n   * on arrays, etc...\n   * @param \t\t{Mixed} \tvalue \t\tThe value on which to apply the proxy\n   * @param \t\t{String} \tobjPath \tThe object property path to watch\n   * @param \t\t{Function} \tsetValueCb \tA function that will be responsible to set the new value intarnally\n   * @return \t\t{Mixed} \t\t\t\tReturn the value\n   */\n\n\t}, {\n\t\tkey: '_applyProxy',\n\t\tvalue: function _applyProxy(value, objPath, setValueCb) {\n\t\t\t// if is an array\n\t\t\tif (value instanceof Array) {\n\t\t\t\t// override methods\n\t\t\t\tthis._overrideArrayMethod(value, ['push', 'splice', 'pop', 'shift', 'unshift', 'reverse', 'sort', 'concat'], objPath, setValueCb);\n\t\t\t}\n\t\t\treturn value;\n\t\t}\n\n\t\t/**\n   * Watch something on an object\n   * @param \t\t{Object} \t\tobject \t\tThe object to watch\n   * @param \t\t{String} \t\tpath \t\tThe property path to watch on the object\n   * @param \t\t{Function} \t\tcb \t\t\tThe callback called when the property is updated\n   */\n\n\t}, {\n\t\tkey: 'watch',\n\t\tvalue: function watch(object, path, cb) {\n\t\t\tvar _this3 = this;\n\n\t\t\tvar descriptor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\t// split the path by ',' to watch multiple properties\n\t\t\tif (typeof path === 'string') {\n\t\t\t\tpath = path.split(',');\n\t\t\t}\n\t\t\tif (!path instanceof Array) {\n\t\t\t\tthrow \"The 'path' parameter has to be an array...\";\n\t\t\t}\n\t\t\t// loop on each path to watch\n\t\t\tpath.forEach(function (p) {\n\t\t\t\t_this3._watch(object, p.trim(), cb, descriptor);\n\t\t\t});\n\t\t}\n\n\t\t/**\n   * Internal watch$\n   * @param \t\t{Object} \t\tobject \t\tThe object to watch\n   * @param \t\t{String} \t\tpath \t\tThe property path to watch on the object\n   * @param \t\t{Function} \t\tcb \t\t\tThe callback called when the property is updated\n   */\n\n\t}, {\n\t\tkey: '_watch',\n\t\tvalue: function _watch(object, path, cb) {\n\t\t\tvar descriptor = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\t// check if the path parameter has already a descriptor\n\t\t\tvar split = path.split('.');\n\t\t\tvar obj = object;\n\t\t\tvar property = null;\n\t\t\tif (split.length > 1) {\n\t\t\t\tproperty = split.pop();\n\t\t\t\tobj = (0, _get3.default)(object, split.join('.'));\n\t\t\t} else {\n\t\t\t\tproperty = split[0];\n\t\t\t}\n\t\t\tvar currentValue = null;\n\t\t\tcurrentValue = (0, _get3.default)(object, path);\n\n\t\t\t// if is undefined, create the value at null\n\t\t\tif (obj === undefined || currentValue === undefined) {\n\t\t\t\t(0, _set3.default)(obj, path, null);\n\t\t\t\t// _set(this, split.join('.'),null);\n\t\t\t\t// throw `It's not possible to watch the property ${path} cause it does not exist...`;\n\t\t\t};\n\n\t\t\t// define the property proxy\n\t\t\tthis._defineProp(obj, property, currentValue, path, descriptor);\n\n\t\t\t// register new watch\n\t\t\tif (!this._watchStack[path]) {\n\t\t\t\tthis._watchStack[path] = [];\n\t\t\t}\n\t\t\tthis._watchStack[path].push(cb);\n\t\t}\n\n\t\t/**\n   * Tell that something has changed\n   * @param \t\t{String} \t\tpath \t\tThe object property path that has been updated\n   * @param \t\t{Mixed} \t\tnewValue \tThe new property value\n   * @param \t\t{Mixed} \t\toldValue \tThe old property value\n   * @param \t\t{Object} \t\t[updateInfo=null] \tAn object that add information about the update like addedItems for array, etc...\n   */\n\n\t}, {\n\t\tkey: '_notify',\n\t\tvalue: function _notify(path, newValue, oldValue) {\n\t\t\tvar updateInfo = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\tif (this._watchStack[path] !== undefined && newValue !== oldValue) {\n\t\t\t\tthis._watchStack[path].forEach(function (cb) {\n\t\t\t\t\tcb(newValue, oldValue, updateInfo);\n\t\t\t\t});\n\t\t\t}\n\t\t}\n\t}]);\n\n\treturn SWatcher;\n}();\n\nexports.default = SWatcher;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/classes/SWatcher.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/core/SWebComponent.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/core/SWebComponent.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _sNativeWebComponent = __webpack_require__(/*! ./sNativeWebComponent */ \"./node_modules/coffeekraken-sugar/js/core/sNativeWebComponent.js\");\n\nvar _sNativeWebComponent2 = _interopRequireDefault(_sNativeWebComponent);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\nvar SWebComponent = function (_native) {\n  _inherits(SWebComponent, _native);\n\n  function SWebComponent() {\n    _classCallCheck(this, SWebComponent);\n\n    return _possibleConstructorReturn(this, (SWebComponent.__proto__ || Object.getPrototypeOf(SWebComponent)).apply(this, arguments));\n  }\n\n  return SWebComponent;\n}((0, _sNativeWebComponent2.default)(HTMLElement));\n\nexports.default = SWebComponent;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/core/SWebComponent.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/core/SWebComponentMixin.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/core/SWebComponentMixin.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n\nvar _typeof = typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; };\n\nvar _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };\n\nvar _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (\"value\" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();\n\nvar _mixwith = __webpack_require__(/*! ../vendors/mixwith */ \"./node_modules/coffeekraken-sugar/js/vendors/mixwith.js\");\n\nvar _autoCast = __webpack_require__(/*! ../utils/string/autoCast */ \"./node_modules/coffeekraken-sugar/js/utils/string/autoCast.js\");\n\nvar _autoCast2 = _interopRequireDefault(_autoCast);\n\nvar _extend2 = __webpack_require__(/*! lodash/extend */ \"./node_modules/lodash/extend.js\");\n\nvar _extend3 = _interopRequireDefault(_extend2);\n\nvar _camelize = __webpack_require__(/*! ../utils/string/camelize */ \"./node_modules/coffeekraken-sugar/js/utils/string/camelize.js\");\n\nvar _camelize2 = _interopRequireDefault(_camelize);\n\nvar _uncamelize = __webpack_require__(/*! ../utils/string/uncamelize */ \"./node_modules/coffeekraken-sugar/js/utils/string/uncamelize.js\");\n\nvar _uncamelize2 = _interopRequireDefault(_uncamelize);\n\nvar _upperFirst = __webpack_require__(/*! ../utils/string/upperFirst */ \"./node_modules/coffeekraken-sugar/js/utils/string/upperFirst.js\");\n\nvar _upperFirst2 = _interopRequireDefault(_upperFirst);\n\nvar _fastdom = __webpack_require__(/*! fastdom */ \"./node_modules/fastdom/fastdom.js\");\n\nvar _fastdom2 = _interopRequireDefault(_fastdom);\n\nvar _dispatchEvent = __webpack_require__(/*! ../dom/dispatchEvent */ \"./node_modules/coffeekraken-sugar/js/dom/dispatchEvent.js\");\n\nvar _dispatchEvent2 = _interopRequireDefault(_dispatchEvent);\n\nvar _whenInViewport = __webpack_require__(/*! ../dom/whenInViewport */ \"./node_modules/coffeekraken-sugar/js/dom/whenInViewport.js\");\n\nvar _whenInViewport2 = _interopRequireDefault(_whenInViewport);\n\nvar _whenVisible = __webpack_require__(/*! ../dom/whenVisible */ \"./node_modules/coffeekraken-sugar/js/dom/whenVisible.js\");\n\nvar _whenVisible2 = _interopRequireDefault(_whenVisible);\n\nvar _prependChild = __webpack_require__(/*! ../dom/prependChild */ \"./node_modules/coffeekraken-sugar/js/dom/prependChild.js\");\n\nvar _prependChild2 = _interopRequireDefault(_prependChild);\n\nvar _propertyProxy = __webpack_require__(/*! ../utils/objects/propertyProxy */ \"./node_modules/coffeekraken-sugar/js/utils/objects/propertyProxy.js\");\n\nvar _propertyProxy2 = _interopRequireDefault(_propertyProxy);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError(\"Cannot call a class as a function\"); } }\n\nfunction _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError(\"this hasn't been initialised - super() hasn't been called\"); } return call && (typeof call === \"object\" || typeof call === \"function\") ? call : self; }\n\nfunction _inherits(subClass, superClass) { if (typeof superClass !== \"function\" && superClass !== null) { throw new TypeError(\"Super expression must either be null or a function, not \" + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }\n\n__webpack_require__(/*! es6-object-assign */ \"./node_modules/es6-object-assign/index.js\").polyfill();\n\n/**\n * @name \t\tSWebComponent\n * @extends \tHTMLElement\n * Base class that abstract a lot of dirty work in order to create nice and clean webcomponents.\n * Features:\n * - Listen for attributes changes\n * - Mount the component at a certain point in time (inViewport, visible, etc...)\n * - **Automatically cast the attributes** to their proper js variable types (Array, Object, String, etc...)\n * - **Physical props** : Specify some props that will ALWAYS be present as attribute on the component for styling purpose\n * - Define some **default CSS** that will be injected in the head automatically\n * - Specify some **required props**\n * - **Full lifecycle management**:\n * \t- componentCreated\n * \t- componentWillMount\n * \t- componentMount\n * \t- componentWillReceiveProp\n * \t- componentWillReceiveProps\n * \t- render\n * \t- componentUnmount\n * - **Mount dependencies** : This will allows you to set some promises that have to be resolved before mounting the component\n *\n * @example \tjs\n * import SWebComponent from 'coffeekraken-sugar/js/core/SWebComponent'\n * class MyCoolComponent extends SWebComponent {\n *\n *\t\\/**\n * \t * Default props\n * \t * @definition \t\tSWebComponent.defaultProps\n * \t * @protected\n * \t *\\/\n * \tstatic get defaultProps() {\n * \t\treturn {\n * \t\t};\n * \t}\n *\n * \t\\/**\n * \t * Css\n * \t * @protected\n * \t *\\/\n * \tstatic defaultCss(componentName, componentNameDash) {\n * \t\treturn `\n * \t\t\t${componentNameDash} {\n * \t\t\t\tdisplay : block;\n * \t\t\t}\n * \t\t`;\n * \t}\n *\n * \t\\/**\n * \t * Component will mount\n *  \t * @definition \t\tSWebComponent.componentWillMount\n * \t * @protected\n * \t *\\/\n * \tcomponentWillMount() {\n * \t\tsuper.componentWillMount();\n * \t}\n *\n * \t\\/**\n * \t * Mount component\n * \t * @definition \t\tSWebComponent.componentMount\n * \t * @protected\n * \t *\\/\n * \tcomponentMount() {\n * \t\tsuper.componentMount();\n * \t}\n *\n * \t\\/**\n * \t * Component unmount\n * \t * @definition \t\tSWebComponent.componentUnmount\n * \t * @protected\n * \t *\\/\n * \tcomponentUnmount() {\n * \t\tsuper.componentUnmount();\n * \t}\n *\n * \t\\/**\n * \t * Component will receive prop\n * \t * @definition \t\tSWebComponent.componentWillReceiveProp\n * \t * @protected\n * \t *\\/\n * \tcomponentWillReceiveProp(name, newVal, oldVal) {\n * \t\tswitch(name) {\n * \t\t}\n * \t}\n * }\n *\n * // define your component\n * MyCoolComponent.define('my-cool-component', MyCoolComponent);\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\n\nif (!window.sugar) window.sugar = {};\nif (!window.sugar._webComponentsClasses) window.sugar._webComponentsClasses = {};\nif (!window.sugar._webComponentsDefaultProps) window.sugar._webComponentsDefaultProps = {};\nif (!window.sugar._webComponentsDefaultCss) window.sugar._webComponentsDefaultCss = {};\n\nvar SWebComponentMixin = (0, _mixwith.Mixin)(function (superclass) {\n\treturn function (_superclass) {\n\t\t_inherits(_class2, _superclass);\n\n\t\t_createClass(_class2, [{\n\t\t\tkey: 'defaultProps',\n\n\n\t\t\t/**\n    * Get the default props for this particular instance\n    * @type  \t\t{Object}\n    */\n\t\t\tget: function get() {\n\n\t\t\t\t// check if default props in cache to avoid multiple time\n\t\t\t\t// computing\n\t\t\t\tif (this._defaultPropsCache) return this._defaultPropsCache;\n\n\t\t\t\t// compute\n\t\t\t\tvar props = window.sugar._webComponentsClasses[this.componentName].defaultProps;\n\t\t\t\tvar comp = window.sugar._webComponentsClasses[this.componentName];\n\t\t\t\twhile (comp) {\n\t\t\t\t\tif (comp.defaultProps) {\n\t\t\t\t\t\tprops = _extends({}, comp.defaultProps, props);\n\t\t\t\t\t}\n\t\t\t\t\tif (comp._defaultProps) {\n\t\t\t\t\t\tprops = _extends({}, props, comp._defaultProps);\n\t\t\t\t\t}\n\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t}\n\t\t\t\t// extend with default props stored in the component default props stack by tagname\n\t\t\t\tif (window.sugar._webComponentsDefaultProps[this.componentName]) {\n\t\t\t\t\tprops = _extends({}, props, window.sugar._webComponentsDefaultProps[this.componentName]);\n\t\t\t\t}\n\n\t\t\t\t// save in cache\n\t\t\t\tthis._defaultPropsCache = Object.assign({}, props);\n\n\t\t\t\t// return props\n\t\t\t\treturn props;\n\t\t\t}\n\n\t\t\t/**\n    * Return an array of props to set on the dom\n    * @return \t\t{Array}\n    */\n\n\t\t}, {\n\t\t\tkey: 'physicalProps',\n\n\n\t\t\t/**\n    * Get physical props for this particular instance\n    * @return \t\t{Array} \t\t\tThe physical props array\n    */\n\t\t\tget: function get() {\n\n\t\t\t\tif (this._physicalPropsCache) return this._physicalPropsCache;\n\n\t\t\t\tvar props = window.sugar._webComponentsClasses[this.componentName].physicalProps;\n\t\t\t\tvar comp = window.sugar._webComponentsClasses[this.componentName];\n\t\t\t\twhile (comp) {\n\t\t\t\t\tif (comp.physicalProps) {\n\t\t\t\t\t\tcomp.physicalProps.forEach(function (prop) {\n\t\t\t\t\t\t\tif (props.indexOf(prop) === -1) {\n\t\t\t\t\t\t\t\tprops.push(prop);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t}\n\n\t\t\t\tthis._physicalPropsCache = props;\n\n\t\t\t\treturn props;\n\t\t\t}\n\n\t\t\t/**\n    * Return an array of required props to init the component\n    * @return \t\t{Array}\n    */\n\n\t\t}, {\n\t\t\tkey: 'requiredProps',\n\n\n\t\t\t/**\n    * Get the required props array for this particular instance\n    * @return \t\t{Array} \t\t\tAn array of required props\n    */\n\t\t\tget: function get() {\n\n\t\t\t\tif (this._requiredPropsCache) return this._requiredPropsCache;\n\n\t\t\t\tvar props = window.sugar._webComponentsClasses[this.componentName].requiredProps;\n\t\t\t\tvar comp = window.sugar._webComponentsClasses[this.componentName];\n\t\t\t\twhile (comp) {\n\t\t\t\t\tif (comp.requiredProps) {\n\t\t\t\t\t\tcomp.requiredProps.forEach(function (prop) {\n\t\t\t\t\t\t\tif (props.indexOf(prop) === -1) {\n\t\t\t\t\t\t\t\tprops.push(prop);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t}\n\n\t\t\t\tthis._requiredPropsCache = props;\n\n\t\t\t\treturn props;\n\t\t\t}\n\n\t\t\t/**\n    * Specify the default css for the component\n    * @param \t\t{String} \t\tcomponentName \t\tThe camelcase component name\n    * @param \t\t{String} \t\tcomponentNameDash \tThe dashcase component name\n    * @return \t\t{String} \t\t\t\t\t\t\tThe default css for the component\n    */\n\n\t\t}, {\n\t\t\tkey: 'defaultCss',\n\n\n\t\t\t/**\n    * Get the default css of the component\n    * @type \t\t{String}\n    */\n\t\t\tget: function get() {\n\n\t\t\t\tif (this._defaultCssCache) return this._defaultCssCache;\n\n\t\t\t\tvar css = '';\n\t\t\t\tvar comp = window.sugar._webComponentsClasses[this.componentName];\n\t\t\t\twhile (comp) {\n\t\t\t\t\tif (comp.defaultCss) {\n\t\t\t\t\t\tcss += comp.defaultCss(this.componentName, this.componentNameDash);\n\t\t\t\t\t}\n\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t}\n\n\t\t\t\tthis._defaultCssCache = css;\n\n\t\t\t\treturn css;\n\t\t\t}\n\n\t\t\t/**\n    * Return an array of props to set on the dom\n    * @type \t\t{Array}\n    */\n\n\t\t}, {\n\t\t\tkey: 'mountDependencies',\n\n\n\t\t\t/**\n    * Get an array of promises to resolve before mounting the component.\n    * @type \t\t{Array<Promise>}\n    */\n\t\t\tget: function get() {\n\t\t\t\tvar _this2 = this;\n\n\t\t\t\tvar deps = [];\n\t\t\t\tvar comp = window.sugar._webComponentsClasses[this.componentName];\n\t\t\t\twhile (comp) {\n\t\t\t\t\tif (comp.mountDependencies) {\n\t\t\t\t\t\tcomp.mountDependencies.forEach(function (dep) {\n\t\t\t\t\t\t\tif (deps.indexOf(dep) === -1) {\n\t\t\t\t\t\t\t\tdeps.push(dep);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t}\n\n\t\t\t\t// props mount dependencies\n\t\t\t\tdeps = deps.concat(this.props.mountDependencies);\n\t\t\t\tvar finalDeps = [];\n\t\t\t\tdeps.forEach(function (dep) {\n\t\t\t\t\tif (typeof dep === 'function') {\n\t\t\t\t\t\tdep = dep.bind(_this2);\n\t\t\t\t\t\tdep = dep();\n\t\t\t\t\t}\n\t\t\t\t\tfinalDeps.push(dep);\n\t\t\t\t});\n\t\t\t\treturn finalDeps;\n\t\t\t}\n\n\t\t\t/**\n    * Constructor\n    * @protected\n    */\n\n\t\t}], [{\n\t\t\tkey: 'define',\n\n\n\t\t\t/**\n    * Define the new web component\n    * @param \t\t\t{String} \t\t\tname \t\tThe name of the component\n    * @param \t\t\t{Object|String} \t[componentClassOrExt=null] \tThe component class or the HTML tag to extend like \"input\", \"button\", etc...\n    * @param \t\t\t{Object|String}\t\text \t\tThe HTML tag to extend like \"input\", \"button\", etc...\n    */\n\t\t\tvalue: function define(name) {\n\t\t\t\tvar componentOrExt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\t\t\t\tvar ext = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\n\n\t\t\t\tvar component = componentOrExt && typeof componentOrExt !== 'string' ? componentOrExt : this;\n\t\t\t\tvar componentName = (0, _upperFirst2.default)((0, _camelize2.default)(name));\n\t\t\t\tvar componentNameDash = name;\n\n\t\t\t\text = typeof componentOrExt === 'string' ? componentOrExt : ext;\n\n\t\t\t\tif (window.sugar._webComponentsClasses[componentName]) return;\n\t\t\t\twindow.sugar._webComponentsClasses[componentName] = component;\n\n\t\t\t\t// register the webcomponent\n\t\t\t\tif (window.customElements) {\n\t\t\t\t\tvar extendsObj = {};\n\t\t\t\t\tif (ext) {\n\t\t\t\t\t\textendsObj.extends = ext;\n\t\t\t\t\t}\n\t\t\t\t\twindow.customElements.define(name, component, extendsObj);\n\t\t\t\t} else if (document.registerElement) {\n\t\t\t\t\tdocument.registerElement(name, {\n\t\t\t\t\t\tprototype: component.prototype,\n\t\t\t\t\t\textends: ext\n\t\t\t\t\t});\n\t\t\t\t} else {\n\t\t\t\t\tthrow 'Your browser does not support either document.registerElement or window.customElements.define webcomponents specification...';\n\t\t\t\t}\n\n\t\t\t\t// create a proxy factory\n\t\t\t\tvar webcomponent = function webcomponent() {\n\t\t\t\t\tvar props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n\n\t\t\t\t\tif (ext) {\n\t\t\t\t\t\treturn document.createElement(ext, name).setProps(props);\n\t\t\t\t\t}\n\t\t\t\t\treturn document.createElement(name).setProps(props);\n\t\t\t\t};\n\n\t\t\t\t// fix for firefox and surely other crapy browser...\n\t\t\t\t// this make sur that the (static) methods of the component\n\t\t\t\t// are present on the webcomponent itself\n\t\t\t\tvar staticFns = [];\n\t\t\t\tvar comp = component;\n\t\t\t\twhile (comp) {\n\t\t\t\t\ttry {\n\t\t\t\t\t\tstaticFns = staticFns.concat(Object.getOwnPropertyNames(comp).filter(function (prop) {\n\t\t\t\t\t\t\treturn typeof comp[prop] === \"function\";\n\t\t\t\t\t\t}));\n\t\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t\t} catch (e) {\n\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tvar keys = staticFns.concat(Object.keys(component));\n\t\t\t\tkeys.forEach(function (key) {\n\t\t\t\t\tif (!webcomponent[key]) {\n\t\t\t\t\t\twebcomponent[key] = component[key];\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\t// handle css\n\t\t\t\tcomponent._injectDefaultCss(component, componentName, componentNameDash);\n\n\t\t\t\t// return the webcomponent instance\n\t\t\t\treturn webcomponent;\n\t\t\t}\n\n\t\t\t/**\n    * Inject css into html\n    * @param \t\t{HTMLElement}\tcomponentClass \t\tThe component class for which to inject the base css\n    * @param \t\t{String} \t\tcomponentName \t\tThe component name\n    * @param \t\t{String} \t\tcomponentNameDash \tThe dash formated component name\n    */\n\n\t\t}, {\n\t\t\tkey: '_injectDefaultCss',\n\t\t\tvalue: function _injectDefaultCss(componentClass, componentName, componentNameDash) {\n\t\t\t\t// check if component has a css to be injected into the page\n\t\t\t\tif (window.sugar._webComponentsDefaultCss[componentName] === undefined) {\n\t\t\t\t\tvar css = '';\n\t\t\t\t\tvar comp = componentClass;\n\t\t\t\t\twhile (comp) {\n\t\t\t\t\t\tif (comp.defaultCss) {\n\t\t\t\t\t\t\tcss += comp.defaultCss(componentName, componentNameDash);\n\t\t\t\t\t\t}\n\t\t\t\t\t\tcomp = Object.getPrototypeOf(comp);\n\t\t\t\t\t}\n\t\t\t\t\tif (css) {\n\t\t\t\t\t\tcss = css.replace(/[\\s]+/g, ' ');\n\t\t\t\t\t\twindow.sugar._webComponentsDefaultCss[componentName] = css;\n\t\t\t\t\t\tvar styleElm = document.createElement('style');\n\t\t\t\t\t\tstyleElm.setAttribute('name', componentName);\n\t\t\t\t\t\tstyleElm.innerHTML = css;\n\t\t\t\t\t\t(0, _prependChild2.default)(styleElm, document.head);\n\t\t\t\t\t} else {\n\t\t\t\t\t\twindow.sugar._webComponentsDefaultCss[componentName] = false;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/**\n    * Internal store for all the props of the component\n    * Props are actual computed props with attributes\n    * @type \t\t{Object}\n    */\n\n\n\t\t\t/**\n    * Store all the props of the component\n    * Props are actual computed props with attributes\n    * @type \t\t{Object}\n    */\n\n\t\t}, {\n\t\t\tkey: 'setDefaultProps',\n\n\n\t\t\t/**\n    * Set some default props for a specific component\n    * @param \t\t{Object} \t\tprops \t\t\tA props object to set\n    * @param \t\t{String} \t\t[tagname=null] \tThe tagname of the component you want to setting up\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\t\t\tvalue: function setDefaultProps(props) {\n\t\t\t\tvar tagname = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n\t\t\t\t// if a tagname is specified, we store the default props for a\n\t\t\t\t// particular tagname\n\t\t\t\tif (tagname) {\n\t\t\t\t\ttagname = [].concat(tagname);\n\t\t\t\t\ttagname.forEach(function (tag) {\n\t\t\t\t\t\ttag = (0, _upperFirst2.default)((0, _camelize2.default)(tag));\n\t\t\t\t\t\twindow.sugar._webComponentsDefaultProps[tag] = _extends({}, window.sugar._webComponentsDefaultProps[tag] || {}, props);\n\t\t\t\t\t});\n\t\t\t\t} else {\n\t\t\t\t\tvar proto = this;\n\t\t\t\t\tproto._defaultProps = _extends({}, proto._defaultProps || {}, props);\n\t\t\t\t}\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'defaultCss',\n\t\t\tvalue: function defaultCss(componentName, componentNameDash) {\n\t\t\t\treturn '';\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'defaultProps',\n\n\n\t\t\t/**\n    * Return the default props for the component.\n    * Need to take care of the passed props parameter and mix it at the\n    * end of your default props\n    *\n    * @type \t{Object}\n    * @example\n    * getDefaultProps(props = {}) {\n    * \t\treturn super.getDefaultProps({\n    * \t\t\tmyCoolProp : null,\n    * \t\t\t...props\n    * \t\t});\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\t\t\tget: function get() {\n\t\t\t\treturn {\n\t\t\t\t\tmountWhen: null,\n\t\t\t\t\tmountDependencies: [],\n\t\t\t\t\tunmountTimeout: 500\n\t\t\t\t};\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'physicalProps',\n\t\t\tget: function get() {\n\t\t\t\treturn [];\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'requiredProps',\n\t\t\tget: function get() {\n\t\t\t\treturn [];\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'mountDependencies',\n\t\t\tget: function get() {\n\t\t\t\treturn [];\n\t\t\t}\n\t\t}]);\n\n\t\tfunction _class2() {\n\t\t\tvar _ref;\n\n\t\t\tvar _temp, _this, _ret;\n\n\t\t\t_classCallCheck(this, _class2);\n\n\t\t\tfor (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {\n\t\t\t\targs[_key] = arguments[_key];\n\t\t\t}\n\n\t\t\tvar self = (_temp = (_this = _possibleConstructorReturn(this, (_ref = _class2.__proto__ || Object.getPrototypeOf(_class2)).call.apply(_ref, [this].concat(args))), _this), _this._props = {}, _this.props = {}, _temp);\n\t\t\tself.init();\n\t\t\treturn _ret = self, _possibleConstructorReturn(_this, _ret);\n\t\t}\n\n\t\t_createClass(_class2, [{\n\t\t\tkey: 'init',\n\t\t\tvalue: function init() {\n\t\t\t\tthis.createdCallback();\n\t\t\t}\n\n\t\t\t/**\n    * When the component is created.\n    * This is called even if the component is not attached in the DOM tree\n    * @protected\n    */\n\n\t\t}, {\n\t\t\tkey: 'createdCallback',\n\t\t\tvalue: function createdCallback() {\n\n\t\t\t\t// props\n\t\t\t\tthis.props = {};\n\n\t\t\t\t// track the lifecyle\n\t\t\t\tthis._lifecycle = {\n\t\t\t\t\tcomponentWillMount: false,\n\t\t\t\t\tcomponentMount: false,\n\t\t\t\t\tcomponentUnmount: false\n\t\t\t\t};\n\n\t\t\t\t// created callback\n\t\t\t\tthis.componentCreated();\n\t\t\t}\n\n\t\t\t/**\n    * When the element is attached in the DOM tree\n    * @protected\n    */\n\n\t\t}, {\n\t\t\tkey: 'connectedCallback',\n\t\t\tvalue: function connectedCallback() {\n\t\t\t\tvar _this3 = this;\n\n\t\t\t\t// if not already passed through the created process\n\t\t\t\tif (!this._lifecycle) this.createdCallback();\n\n\t\t\t\t// update attached status\n\t\t\t\tthis._componentAttached = true;\n\n\t\t\t\t// clear the unmount timeout\n\t\t\t\tclearTimeout(this._unmountTimeout);\n\n\t\t\t\t// stop here if already mounted once\n\t\t\t\tif (this._lifecycle.componentMount || this._lifecycle.componentWillMount) return;\n\n\t\t\t\t// set the componentName\n\t\t\t\tvar sourceName = this.getAttribute('is') || this.tagName.toLowerCase();\n\t\t\t\tthis.componentNameDash = this._componentNameDash = sourceName;\n\t\t\t\tthis.componentName = this._componentName = (0, _upperFirst2.default)((0, _camelize2.default)(sourceName));\n\n\t\t\t\t// default props init\n\t\t\t\tthis._props = Object.assign({}, this.defaultProps, this.props);\n\n\t\t\t\t// if we have some initial props, we set them now\n\t\t\t\tif (this._initialProps) this.setProps(this._initialProps);\n\n\t\t\t\t// init properties proxy object\n\t\t\t\tif (window.Proxy) {\n\t\t\t\t\tthis.props = new Proxy(this._props, {\n\t\t\t\t\t\tset: function set(target, property, value) {\n\t\t\t\t\t\t\t// get the old value\n\t\t\t\t\t\t\tvar oldVal = target[property];\n\t\t\t\t\t\t\t// apply the new value\n\t\t\t\t\t\t\ttarget[property] = value;\n\t\t\t\t\t\t\t// handle the new property value\n\t\t\t\t\t\t\t_this3._handleNewPropValue(property, value, oldVal);\n\t\t\t\t\t\t\t// notify the proxy that the property has been updated\n\t\t\t\t\t\t\treturn true;\n\t\t\t\t\t\t},\n\t\t\t\t\t\tget: function get(target, property) {\n\t\t\t\t\t\t\t// simply return the property value from the target\n\t\t\t\t\t\t\treturn target[property];\n\t\t\t\t\t\t}\n\t\t\t\t\t});\n\t\t\t\t} else {\n\t\t\t\t\tthis.props = this._props;\n\t\t\t\t}\n\n\t\t\t\t// listen for updates on the element itself\n\t\t\t\t// instead of using the attributesChangedCallback\n\t\t\t\t// cause with the attributesChangedCallback, you'll need to declare\n\t\t\t\t// at start which attributes to listen and this behavior is not suitable\n\t\t\t\t// for new attributes added after the component creation...\n\t\t\t\tvar observer = new MutationObserver(function (mutationList) {\n\t\t\t\t\tvar mutatedAttributes = [];\n\t\t\t\t\tmutationList.forEach(function (mutation) {\n\t\t\t\t\t\tif (mutatedAttributes.indexOf(mutation.attributeName) === -1) {\n\t\t\t\t\t\t\t_this3._attributeMutationCallback(mutation.attributeName, mutation.oldValue, _this3.getAttribute(mutation.attributeName));\n\t\t\t\t\t\t}\n\t\t\t\t\t\tmutatedAttributes.push(mutation.attributeName);\n\t\t\t\t\t});\n\t\t\t\t});\n\t\t\t\tobserver.observe(this, {\n\t\t\t\t\tattributes: true,\n\t\t\t\t\tattributeOldValue: true\n\t\t\t\t});\n\n\t\t\t\t// internal properties\n\t\t\t\tthis._nextPropsStack = {};\n\t\t\t\tthis._prevPropsStack = {};\n\t\t\t\tthis._fastdomSetProp = null;\n\n\t\t\t\t// compute props\n\t\t\t\tthis._initInitialAttributes();\n\n\t\t\t\t// props proxy\n\t\t\t\tthis._initPropsProxy();\n\n\t\t\t\t// check the required props\n\t\t\t\tthis.requiredProps.forEach(function (prop) {\n\t\t\t\t\tif (!_this3.props[prop]) {\n\t\t\t\t\t\tthrow 'The \"' + _this3.componentNameDash + '\" component need the \"' + prop + '\" property in order to work';\n\t\t\t\t\t}\n\t\t\t\t});\n\n\t\t\t\t// component will mount only if part of the active document\n\t\t\t\tthis.componentWillMount();\n\n\t\t\t\t// wait until dependencies are ok\n\t\t\t\tthis._whenMountDependenciesAreOk().then(function () {\n\t\t\t\t\t// switch on the mountWhen prop\n\t\t\t\t\tswitch (_this3.props.mountWhen) {\n\t\t\t\t\t\tcase 'inViewport':\n\t\t\t\t\t\tcase 'isInViewport':\n\t\t\t\t\t\t\t(0, _whenInViewport2.default)(_this3).then(function () {\n\t\t\t\t\t\t\t\t_this3._mountComponent();\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase 'isMouseover':\n\t\t\t\t\t\tcase 'mouseover':\n\t\t\t\t\t\t\t_this3.addEventListener('mouseover', _this3._onMouseoverComponentMount.bind(_this3));\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase 'isVisible':\n\t\t\t\t\t\tcase 'visible':\n\t\t\t\t\t\t\t(0, _whenVisible2.default)(_this3).then(function () {\n\t\t\t\t\t\t\t\t_this3._mountComponent();\n\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tdefault:\n\t\t\t\t\t\t\t// mount component directly\n\t\t\t\t\t\t\t_this3._mountComponent();\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'attachedCallback',\n\t\t\tvalue: function attachedCallback() {\n\t\t\t\tthis.connectedCallback();\n\t\t\t}\n\n\t\t\t/**\n    * When any of the component attribute changes\n    * @param \t\t{String} \t\tattribute \t\tThe attribute name that has changed\n    * @param \t\t{String}\t\toldVal \t\t\tThe previous attribute value\n    * @param \t\t{String} \t\tnewVal \t\t\tThe new attribute value\n    * @protected\n    */\n\n\t\t}, {\n\t\t\tkey: '_attributeMutationCallback',\n\t\t\tvalue: function _attributeMutationCallback(attribute, oldVal, newVal) {\n\n\t\t\t\t// stop if the attribute has not changed\n\t\t\t\tif (oldVal === newVal) return;\n\n\t\t\t\t// keep an original attribute name\n\t\t\t\tvar _attribute = attribute;\n\n\t\t\t\t// process the attribute to camelCase\n\t\t\t\tattribute = (0, _camelize2.default)(attribute);\n\n\t\t\t\t// if the property is not a real property\n\t\t\t\tif (!this.shouldComponentAcceptProp(attribute)) return;\n\n\t\t\t\t// cast the new val\n\t\t\t\tnewVal = (0, _autoCast2.default)(newVal);\n\n\t\t\t\t// handle the case when newVal is undefined (added attribute whithout any value)\n\t\t\t\tif ((newVal === undefined || newVal === null || newVal === '') && this.hasAttribute(_attribute)) {\n\t\t\t\t\tnewVal = true;\n\t\t\t\t} else if (newVal === null && !this.hasAttribute(_attribute) && this.props[attribute] === false) {\n\t\t\t\t\t// the attribute has been removed and\n\t\t\t\t\t// the prop is already to false\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\t// do nothing if the value is already the same\n\t\t\t\tif (this.props[attribute] === newVal) return;\n\n\t\t\t\t// set the new prop\n\t\t\t\tthis.setProp(attribute, newVal);\n\t\t\t}\n\n\t\t\t/**\n    * Called directly when the component is created. This act like a constructor.\n    *\n    * @example\n    * componentCreated() {\n    * \t\t// call parent method\n    * \t\tsuper.componentCreated();\n    * \t\t// do something here...\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentCreated',\n\t\t\tvalue: function componentCreated() {}\n\n\t\t\t/**\n    * Method called before the component will actually mount and BEFORE the the mountDependencies to be resolved or not.\n    * This is a good place to do directl when the component is attached in the DOM but before any dependencies are resolved\n    *\n    * @example\n    * componentWillMount() {\n    * \t\t// call parent method\n    * \t\tsuper.componentWillMount();\n    * \t\t// do something here...\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentWillMount',\n\t\t\tvalue: function componentWillMount() {\n\t\t\t\t// protect from mounting multiple times when unecessary\n\t\t\t\tif (this._lifecycle.componentWillMount) return;\n\n\t\t\t\t// update lifecycle state\n\t\t\t\tthis._lifecycle.componentWillMount = true;\n\t\t\t}\n\n\t\t\t/**\n    * Method called right after that the component has been added in the dom,\n    * after and only if the mountDependencies are resolved\n    * and before the initial render.\n    *\n    * @example\n    * componentMount() {\n    * \t\t// call parent method\n    * \t\tsuper.componentMount();\n    * \t\t// do something here...\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentMount',\n\t\t\tvalue: function componentMount() {\n\t\t\t\tif (this._lifecycle.componentMount) return;\n\t\t\t\t// update the lifecycle state\n\t\t\t\tthis._lifecycle.componentMount = true;\n\t\t\t\t// mark the component as mounted\n\t\t\t\tthis.setAttribute('mounted', true);\n\t\t\t}\n\n\t\t\t/**\n    * Apply all the updated that you need in the dom for the component to reflect the props\n    *\n    * @example\n    * render() {\n    * \t\t// call the parent method\n    * \t\tsuper.render();\n    * \t\t// apply some classes, properties, styles, etc... in the dom\n    * \t\t// in order to reflect the props object state\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'render',\n\t\t\tvalue: function render() {}\n\n\t\t\t/**\n    * Method called when the component need to unmount itself cause it has been removed from the DOM tree and the props.unmountTimeout is passed.\n    *\n    * @example\n    * componentUnmount() {\n    * \t\t// call parent method\n    * \t\tsuper.componentUnmount();\n    * \t\t// do something here...\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentUnmount',\n\t\t\tvalue: function componentUnmount() {\n\t\t\t\tif (this._lifecycle.componentUnmount) return;\n\t\t\t\t// update lifecycle state\n\t\t\t\tthis._lifecycle.componentUnmount = true;\n\t\t\t\t// remove the component mounted attribute\n\t\t\t\tthis.removeAttribute('mounted');\n\t\t\t}\n\n\t\t\t/**\n    * Check all the mountDependencies and try to resolve them.\n    * @return \t\t\t{Promise} \t\t\t\tA promise that will be resolved when the dependencies are resolved\n    */\n\n\t\t}, {\n\t\t\tkey: '_whenMountDependenciesAreOk',\n\t\t\tvalue: function _whenMountDependenciesAreOk() {\n\t\t\t\tvar _this4 = this;\n\n\t\t\t\tvar promise = new Promise(function (resolve, reject) {\n\t\t\t\t\tvar deps = _this4.mountDependencies;\n\t\t\t\t\tif (!deps.length) {\n\t\t\t\t\t\tresolve();\n\t\t\t\t\t} else {\n\t\t\t\t\t\t// resolve all the promises\n\t\t\t\t\t\tPromise.all(deps).then(function () {\n\t\t\t\t\t\t\tresolve();\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t\treturn promise;\n\t\t\t}\n\n\t\t\t/**\n    * Init props proxy.\n    * This will create a getter/setter accessor on the item itself\n    * that get and update his corresponding props.{name} property\n    */\n\n\t\t}, {\n\t\t\tkey: '_initPropsProxy',\n\t\t\tvalue: function _initPropsProxy() {\n\t\t\t\tvar _this5 = this;\n\n\t\t\t\t// loop on each props\n\t\t\t\tfor (var key in this.defaultProps) {\n\t\t\t\t\tif (this.hasOwnProperty(key) || key in this) {\n\t\t\t\t\t\tif (this.props.debug) {\n\t\t\t\t\t\t\tconsole.warn('The component ' + this.componentNameDash + ' has already an \"' + key + '\" property... This property will not reflect the this.props[\\'' + key + '\\'] value... Try to use a property name that does not already exist on an HTMLElement...');\n\t\t\t\t\t\t}\n\t\t\t\t\t\tcontinue;\n\t\t\t\t\t}\n\t\t\t\t\t(function (key) {\n\t\t\t\t\t\tObject.defineProperty(_this5, key, {\n\t\t\t\t\t\t\tget: function get() {\n\t\t\t\t\t\t\t\treturn _this5.props[key];\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\tset: function set(value) {\n\t\t\t\t\t\t\t\t_this5.setProp(key, (0, _autoCast2.default)(value));\n\t\t\t\t\t\t\t},\n\t\t\t\t\t\t\tenumarable: true\n\t\t\t\t\t\t});\n\t\t\t\t\t})(key);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/**\n    * On mouse over\n    */\n\n\t\t}, {\n\t\t\tkey: '_onMouseoverComponentMount',\n\t\t\tvalue: function _onMouseoverComponentMount() {\n\t\t\t\tthis._mountComponent();\n\t\t\t\tthis.removeEventListener('mouseover', this._onMouseoverComponentMount);\n\t\t\t}\n\n\t\t\t/**\n    * Internal mount component method\n    */\n\n\t\t}, {\n\t\t\tkey: '_mountComponent',\n\t\t\tvalue: function _mountComponent() {\n\t\t\t\tvar _this6 = this;\n\n\t\t\t\t// wait next frame\n\t\t\t\t_fastdom2.default.clear(this._fastdomSetProp);\n\t\t\t\tthis._fastdomSetProp = this.mutate(function () {\n\t\t\t\t\t// sometimes, the component has been unmounted between the\n\t\t\t\t\t// fastdom execution, so we stop here if it's the case\n\t\t\t\t\tif (!_this6._componentAttached) return;\n\t\t\t\t\t// init\n\t\t\t\t\t_this6.componentMount();\n\t\t\t\t\t// render\n\t\t\t\t\t_this6.render();\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t/**\n    * Detect when the component is detached from the DOM tree.\n    * @protected\n    */\n\n\t\t}, {\n\t\t\tkey: 'disconnectedCallback',\n\t\t\tvalue: function disconnectedCallback() {\n\t\t\t\tvar _this7 = this;\n\n\t\t\t\t// update attached status\n\t\t\t\tthis._componentAttached = false;\n\n\t\t\t\t// unmount timeout\n\t\t\t\tclearTimeout(this._unmountTimeout);\n\t\t\t\tthis._unmountTimeout = setTimeout(function () {\n\t\t\t\t\t// wait next frame\n\t\t\t\t\t_fastdom2.default.clear(_this7._fastdomSetProp);\n\t\t\t\t\t_this7._fastdomSetProp = _this7.mutate(function () {\n\t\t\t\t\t\t// unmount only if the component is mounted\n\t\t\t\t\t\tif (!_this7._lifecycle.componentMount) return;\n\t\t\t\t\t\t// unmount\n\t\t\t\t\t\t_this7.componentUnmount();\n\t\t\t\t\t\t// update lifecycle\n\t\t\t\t\t\t_this7._lifecycle.componentMount = false;\n\t\t\t\t\t});\n\t\t\t\t}, this.props.unmountTimeout);\n\t\t\t}\n\t\t}, {\n\t\t\tkey: 'detachedCallback',\n\t\t\tvalue: function detachedCallback() {\n\t\t\t\tthis.disconnectedCallback();\n\t\t\t}\n\n\t\t\t/**\n    * Dispatch an event from the tag with namespaced event name\n    * This will dispatch actually two events :\n    * 1. {tagName}.{name} : example : s-datepicker.change\n    * 2. {name} \t\t   : example : change\n    *\n    * @param\t\t{String} \t\tname \t\tThe event name\n    * @param \t\t{Mixed} \t\tdata \t\tSome data to attach to the event\n    */\n\n\t\t}, {\n\t\t\tkey: 'dispatchComponentEvent',\n\t\t\tvalue: function dispatchComponentEvent(name) {\n\t\t\t\tvar data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\t\t\t\tvar fromElm = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : this;\n\n\t\t\t\t(0, _dispatchEvent2.default)(fromElm, name, data);\n\t\t\t\t(0, _dispatchEvent2.default)(fromElm, this.tagName.toLowerCase() + '.' + name, data);\n\t\t\t}\n\n\t\t\t/**\n    * Set a bunch of properties at once\n    * @param \t\t\t{Object} \t\t[props={}] \t\tAn object of props to set\n    */\n\n\t\t}, {\n\t\t\tkey: 'setProps',\n\t\t\tvalue: function setProps() {\n\t\t\t\tvar props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n\n\t\t\t\t// set each props\n\t\t\t\tfor (var key in props) {\n\t\t\t\t\tthis.setProp(key, props[key]);\n\t\t\t\t}\n\t\t\t\t// return the component\n\t\t\t\treturn this;\n\t\t\t}\n\n\t\t\t/**\n    * Set a property\n    * @param \t\t\t{String} \t\tprop \t\t\tThe property name to set\n    * @param \t\t\t{Mixed} \t\tvalue \t\t\tThe new property value\n    */\n\n\t\t}, {\n\t\t\tkey: 'setProp',\n\t\t\tvalue: function setProp(prop, value) {\n\t\t\t\tvar set = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;\n\n\n\t\t\t\t// if the component is not attached to the dom, we don't have the props etc\n\t\t\t\t// so we save them inside an object that we will merge later in the props\n\t\t\t\tif (!this._componentAttached) {\n\t\t\t\t\tif (!this._initialProps) this._initialProps = {};\n\t\t\t\t\tthis._initialProps[prop] = value;\n\t\t\t\t\treturn;\n\t\t\t\t}\n\n\t\t\t\t// save the oldVal\n\t\t\t\tvar oldVal = this.props[prop];\n\n\t\t\t\t// stop if same value\n\t\t\t\tif (oldVal === value) return;\n\n\t\t\t\t// set the prop\n\t\t\t\tthis._props[prop] = value;\n\n\t\t\t\t// handle new value\n\t\t\t\tthis._handleNewPropValue(prop, value, oldVal);\n\n\t\t\t\t// return the component\n\t\t\t\treturn this;\n\t\t\t}\n\n\t\t\t/**\n    * Get a property\n    * @param \t\t{String} \t\tprop \t\t\tThe property name to get\n    * @return \t\t{Mixed} \t\t\t\t\t\tThe property value or null\n    */\n\n\t\t}, {\n\t\t\tkey: 'getProp',\n\t\t\tvalue: function getProp(prop) {\n\t\t\t\treturn this.props[prop];\n\t\t\t}\n\n\t\t\t/**\n    * Handle new property\n    * @param \t\t{String} \t\tprop \t\tThe property name\n    * @param \t\t{Mixed} \t\tnewVal \t\tThe new property value\n    * @param \t\t{Mixed}\t\t\toldVal \t\tThe old property value\n    */\n\n\t\t}, {\n\t\t\tkey: '_handleNewPropValue',\n\t\t\tvalue: function _handleNewPropValue(prop, newVal, oldVal) {\n\t\t\t\tvar _this8 = this;\n\n\t\t\t\t// if the component is not mounted\n\t\t\t\t// we do nothing here...\n\t\t\t\tif (!this.isComponentMounted()) return;\n\n\t\t\t\t// create the stacks\n\t\t\t\tthis._prevPropsStack[prop] = oldVal;\n\t\t\t\tthis._nextPropsStack[prop] = newVal;\n\n\t\t\t\t// component will receive prop\n\t\t\t\tthis.componentWillReceiveProp(prop, newVal, oldVal);\n\n\t\t\t\t// wait till next frame\n\t\t\t\t_fastdom2.default.clear(this._fastdomSetProp);\n\t\t\t\tthis._fastdomSetProp = _fastdom2.default.mutate(function () {\n\n\t\t\t\t\t// create array version of each stacks\n\t\t\t\t\tvar nextPropsArray = [],\n\t\t\t\t\t    prevPropsArray = [];\n\t\t\t\t\tfor (var key in _this8._nextPropsStack) {\n\t\t\t\t\t\tvar val = _this8._nextPropsStack[key];\n\t\t\t\t\t\tnextPropsArray.push({\n\t\t\t\t\t\t\tname: key,\n\t\t\t\t\t\t\tvalue: val\n\t\t\t\t\t\t});\n\n\t\t\t\t\t\t// handle physical props\n\t\t\t\t\t\t_this8._handlePhysicalProp(key, val);\n\t\t\t\t\t}\n\t\t\t\t\tfor (var _key2 in _this8._prevPropsStack) {\n\t\t\t\t\t\tvar _val = _this8._prevPropsStack[_key2];\n\t\t\t\t\t\tprevPropsArray.push({\n\t\t\t\t\t\t\tname: _key2,\n\t\t\t\t\t\t\tvalue: _val\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\n\t\t\t\t\t// call the will reveiveProps if exist\n\t\t\t\t\tif (_this8.componentWillReceiveProps) {\n\t\t\t\t\t\t_this8.componentWillReceiveProps(_this8._nextPropsStack, nextPropsArray);\n\t\t\t\t\t}\n\n\t\t\t\t\t// should component update\n\t\t\t\t\tif (_this8.shouldComponentUpdate && !_this8.shouldComponentUpdate(_this8._nextPropsStack, _this8._prevPropsStack)) return;\n\n\t\t\t\t\t// render the component\n\t\t\t\t\t_this8.render();\n\t\t\t\t});\n\t\t\t}\n\n\t\t\t/**\n    * Method called when the component will receive new props\n    * @param \t\t{String} \t\tprop \t\tThe property name\n    * @param \t\t{Mixed} \t\tnewVal \t\tThe new property value\n    * @param \t\t{Mixed}\t\t\toldVal \t\tThe old property value\n    * @example \tjs\n    * componentWillReceiveProp(prop, newVal, oldVal) {\n    *  \tswitch(prop) {\n    *  \t\tcase ...\n    *    \t\t\t// do something...\n    * \t\t\tbreak;\n    *  \t}\n    * }\n    *\n    * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentWillReceiveProp',\n\t\t\tvalue: function componentWillReceiveProp(prop, newVal, oldVal) {}\n\t\t\t// do something\n\n\n\t\t\t/**\n    * Method that check if a property passed to the component has to be accepted or not.\n    * @param \t\t{String} \t\t\tprop \t\tThe property name\n    * @return \t\t{Boolean} \t\t\t\t\t\tIf true, the property will be accepted, if false, it will not be considered as a property\n    */\n\n\t\t}, {\n\t\t\tkey: 'shouldComponentAcceptProp',\n\t\t\tvalue: function shouldComponentAcceptProp(prop) {\n\t\t\t\treturn this.props[prop] !== undefined;\n\t\t\t}\n\n\t\t\t/**\n    * Check if component is mounted\n    * @return \t\t\t{Boolean} \t\t\ttrue if mounted, false if not\n    */\n\n\t\t}, {\n\t\t\tkey: 'isComponentMounted',\n\t\t\tvalue: function isComponentMounted() {\n\t\t\t\treturn this._lifecycle.componentMount;\n\t\t\t}\n\n\t\t\t/**\n    * Handle physical props by setting or not the prop\n    * on the dom element as attribute\n    * @param \t\t\t{String} \t\t\tprop \t\t\tThe property to handle\n    * @param \t\t\t{Mixed} \t\t\tvalue \t\t\tThe property value\n    * @author \t\t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n    */\n\n\t\t}, {\n\t\t\tkey: '_handlePhysicalProp',\n\t\t\tvalue: function _handlePhysicalProp(prop, value) {\n\t\t\t\t// check if is a physical prop to set it in the dom\n\t\t\t\tvar physicalProps = this.physicalProps;\n\t\t\t\tif (physicalProps.indexOf(prop) !== -1) {\n\t\t\t\t\t// set the prop on the node\n\t\t\t\t\tif (value !== 0 && (value === false || value === 'null' || !value)) {\n\t\t\t\t\t\tthis.removeAttribute((0, _uncamelize2.default)(prop));\n\t\t\t\t\t} else if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {\n\t\t\t\t\t\tthis.setAttribute((0, _uncamelize2.default)(prop), JSON.stringify(value));\n\t\t\t\t\t} else if (typeof value === 'function') {\n\t\t\t\t\t\tthis.setAttribute((0, _uncamelize2.default)(prop), 'fn');\n\t\t\t\t\t} else {\n\t\t\t\t\t\tthis.setAttribute((0, _uncamelize2.default)(prop), value);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/**\n    * Compute props by mixing settings with attributes presents on the component\n    */\n\n\t\t}, {\n\t\t\tkey: '_initInitialAttributes',\n\t\t\tvalue: function _initInitialAttributes() {\n\t\t\t\tfor (var i = 0; i < this.attributes.length; i++) {\n\t\t\t\t\tvar attr = this.attributes[i];\n\t\t\t\t\tvar attrCamelName = (0, _camelize2.default)(attr.name);\n\t\t\t\t\t// do not set if it's not an existing prop\n\t\t\t\t\tif (!this.shouldComponentAcceptProp(attrCamelName)) continue;\n\t\t\t\t\t// the attribute has no value but it is present\n\t\t\t\t\t// so we assume the prop value is true\n\t\t\t\t\tif (!attr.value) {\n\t\t\t\t\t\tthis._props[attrCamelName] = true;\n\t\t\t\t\t\tcontinue;\n\t\t\t\t\t}\n\t\t\t\t\t// cast the value\n\t\t\t\t\tthis._props[attrCamelName] = (0, _autoCast2.default)(attr.value);\n\t\t\t\t}\n\n\t\t\t\t// handle physicalProps\n\t\t\t\tfor (var key in this.props) {\n\t\t\t\t\tvar value = this.props[key];\n\t\t\t\t\t// handle physical props\n\t\t\t\t\tthis._handlePhysicalProp(key, value);\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t/**\n    * Mutate the dom using an optimize requestAnimationFrame technique\n    * @param \t\t{Function} \t\tcb \t\t\tThe callback to exexute\n    */\n\n\t\t}, {\n\t\t\tkey: 'mutate',\n\t\t\tvalue: function mutate(cb) {\n\t\t\t\treturn _fastdom2.default.mutate(cb);\n\t\t\t}\n\n\t\t\t/**\n    * Set a class that will be construct with the componentNameDash,\n    * an optional element and modifier\n    * @param \t{String} \t[element=null] \t\tThe element name\n    * @param \t{String} \t[modifier=null] \tThe modifier name\n    * @param \t{String} \t[state=null] \t\tThe state name\n    * @return \t{String} \t\t\t\t\t\tThe generated class\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentClassName',\n\t\t\tvalue: function componentClassName() {\n\t\t\t\tvar element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n\t\t\t\tvar modifier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\t\t\t\tvar state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\n\t\t\t\t// if the method is BEM\n\t\t\t\tvar sel = this.componentNameDash;\n\t\t\t\tif (element) {\n\t\t\t\t\tsel += '__' + element;\n\t\t\t\t}\n\t\t\t\tif (modifier) {\n\t\t\t\t\tsel += '--' + modifier;\n\t\t\t\t}\n\t\t\t\tif (state) {\n\t\t\t\t\tsel += '--' + state;\n\t\t\t\t}\n\t\t\t\treturn sel;\n\t\t\t}\n\n\t\t\t/**\n    * Get a component selector class built with the passed element, modifier and state parameters\n    * @param \t{String} \t[element=null] \t\tThe element name\n    * @param \t{String} \t[modifier=null] \tThe modifier name\n    * @param \t{String} \t[state=null] \t\tThe state name\n    * @return \t{String} \t\t\t\t\t\tThe generated class\n    */\n\n\t\t}, {\n\t\t\tkey: 'componentSelector',\n\t\t\tvalue: function componentSelector() {\n\t\t\t\tvar element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;\n\t\t\t\tvar modifier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\t\t\t\tvar state = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\n\t\t\t\tvar sel = this.componentClassName(element, modifier, state);\n\t\t\t\tsel = ('.' + sel).replace(' ', '.');\n\t\t\t\treturn sel;\n\t\t\t}\n\n\t\t\t/**\n    * Check if the passed element has the component class generated by the element and modifier argument\n    * @param \t{HTMLElement} \telm \t\t\t\tThe element to check\n    * @param \t{String} \t\t[element=null] \t\tThe element name\n    * @param \t{String} \t\t[modifier=null] \tThe modifier name\n    * @param \t{String} \t\t[state=null] \t\tThe state name\n    * @return \t{Boolean} \t\t\t\t\t\t\tThe check result\n    */\n\n\t\t}, {\n\t\t\tkey: 'hasComponentClass',\n\t\t\tvalue: function hasComponentClass(elm) {\n\t\t\t\tvar element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\t\t\t\tvar modifier = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\t\t\t\tvar state = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\t\t// generate the class\n\t\t\t\tvar cls = this.componentSelector(element, modifier, state);\n\t\t\t\tvar _cls = cls.split('.');\n\t\t\t\tfor (var i = 0; i < _cls.length; i++) {\n\t\t\t\t\tvar cl = _cls[i];\n\t\t\t\t\tif (cl && cl !== '') {\n\t\t\t\t\t\tif (!elm.classList.contains(cl)) {\n\t\t\t\t\t\t\treturn false;\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\treturn true;\n\t\t\t}\n\n\t\t\t/**\n    * Add a class on the passed element that will be construct with the componentNameDash,\n    * an optional element, modifier and state\n    * @param \t{String} \t[element=null] \t\tThe element name\n    * @param \t{String} \t[modifier=null] \tThe modifier name\n    * @param \t{String} \t[state=null] \t\tThe state name\n    * @return \t{SComponent}} \t\t\tThe component itself\n    */\n\n\t\t}, {\n\t\t\tkey: 'addComponentClass',\n\t\t\tvalue: function addComponentClass(elm) {\n\t\t\t\tvar element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n\t\t\t\tvar _this9 = this;\n\n\t\t\t\tvar modifier = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\t\t\t\tvar state = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\t\t// if is an array\n\t\t\t\tif (elm instanceof Array || elm instanceof NodeList) {\n\t\t\t\t\t[].forEach.call(elm, function (el) {\n\t\t\t\t\t\t_this9.addComponentClass(el, element, modifier, state);\n\t\t\t\t\t});\n\t\t\t\t\treturn this;\n\t\t\t\t}\n\n\t\t\t\t// get the component class\n\t\t\t\tvar cls = this.componentSelector(element, modifier, state);\n\t\t\t\t// loop on each classes to add\n\t\t\t\tcls.split('.').forEach(function (cl) {\n\t\t\t\t\tif (cl && cl !== '') {\n\t\t\t\t\t\t_this9.mutate(function () {\n\t\t\t\t\t\t\telm.classList.add(cl);\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t\t// return the instance to maintain chainability\n\t\t\t\treturn this;\n\t\t\t}\n\n\t\t\t/**\n    * Remove a class on the passed element that will be construct with the componentNameDash,\n    * an optional element, modifier and state\n    * @param \t{String} \t[element=null] \t\tThe element name\n    * @param \t{String} \t[modifier=null] \tThe modifier name\n    * @param \t{String} \t[state=null] \t\tThe state name\n    * @return \t{SComponent}} \t\t\t\t\tThe component itself\n    */\n\n\t\t}, {\n\t\t\tkey: 'removeComponentClass',\n\t\t\tvalue: function removeComponentClass(elm) {\n\t\t\t\tvar element = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n\t\t\t\tvar _this10 = this;\n\n\t\t\t\tvar modifier = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\t\t\t\tvar state = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;\n\n\t\t\t\t// if is an array\n\t\t\t\tif (elm instanceof Array || elm instanceof NodeList) {\n\t\t\t\t\t[].forEach.call(elm, function (el) {\n\t\t\t\t\t\t_this10.removeComponentClass(el, element, modifier, state);\n\t\t\t\t\t});\n\t\t\t\t\treturn this;\n\t\t\t\t}\n\n\t\t\t\t// get the component class\n\t\t\t\tvar cls = this.componentSelector(element, modifier, state);\n\t\t\t\t// loop on each classes to add\n\t\t\t\tcls.split('.').forEach(function (cl) {\n\t\t\t\t\tif (cl && cl !== '') {\n\t\t\t\t\t\t_this10.mutate(function () {\n\t\t\t\t\t\t\telm.classList.remove(cl);\n\t\t\t\t\t\t});\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t\t// return the instance to maintain chainability\n\t\t\t\treturn this;\n\t\t\t}\n\t\t}]);\n\n\t\treturn _class2;\n\t}(superclass);\n});\n\n// Export the mixin class\nexports.default = SWebComponentMixin;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/core/SWebComponentMixin.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/core/sNativeWebComponent.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/core/sNativeWebComponent.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = sNativeWebComponent;\n\n__webpack_require__(/*! document-register-element */ \"./node_modules/document-register-element/build/document-register-element.js\");\n\n__webpack_require__(/*! @ungap/custom-elements-builtin */ \"./node_modules/@ungap/custom-elements-builtin/esm/index.js\");\n\nvar _safari = __webpack_require__(/*! ../utils/is/safari */ \"./node_modules/coffeekraken-sugar/js/utils/is/safari.js\");\n\nvar _safari2 = _interopRequireDefault(_safari);\n\nvar _mixwith = __webpack_require__(/*! ../vendors/mixwith */ \"./node_modules/coffeekraken-sugar/js/vendors/mixwith.js\");\n\nvar _SWebComponentMixin = __webpack_require__(/*! ./SWebComponentMixin */ \"./node_modules/coffeekraken-sugar/js/core/SWebComponentMixin.js\");\n\nvar _SWebComponentMixin2 = _interopRequireDefault(_SWebComponentMixin);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\nfunction sNativeWebComponent(HTMLElementToExtend) {\n\n\tif (!(0, _safari2.default)()) {\n\t\tHTMLElementToExtend = function (OriginalHTMLElement) {\n\t\t\tfunction BabelHTMLElement() {\n\t\t\t\tif (typeof Reflect == 'undefined' || typeof Reflect.construct != 'function' || typeof customElements == 'undefined') {\n\t\t\t\t\t// Use your favorite polyfill.\n\t\t\t\t}\n\t\t\t\tvar newTarget = this.__proto__.constructor;\n\t\t\t\treturn Reflect.construct(OriginalHTMLElement, [], newTarget);\n\t\t\t}\n\t\t\tObject.setPrototypeOf(BabelHTMLElement, OriginalHTMLElement);\n\t\t\tObject.setPrototypeOf(BabelHTMLElement.prototype, OriginalHTMLElement.prototype);\n\t\t\treturn BabelHTMLElement;\n\t\t}(HTMLElementToExtend);\n\t}\n\n\tif (typeof HTMLElementToExtend !== 'function') {\n\t\tvar _HTMLElementToExtend = function _HTMLElementToExtend() {};\n\t\t_HTMLElementToExtend.prototype = HTMLElementToExtend.prototype;\n\t\tHTMLElementToExtend = _HTMLElementToExtend;\n\t}\n\n\treturn (0, _mixwith.mix)(HTMLElementToExtend).with(_SWebComponentMixin2.default);\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/core/sNativeWebComponent.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/closest.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/closest.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = closest;\n\nvar _matches = __webpack_require__(/*! ./matches */ \"./node_modules/coffeekraken-sugar/js/dom/matches.js\");\n\nvar _matches2 = _interopRequireDefault(_matches);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Go up the dom three to find the first element that matches the passed selector\n *\n * @name \t\tclosest\n * @param \t\t{HTMLElement} \t\t\t\t\telm  \t\tThe element to start on\n * @param \t\t{String|Function} \t\t\t\tselector \tA css selector to search for or a check function that will be used\n * @return \t\t{HTMLElement} \t\t\t\t\t\t\t\tThe element found or null\n *\n * @example  \tjs\n * import closest from 'sugarcss/js/dom/closest'\n * const closestElm = closest(myCoolElement, '.my-cool-class');\n * if (closestElm) {\n * \t\t// we have found en element that matches the selector\n * }\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction closest(elm, selector) {\n  elm = elm.parentNode;\n  while (elm && elm != document) {\n    if (typeof selector === 'function') {\n      if (selector(elm)) return elm;\n    } else if (typeof selector === 'string' && (0, _matches2.default)(elm, selector)) {\n      return elm;\n    }\n    elm = elm.parentNode;\n  }\n  return null;\n}\nwindow.__closest = closest;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/closest.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/closestNotVisible.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/closestNotVisible.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = closestNotVisible;\n\nvar _isVisible = __webpack_require__(/*! ./isVisible */ \"./node_modules/coffeekraken-sugar/js/dom/isVisible.js\");\n\nvar _isVisible2 = _interopRequireDefault(_isVisible);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Go up the dom three to find the first element that is not visible.\n * Not visible mean that has either an opacity to 0, a visibility to hidden or a display to none\n *\n * @name \t\tclosestNotVisible\n * @param \t\t{HTMLElement} \t\t\t\t\telm  \t\tThe element to start on\n * @return \t\t{HTMLElement} \t\t\t\t\t\t\t\tThe element found or null\n *\n * @example  \tjs\n * import closestNotVisible from 'sugarcss/js/dom/closestNotVisible'\n * const closestElm = closest(myCoolElement);\n * if (closestElm) {\n * \t\t// we have found en element is not visible\n * }\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction closestNotVisible(elm) {\n  elm = elm.parentNode;\n  while (elm && elm != document) {\n    if (!(0, _isVisible2.default)(elm)) {\n      return elm;\n    }\n    elm = elm.parentNode;\n  }\n  return false;\n}\nwindow.__closestNotVisible = closestNotVisible;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/closestNotVisible.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/dispatchEvent.js":
-/*!*****************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/dispatchEvent.js ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = dispatchEvent;\n\nvar _SEvent = __webpack_require__(/*! ../classes/SEvent */ \"./node_modules/coffeekraken-sugar/js/classes/SEvent.js\");\n\nvar _SEvent2 = _interopRequireDefault(_SEvent);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Helper to quickly display an event with some optional data attached to it\n *\n * @name \t\tdispatchEvent\n * @param \t\t{HTMLElement} \t\t\t\t\ttarget  \t\tThe element to dispatch the event from\n * @param \t\t{String} \t\t\t\t\t\tname \t\t\tThe event name to dispatch\n * @param \t\t{Mixed} \t\t\t\t\t\tdata \t\t\tThe data to attache to the event\n *\n * @example  \tjs\n * import dispatchEvent from 'sugarcss/js/dom/dispatchEvent'\n * dispatchEvent(myCoolHTMLElement, 'myCoolEventName', {\n * \t\tvar1 : 'value1'\n * });\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction dispatchEvent(target, name) {\n  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;\n\n  // create new event\n  var e = new _SEvent2.default(name, {\n    detail: data,\n    bubbles: true,\n    cancelable: true\n  });\n  target.dispatchEvent(e);\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/dispatchEvent.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/isInViewport.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/isInViewport.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n\nvar _typeof = typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; };\n\nexports.default = isInViewport;\n/**\n * Check if the passed HTMLElement is in the viewport or not\n *\n * @name \t\tisInViewport\n * @param \t\t{HTMLElement} \t\t\t\telm  \t\t\tThe element to insert\n * @param \t\t{Object} \t\t\t\t\t[offset=50] \tAn object of top, right, bottom and left offset used to detect the status or an object with top, right, bottom and left offsets\n * @return \t\t{Boolean\t\t\t\t\t\t\t\t\tIf the element is in the viewport or not\n *\n * @example  \tjs\n * import isInViewport from 'sugarcss/js/dom/isInViewport'\n * if (isInViewport(myCoolHTMLElement) {\n * \t\t// i'm in the viewport\n * }\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction isInViewport(elm) {\n\tvar offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;\n\n\t// handle offset\n\tvar offsetTop = offset;\n\tvar offsetRight = offset;\n\tvar offsetBottom = offset;\n\tvar offsetLeft = offset;\n\tif ((typeof offset === 'undefined' ? 'undefined' : _typeof(offset)) === 'object') {\n\t\toffsetTop = offset.top || 0;\n\t\toffsetRight = offset.right || 0;\n\t\toffsetBottom = offset.bottom || 0;\n\t\toffsetLeft = offset.left || 0;\n\t}\n\tvar containerHeight = window.innerHeight || document.documentElement.clientHeight;\n\tvar containerWidth = window.innerWidth || document.documentElement.clientWidth;\n\tvar rect = elm.getBoundingClientRect();\n\tvar isTopIn = rect.top - containerHeight - offsetBottom <= 0;\n\tvar isBottomIn = rect.bottom - offsetTop >= 0;\n\tvar isLeftIn = rect.left - containerWidth - offsetRight <= 0;\n\tvar isRightIn = rect.right - offsetLeft >= 0;\n\treturn isTopIn && isBottomIn && isLeftIn && isRightIn;\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/isInViewport.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/isVisible.js":
-/*!*************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/isVisible.js ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = isVisible;\n/**\n * Check if the passed HTMLElement is visible or not.\n * Visible mean that it has not an opacity of 0, not a visibility of hidden and not a display of none\n *\n * @name \t\tisVisible\n * @param \t\t{HTMLElement} \t\t\t\telm  \t\tThe element to check\n * @return \t\t{Boolean\t\t\t\t\t\t\t\tIf the element is visible or not\n *\n * @example  \tjs\n * import isVisible from 'sugarcss/js/dom/isVisible'\n * if (isVisible(myCoolHTMLElement) {\n * \t\t// i'm visible\n * }\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction isVisible(elm) {\n\n  // assume that the script tag is always visible\n  if (elm.nodeName.toLowerCase() === 'script') return true;\n\n  // if no offset parent\n  // mean that the element is not visible\n  // if (elm.offsetParent === null) return false;\n\n  // get style\n  var style = window.getComputedStyle(elm, null),\n      opacity = style['opacity'],\n      visibility = style['visibility'],\n      display = style['display'];\n  return '0' !== opacity && 'none' !== display && 'hidden' !== visibility;\n}\nwindow.__isVisible = isVisible;\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/isVisible.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/matches.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/matches.js ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = matches;\n/**\n * Polyfill for the Element.matches function\n *\n * @name \t\tmatches\n * @param \t\t{HTMLElement} \t\t\telm  \t\t\tThe element to check\n * @param \t\t{String} \t\t\t\tselector \t\tThe selector to check on the element\n * @return \t\t{Boolean} \t\t\t\t\t\t\t\tIf the element match the selector or not\n *\n * @example  \tjs\n * import matches from 'sugarcss/js/dom/matches'\n * if (matches(myCoolHTMLElement, '.my-cool-css-selector')) {\n * \t\t// the element match the selector\n * }\n *\n * @see \t\thttps://developer.mozilla.org/en/docs/Web/API/Element/matches\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction matches(el, selector) {\n  if (el.nodeName == '#comment' || el.nodeName == '#text') {\n    return false;\n  }\n  var p = Element.prototype;\n  var f = p.matches || p.webkitMatchesSelector || p.mozMatchesSelector || p.msMatchesSelector || function (s) {\n    return [].indexOf.call(document.querySelectorAll(s), this) !== -1;\n  };\n  return f.call(el, selector);\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/matches.js?");
 
 /***/ }),
 
@@ -1300,18 +959,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/dom/prependChild.js":
-/*!****************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/prependChild.js ***!
-  \****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = prependChild;\n/**\n * Prepend an HTMLElement into another HTMLElement\n *\n * @name \t\tprependChild\n * @param \t\t{HTMLElement} \t\t\t\telm  \t\tThe element to prepend\n * @param \t\t{HTMLElement} \t\t\t\trefElm \t\tThe element in which to prepend the new element\n * @example  \tjs\n * import prependChild from 'sugarcss/js/dom/prependChild'\n * prependChild(myElementToInsert, theReferenceElement);\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction prependChild(elm, refElm) {\n  if (!refElm.firstChild) {\n    refElm.appendChild(elm);\n  } else {\n    refElm.insertBefore(elm, refElm.firstChild);\n  }\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/prependChild.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/dom/querySelectorLive.js":
 /*!*********************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/dom/querySelectorLive.js ***!
@@ -1324,30 +971,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/dom/whenInViewport.js":
-/*!******************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/whenInViewport.js ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = whenInViewport;\n\nvar _whenVisible = __webpack_require__(/*! ./whenVisible */ \"./node_modules/coffeekraken-sugar/js/dom/whenVisible.js\");\n\nvar _whenVisible2 = _interopRequireDefault(_whenVisible);\n\nvar _isInViewport2 = __webpack_require__(/*! ./isInViewport */ \"./node_modules/coffeekraken-sugar/js/dom/isInViewport.js\");\n\nvar _isInViewport3 = _interopRequireDefault(_isInViewport2);\n\nvar _throttle = __webpack_require__(/*! ../utils/functions/throttle */ \"./node_modules/coffeekraken-sugar/js/utils/functions/throttle.js\");\n\nvar _throttle2 = _interopRequireDefault(_throttle);\n\nvar _closest = __webpack_require__(/*! ./closest */ \"./node_modules/coffeekraken-sugar/js/dom/closest.js\");\n\nvar _closest2 = _interopRequireDefault(_closest);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Monitor an HTMLElement to be notified when it is in the viewport\n *\n * @name \t\twhenInViewport\n * @param \t\t{HTMLElement} \t\t\t\telm \t\t\t\t\tThe element to monitor\n * @param \t\t{Number} \t\t\t\t\t[offset=50] \t\t\tAn offset that represent the distance before entering the viewport for the detection\n * @return \t\t(Promise) \t\t\t\t\t\t\t\t\t\t\tThe promise that will be resolved when the element is in the viewport\n *\n * @example \tjs\n * import whenInViewport from 'sugarcss/js/dom/whenInViewport'\n * whenInViewport(myCoolHTMLElement).then((elm) => {\n * \t\t// do something with your element that has entered the viewport...\n * });\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction whenInViewport(elm) {\n\tvar offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 50;\n\n\treturn new Promise(function (resolve, reject) {\n\n\t\tif (window.IntersectionObserver) {\n\n\t\t\tvar isInViewport = false,\n\t\t\t    isVisible = false,\n\t\t\t    _cb = function _cb() {\n\t\t\t\tif (isVisible && isInViewport) {\n\t\t\t\t\tobserver.disconnect();\n\t\t\t\t\tresolve(elm);\n\t\t\t\t}\n\t\t\t};\n\n\t\t\tvar observer = new IntersectionObserver(function (entries, observer) {\n\t\t\t\tif (!entries.length) return;\n\t\t\t\tvar entry = entries[0];\n\t\t\t\tif (entry.intersectionRatio > 0) {\n\t\t\t\t\tisInViewport = true;\n\t\t\t\t} else {\n\t\t\t\t\tisInViewport = false;\n\t\t\t\t}\n\t\t\t\t_cb();\n\t\t\t}, {\n\t\t\t\troot: null, // viewport\n\t\t\t\trootMargin: offset + 'px',\n\t\t\t\tthreshold: [0, .1, .2, .3, .4, .5, .6, .7, .8, .9, 1]\n\t\t\t});\n\n\t\t\tobserver.observe(elm);\n\n\t\t\t// detect when visible\n\t\t\t(0, _whenVisible2.default)(elm).then(function (elm) {\n\t\t\t\tisVisible = true;\n\t\t\t\t_cb();\n\t\t\t});\n\t\t} else {\n\n\t\t\t// try to get the closest element that has an overflow\n\t\t\tvar scrollContainerElm = document;\n\t\t\tif (!elm._inViewportContainer) {\n\t\t\t\tvar overflowContainer = (0, _closest2.default)(elm, '[data-in-viewport-container]');\n\t\t\t\tif (overflowContainer) {\n\t\t\t\t\tscrollContainerElm = overflowContainer;\n\t\t\t\t\telm._inViewportContainer = overflowContainer;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tscrollContainerElm = elm._inViewportContainer;\n\t\t\t}\n\n\t\t\tvar _isInViewport = false,\n\t\t\t    _isVisible = false,\n\t\t\t    _cb2 = function _cb2() {\n\t\t\t\tif (_isVisible && _isInViewport) {\n\t\t\t\t\tscrollContainerElm.removeEventListener('scroll', checkViewport);\n\t\t\t\t\twindow.removeEventListener('resize', checkViewport);\n\t\t\t\t\tresolve(elm);\n\t\t\t\t}\n\t\t\t};\n\t\t\tvar checkViewport = (0, _throttle2.default)(function (e) {\n\t\t\t\t_isInViewport = (0, _isInViewport3.default)(elm, offset);\n\t\t\t\t_cb2();\n\t\t\t}, 100);\n\n\t\t\t// detect when visible\n\t\t\t(0, _whenVisible2.default)(elm).then(function (elm) {\n\t\t\t\t_isVisible = true;\n\t\t\t\t_cb2();\n\t\t\t});\n\n\t\t\t// listen for resize\n\t\t\tscrollContainerElm.addEventListener('scroll', checkViewport);\n\t\t\twindow.addEventListener('resize', checkViewport);\n\t\t\tsetTimeout(function () {\n\t\t\t\tcheckViewport(null);\n\t\t\t});\n\t\t}\n\t});\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/whenInViewport.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/dom/whenVisible.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/dom/whenVisible.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = whenVisible;\n\nvar _isVisible = __webpack_require__(/*! ./isVisible */ \"./node_modules/coffeekraken-sugar/js/dom/isVisible.js\");\n\nvar _isVisible2 = _interopRequireDefault(_isVisible);\n\nvar _closestNotVisible = __webpack_require__(/*! ./closestNotVisible */ \"./node_modules/coffeekraken-sugar/js/dom/closestNotVisible.js\");\n\nvar _closestNotVisible2 = _interopRequireDefault(_closestNotVisible);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Monitor an HTMLElement to be notified when it is visible\n *\n * @name \t\twhenVisible\n * @param \t\t{HTMLElement} \t\t\t\telm \t\tThe element to monitor\n * @param \t\t{Function} \t\t\t\t\t[cb=null] \tAn optional callback to call when the element is visible\n * @return \t\t(Promise) \t\t\t\t\t\t\t\tThe promise that will be resolved when the element is visible\n *\n * @example \tjs\n * import whenVisible from 'sugarcss/js/dom/whenVisible'\n * whenVisible(myCoolHTMLElement).then((elm) => {\n * \t\t// do something with your element that is now visible\n * });\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction whenVisible(elm) {\n\tvar cb = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;\n\n\treturn new Promise(function (resolve, reject) {\n\n\t\t// variables\n\t\tvar isSelfVisible = false,\n\t\t    areParentsVisible = false,\n\t\t    closestNotVisible = null,\n\t\t    selfObserver = null,\n\t\t    parentObserver = null;\n\n\t\tvar _cb = function _cb() {\n\t\t\tif (isSelfVisible && areParentsVisible) {\n\t\t\t\t// process callbacks\n\t\t\t\tif (cb) cb(elm);\n\t\t\t\tresolve(elm);\n\t\t\t\t// remove the event listeners\n\t\t\t\telm.removeEventListener('transitionend', _eventCb);\n\t\t\t\telm.removeEventListener('animationstart', _eventCb);\n\t\t\t\telm.removeEventListener('animationend', _eventCb);\n\t\t\t\t// remove the event listeners\n\t\t\t\tif (closestNotVisible) {\n\t\t\t\t\tclosestNotVisible.removeEventListener('transitionend', _eventCb);\n\t\t\t\t\tclosestNotVisible.removeEventListener('animationstart', _eventCb);\n\t\t\t\t\tclosestNotVisible.removeEventListener('animationend', _eventCb);\n\t\t\t\t}\n\t\t\t}\n\t\t};\n\n\t\t// function called on each transitionend, start, etc...\n\t\tvar _eventCb = function _eventCb(e) {\n\t\t\t// wait just a little time to check again\n\t\t\tsetTimeout(function () {\n\t\t\t\tif (e.target === elm) {\n\t\t\t\t\tif ((0, _isVisible2.default)(elm)) {\n\t\t\t\t\t\tisSelfVisible = true;\n\t\t\t\t\t\tif (selfObserver && selfObserver.disconnect) {\n\t\t\t\t\t\t\tselfObserver.disconnect();\n\t\t\t\t\t\t}\n\t\t\t\t\t\t// remove the event listeners\n\t\t\t\t\t\telm.removeEventListener('transitionend', _eventCb);\n\t\t\t\t\t\telm.removeEventListener('animationstart', _eventCb);\n\t\t\t\t\t\telm.removeEventListener('animationend', _eventCb);\n\t\t\t\t\t}\n\t\t\t\t} else if (e.target === closestNotVisible) {\n\t\t\t\t\tif ((0, _isVisible2.default)(closestNotVisible)) {\n\t\t\t\t\t\tareParentsVisible = true;\n\t\t\t\t\t\tif (parentObserver && parentObserver.disconnect) {\n\t\t\t\t\t\t\tparentObserver.disconnect();\n\t\t\t\t\t\t}\n\t\t\t\t\t\t// remove the event listeners\n\t\t\t\t\t\tclosestNotVisible.removeEventListener('transitionend', _eventCb);\n\t\t\t\t\t\tclosestNotVisible.removeEventListener('animationstart', _eventCb);\n\t\t\t\t\t\tclosestNotVisible.removeEventListener('animationend', _eventCb);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t// callback\n\t\t\t\t_cb();\n\t\t\t});\n\t\t};\n\n\t\t// check if element itself is not visible\n\t\tif (!(0, _isVisible2.default)(elm)) {\n\t\t\tselfObserver = new MutationObserver(function (mutations) {\n\t\t\t\tmutations.forEach(function (mutation) {\n\t\t\t\t\t// check that is the style whos changed\n\t\t\t\t\tif (mutation.attributeName === 'style' || mutation.attributeName === 'class') {\n\t\t\t\t\t\t// check if is visible\n\t\t\t\t\t\tif ((0, _isVisible2.default)(mutation.target)) {\n\t\t\t\t\t\t\t// update\n\t\t\t\t\t\t\tisSelfVisible = true;\n\t\t\t\t\t\t\t// callback\n\t\t\t\t\t\t\t_cb();\n\t\t\t\t\t\t\t// stop observe\n\t\t\t\t\t\t\tselfObserver.disconnect();\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t});\n\t\t\tselfObserver.observe(elm, { attributes: true });\n\n\t\t\t// listen for animationstart to check if the element is visible\n\t\t\telm.addEventListener('animationstart', _eventCb);\n\t\t\telm.addEventListener('animationend', _eventCb);\n\t\t\telm.addEventListener('transitionend', _eventCb);\n\t\t} else {\n\t\t\tisSelfVisible = true;\n\t\t}\n\n\t\t// get the closest not visible element\n\t\t// if found, we monitor it to check when it is visible\n\t\tclosestNotVisible = (0, _closestNotVisible2.default)(elm);\n\t\tif (closestNotVisible) {\n\t\t\tparentObserver = new MutationObserver(function (mutations) {\n\t\t\t\tmutations.forEach(function (mutation) {\n\t\t\t\t\t// check that is the style whos changed\n\t\t\t\t\tif (mutation.attributeName === 'style' || mutation.attributeName === 'class') {\n\t\t\t\t\t\t// check if is visible\n\t\t\t\t\t\tif ((0, _isVisible2.default)(mutation.target)) {\n\t\t\t\t\t\t\t// update\n\t\t\t\t\t\t\tareParentsVisible = true;\n\t\t\t\t\t\t\t// callback\n\t\t\t\t\t\t\t_cb();\n\t\t\t\t\t\t\t// stop observe\n\t\t\t\t\t\t\tparentObserver.disconnect();\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t});\n\t\t\t});\n\t\t\tparentObserver.observe(closestNotVisible, { attributes: true });\n\n\t\t\t// listen for animationstart to check if the element is visible\n\t\t\tclosestNotVisible.addEventListener('animationstart', _eventCb);\n\t\t\tclosestNotVisible.addEventListener('animationend', _eventCb);\n\t\t\tclosestNotVisible.addEventListener('transitionend', _eventCb);\n\t\t} else {\n\t\t\tareParentsVisible = true;\n\t\t}\n\n\t\t// callback\n\t\t_cb();\n\t});\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/dom/whenVisible.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/features/inputAdditionalAttributes.js":
 /*!**********************************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/features/inputAdditionalAttributes.js ***!
@@ -1357,30 +980,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 "use strict";
 eval("\n\nvar _fastdom = __webpack_require__(/*! fastdom */ \"./node_modules/fastdom/fastdom.js\");\n\nvar _fastdom2 = _interopRequireDefault(_fastdom);\n\nvar _querySelectorLive = __webpack_require__(/*! ../dom/querySelectorLive */ \"./node_modules/coffeekraken-sugar/js/dom/querySelectorLive.js\");\n\nvar _querySelectorLive2 = _interopRequireDefault(_querySelectorLive);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * @name \tinputAdditionalAttributes\n * Add some attributes on inputs, textarea and select to help with styling purposes and more.\n * Here's the attributes added:\n * - `has-value`: When the input has a value in it\n * - `empty`: When the input is has no value in it\n * - `dirty`: When the input has been touched\n * @example \tjs\n * import 'coffeekraken-sugar/js/features/inputAdditionalAttributes'\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\n\nfunction handleInputAttributes(eOrElm) {\n\tvar setDirty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;\n\n\tvar field = eOrElm.target ? eOrElm.target : eOrElm;\n\tif (!field || !field.tagName) return;\n\tswitch (field.tagName) {\n\t\tcase 'INPUT':\n\t\tcase 'TEXTAREA':\n\t\tcase 'SELECT':\n\t\t\t_fastdom2.default.mutate(function () {\n\t\t\t\tif (field.type && (field.type === 'checkbox' || field.type === 'radio')) return;\n\t\t\t\tif (field.value && !field.hasAttribute('has-value')) {\n\t\t\t\t\tfield.setAttribute('has-value', true);\n\t\t\t\t\tfield.removeAttribute('empty');\n\t\t\t\t} else if (field.value === undefined || field.value === null || field.value === '') {\n\t\t\t\t\tfield.removeAttribute('has-value');\n\t\t\t\t\tfield.removeAttribute('value');\n\t\t\t\t\tif (!field.hasAttribute('empty')) {\n\t\t\t\t\t\tfield.setAttribute('empty', true);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\tif (setDirty) {\n\t\t\t\t\tif (!field.hasAttribute('dirty')) {\n\t\t\t\t\t\tfield.setAttribute('dirty', true);\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t});\n\t\t\tbreak;\n\t}\n}\n\nfunction handleFormSubmitOrReset(e) {\n\t// loop on each form elements\n\t[].forEach.call(e.target.elements, function (field) {\n\t\t// reset the field attributes\n\t\thandleInputAttributes(field);\n\t\t// stop here if is a submit\n\t\tif (e.type === 'submit') return;\n\t\t// remove dirty attribute\n\t\t_fastdom2.default.mutate(function () {\n\t\t\tfield.removeAttribute('dirty');\n\t\t});\n\t});\n}\n\n(0, _querySelectorLive2.default)('select, textarea, input:not([type=\"submit\"])', function (elm) {\n\thandleInputAttributes(elm, false);\n});\n\ndocument.addEventListener('change', handleInputAttributes);\ndocument.addEventListener('keyup', handleInputAttributes);\ndocument.addEventListener('reset', handleFormSubmitOrReset);\ndocument.addEventListener('submit', handleFormSubmitOrReset);\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/features/inputAdditionalAttributes.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/utils/functions/debounce.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/functions/debounce.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = debounce;\n/**\n * This utils function allows you to make sure that a function that will normally be called\n * several times, for example during a scroll event, to be called only once after\n * the delay passed\n *\n * @name \t\t\tdebounce\n * @example \t\tjs\n * const myDebouncedFn = debounce(() => {\n * \t\t// my function content that will be\n * \t\t// executed only once after the 1 second delay\n * }, 1000);\n *\n * document.addEventListener('scroll', (e) => {\n * \t\t// call my debounced function\n * \t\tmyDebouncedFn();\n * });\n *\n * @author \t\t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction debounce(fn, delay) {\n  var timer = null;\n  return function () {\n    var context = this,\n        args = arguments;\n    clearTimeout(timer);\n    timer = setTimeout(function () {\n      fn.apply(context, args);\n    }, delay);\n  };\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/functions/debounce.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/utils/functions/throttle.js":
-/*!************************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/functions/throttle.js ***!
-  \************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nexports.default = throttle;\n/**\n * This utils function allows you to make sure that a function that will normally be called\n * several times, for example during a scroll event, to be called once each threshhold time\n *\n * @name \t\t\tthrottle\n * @example \t\tjs\n * const myThrottledFn = throttle(() => {\n * \t\t// my function content that will be\n * \t\t// executed only once each second\n * }, 1000);\n *\n * document.addEventListener('scroll', (e) => {\n * \t\t// call my throttled function\n * \t\tmyThrottledFn();\n * });\n *\n * @author \t\t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction throttle(fn, threshhold) {\n    threshhold || (threshhold = 250);\n    var last, deferTimer;\n    return function () {\n        var context = this;\n\n        var now = +new Date(),\n            args = arguments;\n        if (last && now < last + threshhold) {\n            // hold on to it\n            clearTimeout(deferTimer);\n            deferTimer = setTimeout(function () {\n                last = now;\n                fn.apply(context, args);\n            }, threshhold);\n        } else {\n            last = now;\n            fn.apply(context, args);\n        }\n    };\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/functions/throttle.js?");
 
 /***/ }),
 
@@ -1480,18 +1079,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/utils/is/safari.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/is/safari.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = isSafari;\n/**\n * Detect if is safari\n * @example \tjs\n * import isSafari from 'coffeekraken-sugar/js/utils/is/safari'\n * if (isSafari()) {\n *   // do something cool\n * }\n *\n * @return    {Boolean}    true if is safari, false if not\n * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction isSafari() {\n  return navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('Chrome') == -1;\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/is/safari.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/utils/is/url.js":
 /*!************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/utils/is/url.js ***!
@@ -1528,18 +1115,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/utils/objects/propertyProxy.js":
-/*!***************************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/objects/propertyProxy.js ***!
-  \***************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = propertyProxy;\n\nvar _get2 = __webpack_require__(/*! lodash/get */ \"./node_modules/lodash/get.js\");\n\nvar _get3 = _interopRequireDefault(_get2);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n/**\n * Create a proxy for and object property.\n * This gives you the possibility to process the data of the property\n * when it is getted or setted.\n *\n * @name \t\tpropertyProxy\n * @param \t\t{Object} \t\tobj \t\t\tThe object on which to create the proxy\n * @param \t\t{String} \t\tproperty \t\tThe property name that will be proxied\n * @param \t\t{Object} \t\tdescriptor \t\tA descriptor object that contains at least a get or a set method, or both\n * @param \t\t{Boolean} \t\tapplySetterAtStart \tIf need to apply the descriptor setter directly on the current value or not\n *\n * @example \tjs\n * const myObject = {\n * \t\ttitle : 'World'\n * };\n * // create the proxy\n * propertyProxy(myObject, 'title', {\n * \t\tget : (value) => {\n * \t\t\treturn `Hello ${value}`;\n * \t\t},\n * \t\tset : (value) => {\n * \t\t\treturn `Youhou ${value}`;\n * \t\t}\n * });\n * console.log(myObject.title) => 'Hello World';\n * myObject.title = 'Universe';\n * console.log(myObject.title) => 'Hello Youhou Universe';\n *\n * @author \t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction propertyProxy(obj, property, descriptor) {\n\tvar applySetterAtStart = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;\n\n\n\t// store the current value\n\tvar val = (0, _get3.default)(obj, property);\n\tvar currentDescriptor = Object.getOwnPropertyDescriptor(obj.prototype || obj, property);\n\n\t// custom setter check\n\tvar _set = function _set(value) {\n\n\t\tif (descriptor.set) {\n\t\t\tvalue = descriptor.set(value);\n\t\t}\n\n\t\t// descriptor\n\t\tif (currentDescriptor && currentDescriptor.set) {\n\t\t\tvar ret = currentDescriptor.set(value);\n\t\t\tif (ret) {\n\t\t\t\tval = ret;\n\t\t\t} else {\n\t\t\t\tval = currentDescriptor.get();\n\t\t\t}\n\t\t} else {\n\t\t\tval = value;\n\t\t}\n\t};\n\n\t// apply the setter if needed\n\tif (applySetterAtStart) _set(val);\n\n\t// make sure we have the good descriptor\n\tvar d = Object.getOwnPropertyDescriptor(obj, property);\n\tObject.defineProperty(obj, property, {\n\t\tget: function get() {\n\t\t\tvar _val = val;\n\t\t\tif (descriptor.get) {\n\t\t\t\t_val = descriptor.get(_val);\n\t\t\t}\n\t\t\tif (currentDescriptor && currentDescriptor.get) {\n\t\t\t\t_val = currentDescriptor.get();\n\t\t\t}\n\t\t\treturn _val;\n\t\t},\n\t\tset: function set(v) {\n\t\t\t// const oldValue = val;\n\t\t\t// internal set to use the good setter\n\t\t\t_set(v);\n\t\t\t// notify of new update\n\t\t\t// this.notify(objPath, val, oldValue);\n\t\t},\n\t\tconfigurable: descriptor.configurable !== undefined ? descriptor.configurable : currentDescriptor && currentDescriptor.configurable !== undefined ? currentDescriptor.configurable : false,\n\t\tenumarable: descriptor.enumarable !== undefined ? descriptor.enumarable : currentDescriptor && currentDescriptor.enumarable !== undefined ? currentDescriptor.enumarable : true\n\t\t// writable : currentDescriptor && currentDescriptor.writable !== undefined ? currentDescriptor.writable : true\n\t});\n\n\t// return the value\n\treturn val;\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/objects/propertyProxy.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/utils/objects/whenProperty.js":
 /*!**************************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/utils/objects/whenProperty.js ***!
@@ -1564,30 +1139,6 @@ eval("\n\nvar _Observable = __webpack_require__(/*! rxjs/Observable */ \"./node_
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/utils/string/autoCast.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/string/autoCast.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = autoCast;\n/**\n * Auto cast the string into the correct variable type\n */\nfunction autoCast(string) {\n\n\t// if the passed string is not a string, return the value\n\tif (typeof string !== 'string') return string;\n\n\t// handle the single quotes strings like '\"hello world\"'\n\tif (string.substr(0, 1) === '\\'' && string.substr(-1) === '\\'') {\n\t\treturn string.substr(1, string.length - 2);\n\t}\n\n\t// number\n\t// before the window check cause window['0'] correspond to something\n\tvar presumedNumber = parseFloat(string);\n\tif (!isNaN(presumedNumber)) {\n\t\tif (presumedNumber.toString() === string) {\n\t\t\treturn presumedNumber;\n\t\t}\n\t}\n\n\t// avoid getting item from the window object\n\tif (window[string]) {\n\t\treturn string;\n\t}\n\n\t// try to eval the passed string\n\t// if no exception, mean that it's a valid\n\t// js variable type\n\ttry {\n\t\tvar obj = eval('(' + string + ')');\n\t\treturn obj;\n\t} catch (e) {\n\t\t// assume that the string passed is a string\n\t\treturn string;\n\t}\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/string/autoCast.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/utils/string/camelize.js":
-/*!*********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/string/camelize.js ***!
-  \*********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = camelize;\n/**\n * Camelize a string\n */\nfunction camelize(text) {\n\tvar res = '';\n\tres = text.replace(/(?:^|[-_])(\\w)/g, function (_, c) {\n\t\treturn c ? c.toUpperCase() : '';\n\t});\n\tres = res.substr(0, 1).toLowerCase() + res.slice(1);\n\treturn res.trim();\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/string/camelize.js?");
-
-/***/ }),
-
 /***/ "./node_modules/coffeekraken-sugar/js/utils/string/printf.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/coffeekraken-sugar/js/utils/string/printf.js ***!
@@ -1597,30 +1148,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 
 "use strict";
 eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\nexports.default = printf;\n/**\n * printf php equavalent\n * @param \t\t{String} \t\t\t\t\t\tsource \t\t\tThe source in which to replace the tokens\n * @param \t\t{Object|Array|...} \t\t\tvalues \t\t\tAn object/array/list of values to replace\n * @return \t{String} \t\t\t\t\t\t\t\t\t\tThe resulting string\n *\n * @example\n * printf('Hello %s', 'world'); // => Hello world\n * printf('Hello %s, I\\'m %s', 'world', 'John Doe'); // Hello world, I'm John Doe\n * printf('Hello %s, I\\'m %s', ['world', 'John Doe']); // Hello world, I'm John Doe\n * printf('Hello {first}, I\\'m {name}', { first : 'world', name : 'John Doe'}); // Hello world, I'm John Doe\n *\n * @see \t\t\t\thttps://monocleglobe.wordpress.com/2010/01/12/everybody-needs-a-little-printf-in-their-javascript/\n * @author \t\t\tOlivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction printf(source, values) {\n\tvar useArguments = false;\n\tvar _arguments = arguments;\n\tvar i = 0;\n\tif (typeof _arguments[1] == \"string\") {\n\t\tuseArguments = true;\n\t}\n\tif (values instanceof Array || useArguments) {\n\t\treturn source.replace(/\\%s/g, function (a, b) {\n\t\t\ti++;\n\t\t\tif (useArguments) {\n\t\t\t\tif (typeof _arguments[i] == 'string') {\n\t\t\t\t\treturn _arguments[i];\n\t\t\t\t} else {\n\t\t\t\t\tthrow new Error(\"Arguments element is an invalid type\");\n\t\t\t\t}\n\t\t\t}\n\t\t\treturn values[i];\n\t\t});\n\t} else {\n\t\treturn source.replace(/{([^{}]*)}/g, function (a, b) {\n\t\t\tvar r = values[b];\n\t\t\treturn typeof r === 'string' || typeof r === 'number' ? r : a;\n\t\t});\n\t}\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/string/printf.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/utils/string/uncamelize.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/string/uncamelize.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = uncamelize;\n/**\n * Uncamelize a string\n * @param    {String}    string    The string to uncamelize\n * @param    {String}    [separator='-']    The separator to use\n * @return    {String}    The uncamelized string\n *\n * @example    js\n * import uncamelize from 'coffeekraken-sugar/js/utils/strings/uncamelize'\n * uncamelize('helloWorldAndUniverse') // hello-world-and-universe\n *\n * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction uncamelize(text) {\n  var separator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '-';\n\n  // Replace all capital letters by separator followed by lowercase one\n  var res = '';\n  res = text.replace(/[A-Z]/g, function (letter) {\n    return separator + letter.toLowerCase();\n  });\n\n  // Remove first separator (to avoid _hello_world name)\n  return res.replace(\"/^\" + separator + \"/\", '').trim();\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/string/uncamelize.js?");
-
-/***/ }),
-
-/***/ "./node_modules/coffeekraken-sugar/js/utils/string/upperFirst.js":
-/*!***********************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/utils/string/upperFirst.js ***!
-  \***********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = upperFirst;\n/**\n * Upper first\n * @param    {String}    string    The string to process\n * @return    {String}    The processed string with first letter uppercase\n *\n * @example    js\n * import upperFirst from 'coffeekraken-sugar/js/utils/strings/upperFirst'\n * upperFirst('hello world') // Hello world\n *\n * @author    Olivier Bossel <olivier.bossel@gmail.com> (https://olivierbossel.com)\n */\nfunction upperFirst(string) {\n  return string.charAt(0).toUpperCase() + string.slice(1);\n}\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/utils/string/upperFirst.js?");
 
 /***/ }),
 
@@ -1636,18 +1163,6 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n
 
 /***/ }),
 
-/***/ "./node_modules/coffeekraken-sugar/js/vendors/mixwith.js":
-/*!***************************************************************!*\
-  !*** ./node_modules/coffeekraken-sugar/js/vendors/mixwith.js ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;\n\nvar _createClass = function () {\n  function defineProperties(target, props) {\n    for (var i = 0; i < props.length; i++) {\n      var descriptor = props[i];descriptor.enumerable = descriptor.enumerable || false;descriptor.configurable = true;if (\"value\" in descriptor) descriptor.writable = true;Object.defineProperty(target, descriptor.key, descriptor);\n    }\n  }return function (Constructor, protoProps, staticProps) {\n    if (protoProps) defineProperties(Constructor.prototype, protoProps);if (staticProps) defineProperties(Constructor, staticProps);return Constructor;\n  };\n}();\n\nfunction _classCallCheck(instance, Constructor) {\n  if (!(instance instanceof Constructor)) {\n    throw new TypeError(\"Cannot call a class as a function\");\n  }\n}\n\n(function (global, factory) {\n  if (true) {\n    !(__WEBPACK_AMD_DEFINE_ARRAY__ = [exports], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?\n\t\t\t\t(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n  } else { var mod; }\n})(undefined, function (exports) {\n  Object.defineProperty(exports, \"__esModule\", {\n    value: true\n  });\n  var _appliedMixin = '__mixwith_appliedMixin';\n\n  var apply = exports.apply = function (superclass, mixin) {\n    var application = mixin(superclass);\n    application.prototype[_appliedMixin] = unwrap(mixin);\n    return application;\n  };\n\n  var isApplicationOf = exports.isApplicationOf = function (proto, mixin) {\n    return proto.hasOwnProperty(_appliedMixin) && proto[_appliedMixin] === unwrap(mixin);\n  };\n\n  var hasMixin = exports.hasMixin = function (o, mixin) {\n    while (o != null) {\n      if (isApplicationOf(o, mixin)) return true;\n      o = Object.getPrototypeOf(o);\n    }\n    return false;\n  };\n\n  var _wrappedMixin = '__mixwith_wrappedMixin';\n\n  var wrap = exports.wrap = function (mixin, wrapper) {\n    Object.setPrototypeOf(wrapper, mixin);\n    if (!mixin[_wrappedMixin]) {\n      mixin[_wrappedMixin] = mixin;\n    }\n    return wrapper;\n  };\n\n  var unwrap = exports.unwrap = function (wrapper) {\n    return wrapper[_wrappedMixin] || wrapper;\n  };\n\n  var _cachedApplications = '__mixwith_cachedApplications';\n\n  var Cached = exports.Cached = function (mixin) {\n    return wrap(mixin, function (superclass) {\n      // Get or create a symbol used to look up a previous application of mixin\n      // to the class. This symbol is unique per mixin definition, so a class will have N\n      // applicationRefs if it has had N mixins applied to it. A mixin will have\n      // exactly one _cachedApplicationRef used to store its applications.\n\n      var cachedApplications = superclass[_cachedApplications];\n      if (!cachedApplications) {\n        cachedApplications = superclass[_cachedApplications] = new Map();\n      }\n\n      var application = cachedApplications.get(mixin);\n      if (!application) {\n        application = mixin(superclass);\n        cachedApplications.set(mixin, application);\n      }\n\n      return application;\n    });\n  };\n\n  var DeDupe = exports.DeDupe = function (mixin) {\n    return wrap(mixin, function (superclass) {\n      return hasMixin(superclass.prototype, mixin) ? superclass : mixin(superclass);\n    });\n  };\n\n  var HasInstance = exports.HasInstance = function (mixin) {\n    if (Symbol && Symbol.hasInstance && !mixin[Symbol.hasInstance]) {\n      Object.defineProperty(mixin, Symbol.hasInstance, {\n        value: function value(o) {\n          return hasMixin(o, mixin);\n        }\n      });\n    }\n    return mixin;\n  };\n\n  var BareMixin = exports.BareMixin = function (mixin) {\n    return wrap(mixin, function (s) {\n      return apply(s, mixin);\n    });\n  };\n\n  var Mixin = exports.Mixin = function (mixin) {\n    return DeDupe(Cached(BareMixin(mixin)));\n  };\n\n  var mix = exports.mix = function (superclass) {\n    return new MixinBuilder(superclass);\n  };\n\n  var MixinBuilder = function () {\n    function MixinBuilder(superclass) {\n      _classCallCheck(this, MixinBuilder);\n\n      this.superclass = superclass || function () {\n        function _class() {\n          _classCallCheck(this, _class);\n        }\n\n        return _class;\n      }();\n    }\n\n    _createClass(MixinBuilder, [{\n      key: 'with',\n      value: function _with() {\n        for (var _len = arguments.length, mixins = Array(_len), _key = 0; _key < _len; _key++) {\n          mixins[_key] = arguments[_key];\n        }\n\n        return mixins.reduce(function (c, m) {\n          return m(c);\n        }, this.superclass);\n      }\n    }]);\n\n    return MixinBuilder;\n  }();\n});\n\n//# sourceURL=webpack:///./node_modules/coffeekraken-sugar/js/vendors/mixwith.js?");
-
-/***/ }),
-
 /***/ "./node_modules/cssuseragent/cssua.js":
 /*!********************************************!*\
   !*** ./node_modules/cssuseragent/cssua.js ***!
@@ -1656,17 +1171,6 @@ eval("var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPAC
 /***/ (function(module, exports) {
 
 eval("/**\r\n * CssUserAgent (cssua.js) v2.1.31\r\n * http://cssuseragent.org\r\n * \r\n * Copyright (c)2006-2015 Stephen M. McKamey.\r\n * Licensed under The MIT License.\r\n */\r\n/*jshint smarttabs:true, regexp:false, browser:true */\r\n\r\n/**\r\n * @type {Object}\r\n */\r\nvar cssua = (\r\n\r\n/**\r\n * @param html {Object} root DOM element\r\n * @param userAgent {string} browser userAgent string\r\n * @return {Object}\r\n */\r\nfunction(html, userAgent, sa) {\r\n\t'use strict';\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {string}\r\n\t */\r\n\tvar PREFIX = ' ua-';\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_Platform = /\\s*([\\-\\w ]+)[\\s\\/\\:]([\\d_]+\\b(?:[\\-\\._\\/]\\w+)*)/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_Version = /([\\w\\-\\.]+[\\s\\/][v]?[\\d_]+\\b(?:[\\-\\._\\/]\\w+)*)/g;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_BlackBerry = /\\b(?:(blackberry\\w*|bb10)|(rim tablet os))(?:\\/(\\d+\\.\\d+(?:\\.\\w+)*))?/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_Silk = /\\bsilk-accelerated=true\\b/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_FluidApp = /\\bfluidapp\\b/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_desktop = /(\\bwindows\\b|\\bmacintosh\\b|\\blinux\\b|\\bunix\\b)/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_mobile = /(\\bandroid\\b|\\bipad\\b|\\bipod\\b|\\bwindows phone\\b|\\bwpdesktop\\b|\\bxblwp7\\b|\\bzunewp7\\b|\\bwindows ce\\b|\\bblackberry\\w*|\\bbb10\\b|\\brim tablet os\\b|\\bmeego|\\bwebos\\b|\\bpalm|\\bsymbian|\\bj2me\\b|\\bdocomo\\b|\\bpda\\b|\\bchtml\\b|\\bmidp\\b|\\bcldc\\b|\\w*?mobile\\w*?|\\w*?phone\\w*?)/;\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {RegExp}\r\n\t */\r\n\tvar R_game = /(\\bxbox\\b|\\bplaystation\\b|\\bnintendo\\s+\\w+)/;\r\n\r\n\t/**\r\n\t * The root CssUserAgent\r\n\t * @type {Object}\r\n\t */\r\n\tvar cssua = {\r\n\r\n\t\tparse:\r\n\t\t\t/**\r\n\t\t\t * @param uaStr {string}\r\n\t\t\t * @return {Object}\r\n\t\t\t */\r\n\t\t\tfunction(uaStr, sa) {\r\n\r\n\t\t\t\t/**\r\n\t\t\t\t * @type {Object}\r\n\t\t\t\t */\r\n\t\t\t\tvar ua = {};\r\n\t\t\t\tif (sa) {\r\n\t\t\t\t\tua.standalone = sa;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tuaStr = (''+uaStr).toLowerCase();\r\n\t\t\t\tif (!uaStr) {\r\n\t\t\t\t\treturn ua;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tvar i, count, raw = uaStr.split(/[()]/);\r\n\t\t\t\tfor (var j=0, rawCount=raw.length; j<rawCount; j++) {\r\n\t\t\t\t\tif (j%2) {\r\n\t\t\t\t\t\t// inside parens covers platform identifiers\r\n\t\t\t\t\t\tvar platforms = raw[j].split(';');\r\n\t\t\t\t\t\tfor (i=0, count=platforms.length; i<count; i++) {\r\n\t\t\t\t\t\t\tif (R_Platform.exec(platforms[i])) {\r\n\t\t\t\t\t\t\t\tvar key = RegExp.$1.split(' ').join('_'),\r\n\t\t\t\t\t\t\t\t\tval = RegExp.$2;\r\n\r\n\t\t\t\t\t\t\t\t// if duplicate entries favor highest version\r\n\t\t\t\t\t\t\t\tif ((!ua[key] || parseFloat(ua[key]) < parseFloat(val))) {\r\n\t\t\t\t\t\t\t\t\tua[key] = val;\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\r\n\t\t\t\t\t} else {\r\n\t\t\t\t\t\t// outside parens covers most version identifiers\r\n\t\t\t\t\t\tvar uas = raw[j].match(R_Version);\r\n\t\t\t\t\t\tif (uas) {\r\n\t\t\t\t\t\t\tfor (i=0, count=uas.length; i<count; i++) {\r\n\t\t\t\t\t\t\t\tvar parts = uas[i].split(/[\\/\\s]+/);\r\n\t\t\t\t\t\t\t\tif (parts.length && parts[0] !== 'mozilla') {\r\n\t\t\t\t\t\t\t\t\tua[parts[0].split(' ').join('_')] = parts.slice(1).join('-');\r\n\t\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t\t}\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\r\n\t\t\t\tif (R_mobile.exec(uaStr)) {\r\n\t\t\t\t\t// mobile device indicators\r\n\t\t\t\t\tua.mobile = RegExp.$1;\r\n\t\t\t\t\tif (R_BlackBerry.exec(uaStr)) {\r\n\t\t\t\t\t\tdelete ua[ua.mobile];\r\n\t\t\t\t\t\tua.blackberry = ua.version || RegExp.$3 || RegExp.$2 || RegExp.$1;\r\n\t\t\t\t\t\tif (RegExp.$1) {\r\n\t\t\t\t\t\t\t// standardize non-tablet blackberry\r\n\t\t\t\t\t\t\tua.mobile = 'blackberry';\r\n\t\t\t\t\t\t} else if (ua.version === '0.0.1') {\r\n\t\t\t\t\t\t\t// fix playbook 1.0 quirk\r\n\t\t\t\t\t\t\tua.blackberry = '7.1.0.0';\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t} else if (R_game.exec(uaStr)) {\r\n\t\t\t\t\t// game console indicators\r\n\t\t\t\t\tua.game = RegExp.$1;\r\n\t\t\t\t\tvar game = ua.game.split(' ').join('_');\r\n\r\n\t\t\t\t\tif (ua.version && !ua[game]) {\r\n\t\t\t\t\t\tua[game] = ua.version;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t} else if (R_desktop.exec(uaStr)) {\r\n\t\t\t\t\t// desktop OS indicators\r\n\t\t\t\t\tua.desktop = RegExp.$1;\r\n\t\t\t\t}\r\n\r\n\t\t\t\t// platform naming standardizations\r\n\t\t\t\tif (ua.intel_mac_os_x) {\r\n\t\t\t\t\tua.mac_os_x = ua.intel_mac_os_x.split('_').join('.');\r\n\t\t\t\t\tdelete ua.intel_mac_os_x;\r\n\r\n\t\t\t\t} else if (ua.cpu_iphone_os) {\r\n\t\t\t\t\tua.ios = ua.cpu_iphone_os.split('_').join('.');\r\n\t\t\t\t\tdelete ua.cpu_iphone_os;\r\n\r\n\t\t\t\t} else if (ua.cpu_os) {\r\n\t\t\t\t\tua.ios = ua.cpu_os.split('_').join('.');\r\n\t\t\t\t\tdelete ua.cpu_os;\r\n\r\n\t\t\t\t} else if (ua.mobile === 'iphone' && !ua.ios) {\r\n\t\t\t\t\tua.ios = '1';\r\n\t\t\t\t}\r\n\r\n\t\t\t\t// UA naming standardizations\r\n\t\t\t\tif (ua.opera && ua.version) {\r\n\t\t\t\t\tua.opera = ua.version;\r\n\t\t\t\t\t// version/XXX refers to opera\r\n\t\t\t\t\tdelete ua.blackberry;\r\n\r\n\t\t\t\t} else if (R_Silk.exec(uaStr)) {\r\n\t\t\t\t\tua.silk_accelerated = true;\r\n\r\n\t\t\t\t} else if (R_FluidApp.exec(uaStr)) {\r\n\t\t\t\t\tua.fluidapp = ua.version;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tif (ua.edge) {\r\n\t\t\t\t\tdelete ua.applewebkit;\r\n\t\t\t\t\tdelete ua.safari;\r\n\t\t\t\t\tdelete ua.chrome;\r\n\t\t\t\t\tdelete ua.android;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tif (ua.applewebkit) {\r\n\t\t\t\t\tua.webkit = ua.applewebkit;\r\n\t\t\t\t\tdelete ua.applewebkit;\r\n\r\n\t\t\t\t\tif (ua.opr) {\r\n\t\t\t\t\t\tua.opera = ua.opr;\r\n\t\t\t\t\t\tdelete ua.opr;\r\n\t\t\t\t\t\tdelete ua.chrome;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t\tif (ua.safari) {\r\n\t\t\t\t\t\tif (ua.chrome || ua.crios || ua.fxios || ua.opera || ua.silk || ua.fluidapp || ua.phantomjs || (ua.mobile && !ua.ios)) {\r\n\t\t\t\t\t\t\tdelete ua.safari;\r\n\r\n\t\t\t\t\t\t\tif (ua.vivaldi) {\r\n\t\t\t\t\t\t\t\tdelete ua.chrome;\r\n\t\t\t\t\t\t\t}\r\n\r\n\t\t\t\t\t\t} else if (ua.version && !ua.rim_tablet_os) {\r\n\t\t\t\t\t\t\tua.safari = ua.version;\r\n\r\n\t\t\t\t\t\t} else {\r\n\t\t\t\t\t\t\tua.safari = ({\r\n\t\t\t\t\t\t\t\t'419': '2.0.4',\r\n\t\t\t\t\t\t\t\t'417': '2.0.3',\r\n\t\t\t\t\t\t\t\t'416': '2.0.2',\r\n\t\t\t\t\t\t\t\t'412': '2.0',\r\n\t\t\t\t\t\t\t\t'312': '1.3',\r\n\t\t\t\t\t\t\t\t'125': '1.2',\r\n\t\t\t\t\t\t\t\t'85': '1.0'\r\n\t\t\t\t\t\t\t})[parseInt(ua.safari, 10)] || ua.safari;\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t} else if (ua.msie || ua.trident) {\r\n\t\t\t\t\tif (!ua.opera) {\r\n\t\t\t\t\t\t// standardize Internet Explorer\r\n\t\t\t\t\t\tua.ie = ua.msie || ua.rv;\r\n\t\t\t\t\t}\r\n\t\t\t\t\tdelete ua.msie;\r\n\t\t\t\t\tdelete ua.android;\r\n\r\n\t\t\t\t\tif (ua.windows_phone_os) {\r\n\t\t\t\t\t\t// standardize window phone\r\n\t\t\t\t\t\tua.windows_phone = ua.windows_phone_os;\r\n\t\t\t\t\t\tdelete ua.windows_phone_os;\r\n\r\n\t\t\t\t\t} else if (ua.mobile === 'wpdesktop' || ua.mobile === 'xblwp7' || ua.mobile === 'zunewp7') {\r\n\t\t\t\t\t\tua.mobile = 'windows desktop';\r\n\t\t\t\t\t\tua.windows_phone = (+ua.ie < 9) ? '7.0' : (+ua.ie < 10) ? '7.5' : '8.0';\r\n\t\t\t\t\t\tdelete ua.windows_nt;\r\n\t\t\t\t\t}\r\n\r\n\t\t\t\t} else if (ua.gecko || ua.firefox) {\r\n\t\t\t\t\tua.gecko = ua.rv;\r\n\t\t\t\t}\r\n\r\n\t\t\t\tif (ua.rv) {\r\n\t\t\t\t\tdelete ua.rv;\r\n\t\t\t\t}\r\n\t\t\t\tif (ua.version) {\r\n\t\t\t\t\tdelete ua.version;\r\n\t\t\t\t}\r\n\r\n\t\t\t\treturn ua;\r\n\t\t\t},\r\n\r\n\t\tformat:\r\n\t\t\t/**\r\n\t\t\t * @param ua {Object}\r\n\t\t\t * @return {string}\r\n\t\t\t */\r\n\t\t\tfunction (ua) {\r\n\t\t\t\t/**\r\n\t\t\t\t * @param b {string} browser key\r\n\t\t\t\t * @param v {string} browser value\r\n\t\t\t\t * @return {string} formatted CSS classes\r\n\t\t\t\t */\r\n\t\t\t\tfunction format(b, v) {\r\n\t\t\t\t\tb = b.split('.').join('-');\r\n\r\n\t\t\t\t\t/**\r\n\t\t\t\t\t * @type {string}\r\n\t\t\t\t\t */\r\n\t\t\t\t\tvar css = PREFIX+b;\r\n\t\t\t\t\tif (typeof v === 'string') {\r\n\t\t\t\t\t\tv = v.split(' ').join('_').split('.').join('-');\r\n\t\t\t\t\t\tvar i = v.indexOf('-');\r\n\t\t\t\t\t\twhile (i > 0) {\r\n\t\t\t\t\t\t\t// loop through chopping last '-' to end off\r\n\t\t\t\t\t\t\t// concat result onto return string\r\n\t\t\t\t\t\t\tcss += PREFIX+b+'-'+v.substring(0, i);\r\n\t\t\t\t\t\t\ti = v.indexOf('-', i+1);\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tcss += PREFIX+b+'-'+v;\r\n\t\t\t\t\t}\r\n\t\t\t\t\treturn css;\r\n\t\t\t\t}\r\n\t\r\n\t\t\t\t/**\r\n\t\t\t\t * @type {string}\r\n\t\t\t\t */\r\n\t\t\t\tvar\tuaCss = '';\r\n\t\t\t\tfor (var b in ua) {\r\n\t\t\t\t\tif (b && ua.hasOwnProperty(b)) {\r\n\t\t\t\t\t\tuaCss += format(b, ua[b]);\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\r\n\t\t\t\t// user-agent classNames\r\n\t\t\t\treturn uaCss;\r\n\t\t\t},\r\n\r\n\t\tencode:\r\n\t\t\t/**\r\n\t\t\t * Encodes parsed userAgent object as a compact URI-Encoded key-value collection\r\n\t\t\t * @param ua {Object}\r\n\t\t\t * @return {string}\r\n\t\t\t */\r\n\t\t\tfunction(ua) {\r\n\t\t\t\tvar query = '';\r\n\t\t\t\tfor (var b in ua) {\r\n\t\t\t\t\tif (b && ua.hasOwnProperty(b)) {\r\n\t\t\t\t\t\tif (query) {\r\n\t\t\t\t\t\t\tquery += '&';\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tquery += encodeURIComponent(b)+'='+encodeURIComponent(ua[b]);\r\n\t\t\t\t\t}\r\n\t\t\t\t}\r\n\t\t\t\treturn query;\r\n\t\t\t}\r\n\t};\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {Object}\r\n\t */\r\n\tcssua.userAgent = cssua.ua = cssua.parse(userAgent, sa);\r\n\r\n\t/**\r\n\t * @const\r\n\t * @type {string}\r\n\t */\r\n\tvar ua = cssua.format(cssua.ua)+' js';\r\n\r\n\t// append CSS classes to HTML node\r\n\tif (html.className) {\r\n\t\thtml.className = html.className.replace(/\\bno-js\\b/g, '') + ua;\r\n\t\t\r\n\t} else {\r\n\t\thtml.className = ua.substr(1);\r\n\t}\r\n\r\n\treturn cssua;\r\n\r\n})(document.documentElement, navigator.userAgent, navigator.standalone);\r\n\n\n//# sourceURL=webpack:///./node_modules/cssuseragent/cssua.js?");
-
-/***/ }),
-
-/***/ "./node_modules/custom-event/index.js":
-/*!********************************************!*\
-  !*** ./node_modules/custom-event/index.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/* WEBPACK VAR INJECTION */(function(global) {\nvar NativeCustomEvent = global.CustomEvent;\n\nfunction useNative () {\n  try {\n    var p = new NativeCustomEvent('cat', { detail: { foo: 'bar' } });\n    return  'cat' === p.type && 'bar' === p.detail.foo;\n  } catch (e) {\n  }\n  return false;\n}\n\n/**\n * Cross-browser `CustomEvent` constructor.\n *\n * https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent.CustomEvent\n *\n * @public\n */\n\nmodule.exports = useNative() ? NativeCustomEvent :\n\n// IE >= 9\n'undefined' !== typeof document && 'function' === typeof document.createEvent ? function CustomEvent (type, params) {\n  var e = document.createEvent('CustomEvent');\n  if (params) {\n    e.initCustomEvent(type, params.bubbles, params.cancelable, params.detail);\n  } else {\n    e.initCustomEvent(type, false, false, void 0);\n  }\n  return e;\n} :\n\n// IE <= 8\nfunction CustomEvent (type, params) {\n  var e = document.createEventObject();\n  e.type = type;\n  if (params) {\n    e.bubbles = Boolean(params.bubbles);\n    e.cancelable = Boolean(params.cancelable);\n    e.detail = params.detail;\n  } else {\n    e.bubbles = false;\n    e.cancelable = false;\n    e.detail = void 0;\n  }\n  return e;\n}\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./node_modules/custom-event/index.js?");
 
 /***/ }),
 
@@ -1692,29 +1196,6 @@ eval("var closest = __webpack_require__(/*! ./closest */ \"./node_modules/delega
 
 /***/ }),
 
-/***/ "./node_modules/document-register-element/build/document-register-element.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/document-register-element/build/document-register-element.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/*! (C) Andrea Giammarchi - @WebReflection - ISC Style License */\n!function(e,t){\"use strict\";function n(){var e=A.splice(0,A.length);for(Ye=0;e.length;)e.shift().call(null,e.shift())}function r(e,t){for(var n=0,r=e.length;n<r;n++)T(e[n],t)}function o(e){for(var t,n=0,r=e.length;n<r;n++)t=e[n],V(t,le[a(t)])}function l(e){return function(t){ke(t)&&(T(t,e),ae.length&&r(t.querySelectorAll(ae),e))}}function a(e){var t=Ze.call(e,\"is\"),n=e.nodeName.toUpperCase(),r=ue.call(oe,t?te+t.toUpperCase():ee+n);return t&&-1<r&&!i(n,t)?-1:r}function i(e,t){return-1<ae.indexOf(e+'[is=\"'+t+'\"]')}function u(e){var t=e.currentTarget,n=e.attrChange,r=e.attrName,o=e.target,l=e[$]||2,a=e[Q]||3;!ot||o&&o!==t||!t[Z]||\"style\"===r||e.prevValue===e.newValue&&(\"\"!==e.newValue||n!==l&&n!==a)||t[Z](r,n===l?null:e.prevValue,n===a?null:e.newValue)}function c(e){var t=l(e);return function(e){A.push(t,e.target),Ye&&clearTimeout(Ye),Ye=setTimeout(n,1)}}function s(e){rt&&(rt=!1,e.currentTarget.removeEventListener(Y,s)),ae.length&&r((e.target||y).querySelectorAll(ae),e.detail===q?q:_),Re&&d()}function m(e,t){var n=this;ze.call(n,e,t),O.call(n,{target:n})}function f(e,t,n){var r=t.apply(e,n),l=a(r);return-1<l&&V(r,le[l]),n.pop()&&ae.length&&o(r.querySelectorAll(ae)),r}function p(e,t){Fe(e,t),I?I.observe(e,Qe):(nt&&(e.setAttribute=m,e[U]=D(e),e[k](J,O)),e[k](W,u)),e[K]&&ot&&(e.created=!0,e[K](),e.created=!1)}function d(){for(var e,t=0,n=_e.length;t<n;t++)e=_e[t],ie.contains(e)||(n--,_e.splice(t--,1),T(e,q))}function h(e){throw new Error(\"A \"+e+\" type is already registered\")}function T(e,t){var n,r,o=a(e);-1<o&&(S(e,le[o]),o=0,t!==_||e[_]?t!==q||e[q]||(e[_]=!1,e[q]=!0,r=\"disconnected\",o=1):(e[q]=!1,e[_]=!0,r=\"connected\",o=1,Re&&ue.call(_e,e)<0&&_e.push(e)),o&&(n=e[t+x]||e[r+x])&&n.call(e))}function L(){}function M(e,t,n){var r=n&&n[B]||\"\",o=t.prototype,l=Ie(o),a=t.observedAttributes||pe,i={prototype:l};Ue(l,K,{value:function(){if(we)we=!1;else if(!this[ve]){this[ve]=!0,new t(this),o[K]&&o[K].call(this);var e=Ae[Ne.get(t)];(!ge||e.create.length>1)&&H(this)}}}),Ue(l,Z,{value:function(e){-1<ue.call(a,e)&&o[Z]&&o[Z].apply(this,arguments)}}),o[G]&&Ue(l,j,{value:o[G]}),o[z]&&Ue(l,X,{value:o[z]}),r&&(i[B]=r),e=e.toUpperCase(),Ae[e]={constructor:t,create:r?[r,De(e)]:[e]},Ne.set(t,e),y[R](e.toLowerCase(),i),g(e),Oe[e].r()}function E(e){var t=Ae[e.toUpperCase()];return t&&t.constructor}function v(e){return\"string\"==typeof e?e:e&&e.is||\"\"}function H(e){for(var t,n=e[Z],r=n?e.attributes:pe,o=r.length;o--;)t=r[o],n.call(e,t.name||t.nodeName,null,t.value||t.nodeValue)}function g(e){return e=e.toUpperCase(),e in Oe||(Oe[e]={},Oe[e].p=new Ce(function(t){Oe[e].r=t})),Oe[e].p}function b(){He&&delete e.customElements,fe(e,\"customElements\",{configurable:!0,value:new L}),fe(e,\"CustomElementRegistry\",{configurable:!0,value:L});for(var t=w.get(/^HTML[A-Z]*[a-z]/),n=t.length;n--;function(t){var n=e[t];if(n){e[t]=function(e){var t,r;return e||(e=this),e[ve]||(we=!0,t=Ae[Ne.get(e.constructor)],r=ge&&1===t.create.length,e=r?Reflect.construct(n,pe,t.constructor):y.createElement.apply(y,t.create),e[ve]=!0,we=!1,r||H(e)),e},e[t].prototype=n.prototype;try{n.prototype.constructor=e[t]}catch(r){Ee=!0,fe(n,ve,{value:e[t]})}}}(t[n]));y.createElement=function(e,t){var n=v(t);return n?$e.call(this,e,De(n)):$e.call(this,e)},Je||(tt=!0,y[R](\"\"))}var y=e.document,C=e.Object,w=function(e){var t,n,r,o,l=/^[A-Z]+[a-z]/,a=function(e){var t,n=[];for(t in u)e.test(t)&&n.push(t);return n},i=function(e,t){(t=t.toLowerCase())in u||(u[e]=(u[e]||[]).concat(t),u[t]=u[t.toUpperCase()]=e)},u=(C.create||C)(null),c={};for(n in e)for(o in e[n])for(r=e[n][o],u[o]=r,t=0;t<r.length;t++)u[r[t].toLowerCase()]=u[r[t].toUpperCase()]=o;return c.get=function(e){return\"string\"==typeof e?u[e]||(l.test(e)?[]:\"\"):a(e)},c.set=function(e,t){return l.test(e)?i(e,t):i(t,e),c},c}({collections:{HTMLAllCollection:[\"all\"],HTMLCollection:[\"forms\"],HTMLFormControlsCollection:[\"elements\"],HTMLOptionsCollection:[\"options\"]},elements:{Element:[\"element\"],HTMLAnchorElement:[\"a\"],HTMLAppletElement:[\"applet\"],HTMLAreaElement:[\"area\"],HTMLAttachmentElement:[\"attachment\"],HTMLAudioElement:[\"audio\"],HTMLBRElement:[\"br\"],HTMLBaseElement:[\"base\"],HTMLBodyElement:[\"body\"],HTMLButtonElement:[\"button\"],HTMLCanvasElement:[\"canvas\"],HTMLContentElement:[\"content\"],HTMLDListElement:[\"dl\"],HTMLDataElement:[\"data\"],HTMLDataListElement:[\"datalist\"],HTMLDetailsElement:[\"details\"],HTMLDialogElement:[\"dialog\"],HTMLDirectoryElement:[\"dir\"],HTMLDivElement:[\"div\"],HTMLDocument:[\"document\"],HTMLElement:[\"element\",\"abbr\",\"address\",\"article\",\"aside\",\"b\",\"bdi\",\"bdo\",\"cite\",\"code\",\"command\",\"dd\",\"dfn\",\"dt\",\"em\",\"figcaption\",\"figure\",\"footer\",\"header\",\"i\",\"kbd\",\"mark\",\"nav\",\"noscript\",\"rp\",\"rt\",\"ruby\",\"s\",\"samp\",\"section\",\"small\",\"strong\",\"sub\",\"summary\",\"sup\",\"u\",\"var\",\"wbr\"],HTMLEmbedElement:[\"embed\"],HTMLFieldSetElement:[\"fieldset\"],HTMLFontElement:[\"font\"],HTMLFormElement:[\"form\"],HTMLFrameElement:[\"frame\"],HTMLFrameSetElement:[\"frameset\"],HTMLHRElement:[\"hr\"],HTMLHeadElement:[\"head\"],HTMLHeadingElement:[\"h1\",\"h2\",\"h3\",\"h4\",\"h5\",\"h6\"],HTMLHtmlElement:[\"html\"],HTMLIFrameElement:[\"iframe\"],HTMLImageElement:[\"img\"],HTMLInputElement:[\"input\"],HTMLKeygenElement:[\"keygen\"],HTMLLIElement:[\"li\"],HTMLLabelElement:[\"label\"],HTMLLegendElement:[\"legend\"],HTMLLinkElement:[\"link\"],HTMLMapElement:[\"map\"],HTMLMarqueeElement:[\"marquee\"],HTMLMediaElement:[\"media\"],HTMLMenuElement:[\"menu\"],HTMLMenuItemElement:[\"menuitem\"],HTMLMetaElement:[\"meta\"],HTMLMeterElement:[\"meter\"],HTMLModElement:[\"del\",\"ins\"],HTMLOListElement:[\"ol\"],HTMLObjectElement:[\"object\"],HTMLOptGroupElement:[\"optgroup\"],HTMLOptionElement:[\"option\"],HTMLOutputElement:[\"output\"],HTMLParagraphElement:[\"p\"],HTMLParamElement:[\"param\"],HTMLPictureElement:[\"picture\"],HTMLPreElement:[\"pre\"],HTMLProgressElement:[\"progress\"],HTMLQuoteElement:[\"blockquote\",\"q\",\"quote\"],HTMLScriptElement:[\"script\"],HTMLSelectElement:[\"select\"],HTMLShadowElement:[\"shadow\"],HTMLSlotElement:[\"slot\"],HTMLSourceElement:[\"source\"],HTMLSpanElement:[\"span\"],HTMLStyleElement:[\"style\"],HTMLTableCaptionElement:[\"caption\"],HTMLTableCellElement:[\"td\",\"th\"],HTMLTableColElement:[\"col\",\"colgroup\"],HTMLTableElement:[\"table\"],HTMLTableRowElement:[\"tr\"],HTMLTableSectionElement:[\"thead\",\"tbody\",\"tfoot\"],HTMLTemplateElement:[\"template\"],HTMLTextAreaElement:[\"textarea\"],HTMLTimeElement:[\"time\"],HTMLTitleElement:[\"title\"],HTMLTrackElement:[\"track\"],HTMLUListElement:[\"ul\"],HTMLUnknownElement:[\"unknown\",\"vhgroupv\",\"vkeygen\"],HTMLVideoElement:[\"video\"]},nodes:{Attr:[\"node\"],Audio:[\"audio\"],CDATASection:[\"node\"],CharacterData:[\"node\"],Comment:[\"#comment\"],Document:[\"#document\"],DocumentFragment:[\"#document-fragment\"],DocumentType:[\"node\"],HTMLDocument:[\"#document\"],Image:[\"img\"],Option:[\"option\"],ProcessingInstruction:[\"node\"],ShadowRoot:[\"#shadow-root\"],Text:[\"#text\"],XMLDocument:[\"xml\"]}});\"object\"!=typeof t&&(t={type:t||\"auto\"});var A,O,N,D,I,F,S,V,P,R=\"registerElement\",U=\"__\"+R+(1e5*e.Math.random()>>0),k=\"addEventListener\",_=\"attached\",x=\"Callback\",q=\"detached\",B=\"extends\",Z=\"attributeChanged\"+x,j=_+x,G=\"connected\"+x,z=\"disconnected\"+x,K=\"created\"+x,X=q+x,$=\"ADDITION\",Q=\"REMOVAL\",W=\"DOMAttrModified\",Y=\"DOMContentLoaded\",J=\"DOMSubtreeModified\",ee=\"<\",te=\"=\",ne=/^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$/,re=[\"ANNOTATION-XML\",\"COLOR-PROFILE\",\"FONT-FACE\",\"FONT-FACE-SRC\",\"FONT-FACE-URI\",\"FONT-FACE-FORMAT\",\"FONT-FACE-NAME\",\"MISSING-GLYPH\"],oe=[],le=[],ae=\"\",ie=y.documentElement,ue=oe.indexOf||function(e){for(var t=this.length;t--&&this[t]!==e;);return t},ce=C.prototype,se=ce.hasOwnProperty,me=ce.isPrototypeOf,fe=C.defineProperty,pe=[],de=C.getOwnPropertyDescriptor,he=C.getOwnPropertyNames,Te=C.getPrototypeOf,Le=C.setPrototypeOf,Me=!!C.__proto__,Ee=!1,ve=\"__dreCEv1\",He=e.customElements,ge=!/^force/.test(t.type)&&!!(He&&He.define&&He.get&&He.whenDefined),be=C.create||C,ye=e.Map||function(){var e,t=[],n=[];return{get:function(e){return n[ue.call(t,e)]},set:function(r,o){e=ue.call(t,r),e<0?n[t.push(r)-1]=o:n[e]=o}}},Ce=e.Promise||function(e){function t(e){for(r=!0;n.length;)n.shift()(e)}var n=[],r=!1,o={\"catch\":function(){return o},then:function(e){return n.push(e),r&&setTimeout(t,1),o}};return e(t),o},we=!1,Ae=be(null),Oe=be(null),Ne=new ye,De=function(e){return e.toLowerCase()},Ie=C.create||function it(e){return e?(it.prototype=e,new it):this},Fe=Le||(Me?function(e,t){return e.__proto__=t,e}:he&&de?function(){function e(e,t){for(var n,r=he(t),o=0,l=r.length;o<l;o++)n=r[o],se.call(e,n)||fe(e,n,de(t,n))}return function(t,n){do{e(t,n)}while((n=Te(n))&&!me.call(n,t));return t}}():function(e,t){for(var n in t)e[n]=t[n];return e}),Se=e.MutationObserver||e.WebKitMutationObserver,Ve=e.HTMLAnchorElement,Pe=(e.HTMLElement||e.Element||e.Node).prototype,Re=!me.call(Pe,ie),Ue=Re?function(e,t,n){return e[t]=n.value,e}:fe,ke=Re?function(e){return 1===e.nodeType}:function(e){return me.call(Pe,e)},_e=Re&&[],xe=Pe.attachShadow,qe=Pe.cloneNode,Be=Pe.dispatchEvent,Ze=Pe.getAttribute,je=Pe.hasAttribute,Ge=Pe.removeAttribute,ze=Pe.setAttribute,Ke=y.createElement,Xe=y.importNode,$e=Ke,Qe=Se&&{attributes:!0,characterData:!0,attributeOldValue:!0},We=Se||function(e){nt=!1,ie.removeEventListener(W,We)},Ye=0,Je=R in y&&!/^force-all/.test(t.type),et=!0,tt=!1,nt=!0,rt=!0,ot=!0;if(Se&&(P=y.createElement(\"div\"),P.innerHTML=\"<div><div></div></div>\",new Se(function(e,t){if(e[0]&&\"childList\"==e[0].type&&!e[0].removedNodes[0].childNodes.length){P=de(Pe,\"innerHTML\");var n=P&&P.set;n&&fe(Pe,\"innerHTML\",{set:function(e){for(;this.lastChild;)this.removeChild(this.lastChild);n.call(this,e)}})}t.disconnect(),P=null}).observe(P,{childList:!0,subtree:!0}),P.innerHTML=\"\"),Je||(Le||Me?(S=function(e,t){me.call(t,e)||p(e,t)},V=p):(S=function(e,t){e[U]||(e[U]=C(!0),p(e,t))},V=S),Re?(nt=!1,function(){var e=de(Pe,k),t=e.value,n=function(e){var t=new CustomEvent(W,{bubbles:!0});t.attrName=e,t.prevValue=Ze.call(this,e),t.newValue=null,t[Q]=t.attrChange=2,Ge.call(this,e),Be.call(this,t)},r=function(e,t){var n=je.call(this,e),r=n&&Ze.call(this,e),o=new CustomEvent(W,{bubbles:!0});ze.call(this,e,t),o.attrName=e,o.prevValue=n?r:null,o.newValue=t,n?o.MODIFICATION=o.attrChange=1:o[$]=o.attrChange=0,Be.call(this,o)},o=function(e){var t,n=e.currentTarget,r=n[U],o=e.propertyName;r.hasOwnProperty(o)&&(r=r[o],t=new CustomEvent(W,{bubbles:!0}),t.attrName=r.name,t.prevValue=r.value||null,t.newValue=r.value=n[o]||null,null==t.prevValue?t[$]=t.attrChange=0:t.MODIFICATION=t.attrChange=1,Be.call(n,t))};e.value=function(e,l,a){e===W&&this[Z]&&this.setAttribute!==r&&(this[U]={className:{name:\"class\",value:this.className}},this.setAttribute=r,this.removeAttribute=n,t.call(this,\"propertychange\",o)),t.call(this,e,l,a)},fe(Pe,k,e)}()):Se||(ie[k](W,We),ie.setAttribute(U,1),ie.removeAttribute(U),nt&&(O=function(e){var t,n,r,o=this;if(o===e.target){t=o[U],o[U]=n=D(o);for(r in n){if(!(r in t))return N(0,o,r,t[r],n[r],$);if(n[r]!==t[r])return N(1,o,r,t[r],n[r],\"MODIFICATION\")}for(r in t)if(!(r in n))return N(2,o,r,t[r],n[r],Q)}},N=function(e,t,n,r,o,l){var a={attrChange:e,currentTarget:t,attrName:n,prevValue:r,newValue:o};a[l]=e,u(a)},D=function(e){for(var t,n,r={},o=e.attributes,l=0,a=o.length;l<a;l++)t=o[l],\"setAttribute\"!==(n=t.name)&&(r[n]=t.value);return r})),y[R]=function(e,t){if(n=e.toUpperCase(),et&&(et=!1,Se?(I=function(e,t){function n(e,t){for(var n=0,r=e.length;n<r;t(e[n++]));}return new Se(function(r){for(var o,l,a,i=0,u=r.length;i<u;i++)o=r[i],\"childList\"===o.type?(n(o.addedNodes,e),n(o.removedNodes,t)):(l=o.target,ot&&l[Z]&&\"style\"!==o.attributeName&&(a=Ze.call(l,o.attributeName))!==o.oldValue&&l[Z](o.attributeName,o.oldValue,a))})}(l(_),l(q)),F=function(e){return I.observe(e,{childList:!0,subtree:!0}),e},F(y),xe&&(Pe.attachShadow=function(){return F(xe.apply(this,arguments))})):(A=[],y[k](\"DOMNodeInserted\",c(_)),y[k](\"DOMNodeRemoved\",c(q))),y[k](Y,s),y[k](\"readystatechange\",s),y.importNode=function(e,t){switch(e.nodeType){case 1:return f(y,Xe,[e,!!t]);case 11:for(var n=y.createDocumentFragment(),r=e.childNodes,o=r.length,l=0;l<o;l++)n.appendChild(y.importNode(r[l],!!t));return n;default:return qe.call(e,!!t)}},Pe.cloneNode=function(e){return f(this,qe,[!!e])}),tt)return tt=!1;if(-2<ue.call(oe,te+n)+ue.call(oe,ee+n)&&h(e),!ne.test(n)||-1<ue.call(re,n))throw new Error(\"The type \"+e+\" is invalid\");var n,o,a=function(){return u?y.createElement(m,n):y.createElement(m)},i=t||ce,u=se.call(i,B),m=u?t[B].toUpperCase():n;return u&&-1<ue.call(oe,ee+m)&&h(m),o=oe.push((u?te:ee)+n)-1,ae=ae.concat(ae.length?\",\":\"\",u?m+'[is=\"'+e.toLowerCase()+'\"]':m),a.prototype=le[o]=se.call(i,\"prototype\")?i.prototype:Ie(Pe),ae.length&&r(y.querySelectorAll(ae),_),a},y.createElement=$e=function(e,t){var n=v(t),r=n?Ke.call(y,e,De(n)):Ke.call(y,e),o=\"\"+e,l=ue.call(oe,(n?te:ee)+(n||o).toUpperCase()),a=-1<l;return n&&(r.setAttribute(\"is\",n=n.toLowerCase()),a&&(a=i(o.toUpperCase(),n))),ot=!y.createElement.innerHTMLHelper,a&&V(r,le[l]),r}),L.prototype={constructor:L,define:ge?function(e,t,n){if(n)M(e,t,n);else{var r=e.toUpperCase();Ae[r]={constructor:t,create:[r]},Ne.set(t,r),He.define(e,t)}}:M,get:ge?function(e){return He.get(e)||E(e)}:E,whenDefined:ge?function(e){return Ce.race([He.whenDefined(e),g(e)])}:g},!He||/^force/.test(t.type))b();else if(!t.noBuiltIn)try{!function(t,n,r){var o=new RegExp(\"^<a\\\\s+is=('|\\\")\"+r+\"\\\\1></a>$\");if(n[B]=\"a\",t.prototype=Ie(Ve.prototype),t.prototype.constructor=t,e.customElements.define(r,t,n),!o.test(y.createElement(\"a\",{is:r}).outerHTML)||!o.test((new t).outerHTML))throw n}(function ut(){return Reflect.construct(Ve,[],ut)},{},\"document-register-element-a\")}catch(lt){b()}if(!t.noBuiltIn)try{if(Ke.call(y,\"a\",\"a\").outerHTML.indexOf(\"is\")<0)throw{}}catch(at){De=function(e){return{is:e.toLowerCase()}}}}(window);\n\n\n//# sourceURL=webpack:///./node_modules/document-register-element/build/document-register-element.js?");
-
-/***/ }),
-
-/***/ "./node_modules/es6-object-assign/index.js":
-/*!*************************************************!*\
-  !*** ./node_modules/es6-object-assign/index.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-eval("/**\n * Code refactored from Mozilla Developer Network:\n * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign\n */\n\n\n\nfunction assign(target, firstSource) {\n  if (target === undefined || target === null) {\n    throw new TypeError('Cannot convert first argument to object');\n  }\n\n  var to = Object(target);\n  for (var i = 1; i < arguments.length; i++) {\n    var nextSource = arguments[i];\n    if (nextSource === undefined || nextSource === null) {\n      continue;\n    }\n\n    var keysArray = Object.keys(Object(nextSource));\n    for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {\n      var nextKey = keysArray[nextIndex];\n      var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);\n      if (desc !== undefined && desc.enumerable) {\n        to[nextKey] = nextSource[nextKey];\n      }\n    }\n  }\n  return to;\n}\n\nfunction polyfill() {\n  if (!Object.assign) {\n    Object.defineProperty(Object, 'assign', {\n      enumerable: false,\n      configurable: true,\n      writable: true,\n      value: assign\n    });\n  }\n}\n\nmodule.exports = {\n  assign: assign,\n  polyfill: polyfill\n};\n\n\n//# sourceURL=webpack:///./node_modules/es6-object-assign/index.js?");
-
-/***/ }),
-
 /***/ "./node_modules/fastclick/lib/fastclick.js":
 /*!*************************************************!*\
   !*** ./node_modules/fastclick/lib/fastclick.js ***!
@@ -1723,17 +1204,6 @@ eval("/**\n * Code refactored from Mozilla Developer Network:\n * https://develo
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var __WEBPACK_AMD_DEFINE_RESULT__;;(function () {\n\t'use strict';\n\n\t/**\n\t * @preserve FastClick: polyfill to remove click delays on browsers with touch UIs.\n\t *\n\t * @codingstandard ftlabs-jsv2\n\t * @copyright The Financial Times Limited [All Rights Reserved]\n\t * @license MIT License (see LICENSE.txt)\n\t */\n\n\t/*jslint browser:true, node:true*/\n\t/*global define, Event, Node*/\n\n\n\t/**\n\t * Instantiate fast-clicking listeners on the specified layer.\n\t *\n\t * @constructor\n\t * @param {Element} layer The layer to listen on\n\t * @param {Object} [options={}] The options to override the defaults\n\t */\n\tfunction FastClick(layer, options) {\n\t\tvar oldOnClick;\n\n\t\toptions = options || {};\n\n\t\t/**\n\t\t * Whether a click is currently being tracked.\n\t\t *\n\t\t * @type boolean\n\t\t */\n\t\tthis.trackingClick = false;\n\n\n\t\t/**\n\t\t * Timestamp for when click tracking started.\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.trackingClickStart = 0;\n\n\n\t\t/**\n\t\t * The element being tracked for a click.\n\t\t *\n\t\t * @type EventTarget\n\t\t */\n\t\tthis.targetElement = null;\n\n\n\t\t/**\n\t\t * X-coordinate of touch start event.\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.touchStartX = 0;\n\n\n\t\t/**\n\t\t * Y-coordinate of touch start event.\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.touchStartY = 0;\n\n\n\t\t/**\n\t\t * ID of the last touch, retrieved from Touch.identifier.\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.lastTouchIdentifier = 0;\n\n\n\t\t/**\n\t\t * Touchmove boundary, beyond which a click will be cancelled.\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.touchBoundary = options.touchBoundary || 10;\n\n\n\t\t/**\n\t\t * The FastClick layer.\n\t\t *\n\t\t * @type Element\n\t\t */\n\t\tthis.layer = layer;\n\n\t\t/**\n\t\t * The minimum time between tap(touchstart and touchend) events\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.tapDelay = options.tapDelay || 200;\n\n\t\t/**\n\t\t * The maximum time for a tap\n\t\t *\n\t\t * @type number\n\t\t */\n\t\tthis.tapTimeout = options.tapTimeout || 700;\n\n\t\tif (FastClick.notNeeded(layer)) {\n\t\t\treturn;\n\t\t}\n\n\t\t// Some old versions of Android don't have Function.prototype.bind\n\t\tfunction bind(method, context) {\n\t\t\treturn function() { return method.apply(context, arguments); };\n\t\t}\n\n\n\t\tvar methods = ['onMouse', 'onClick', 'onTouchStart', 'onTouchMove', 'onTouchEnd', 'onTouchCancel'];\n\t\tvar context = this;\n\t\tfor (var i = 0, l = methods.length; i < l; i++) {\n\t\t\tcontext[methods[i]] = bind(context[methods[i]], context);\n\t\t}\n\n\t\t// Set up event handlers as required\n\t\tif (deviceIsAndroid) {\n\t\t\tlayer.addEventListener('mouseover', this.onMouse, true);\n\t\t\tlayer.addEventListener('mousedown', this.onMouse, true);\n\t\t\tlayer.addEventListener('mouseup', this.onMouse, true);\n\t\t}\n\n\t\tlayer.addEventListener('click', this.onClick, true);\n\t\tlayer.addEventListener('touchstart', this.onTouchStart, false);\n\t\tlayer.addEventListener('touchmove', this.onTouchMove, false);\n\t\tlayer.addEventListener('touchend', this.onTouchEnd, false);\n\t\tlayer.addEventListener('touchcancel', this.onTouchCancel, false);\n\n\t\t// Hack is required for browsers that don't support Event#stopImmediatePropagation (e.g. Android 2)\n\t\t// which is how FastClick normally stops click events bubbling to callbacks registered on the FastClick\n\t\t// layer when they are cancelled.\n\t\tif (!Event.prototype.stopImmediatePropagation) {\n\t\t\tlayer.removeEventListener = function(type, callback, capture) {\n\t\t\t\tvar rmv = Node.prototype.removeEventListener;\n\t\t\t\tif (type === 'click') {\n\t\t\t\t\trmv.call(layer, type, callback.hijacked || callback, capture);\n\t\t\t\t} else {\n\t\t\t\t\trmv.call(layer, type, callback, capture);\n\t\t\t\t}\n\t\t\t};\n\n\t\t\tlayer.addEventListener = function(type, callback, capture) {\n\t\t\t\tvar adv = Node.prototype.addEventListener;\n\t\t\t\tif (type === 'click') {\n\t\t\t\t\tadv.call(layer, type, callback.hijacked || (callback.hijacked = function(event) {\n\t\t\t\t\t\tif (!event.propagationStopped) {\n\t\t\t\t\t\t\tcallback(event);\n\t\t\t\t\t\t}\n\t\t\t\t\t}), capture);\n\t\t\t\t} else {\n\t\t\t\t\tadv.call(layer, type, callback, capture);\n\t\t\t\t}\n\t\t\t};\n\t\t}\n\n\t\t// If a handler is already declared in the element's onclick attribute, it will be fired before\n\t\t// FastClick's onClick handler. Fix this by pulling out the user-defined handler function and\n\t\t// adding it as listener.\n\t\tif (typeof layer.onclick === 'function') {\n\n\t\t\t// Android browser on at least 3.2 requires a new reference to the function in layer.onclick\n\t\t\t// - the old one won't work if passed to addEventListener directly.\n\t\t\toldOnClick = layer.onclick;\n\t\t\tlayer.addEventListener('click', function(event) {\n\t\t\t\toldOnClick(event);\n\t\t\t}, false);\n\t\t\tlayer.onclick = null;\n\t\t}\n\t}\n\n\t/**\n\t* Windows Phone 8.1 fakes user agent string to look like Android and iPhone.\n\t*\n\t* @type boolean\n\t*/\n\tvar deviceIsWindowsPhone = navigator.userAgent.indexOf(\"Windows Phone\") >= 0;\n\n\t/**\n\t * Android requires exceptions.\n\t *\n\t * @type boolean\n\t */\n\tvar deviceIsAndroid = navigator.userAgent.indexOf('Android') > 0 && !deviceIsWindowsPhone;\n\n\n\t/**\n\t * iOS requires exceptions.\n\t *\n\t * @type boolean\n\t */\n\tvar deviceIsIOS = /iP(ad|hone|od)/.test(navigator.userAgent) && !deviceIsWindowsPhone;\n\n\n\t/**\n\t * iOS 4 requires an exception for select elements.\n\t *\n\t * @type boolean\n\t */\n\tvar deviceIsIOS4 = deviceIsIOS && (/OS 4_\\d(_\\d)?/).test(navigator.userAgent);\n\n\n\t/**\n\t * iOS 6.0-7.* requires the target element to be manually derived\n\t *\n\t * @type boolean\n\t */\n\tvar deviceIsIOSWithBadTarget = deviceIsIOS && (/OS [6-7]_\\d/).test(navigator.userAgent);\n\n\t/**\n\t * BlackBerry requires exceptions.\n\t *\n\t * @type boolean\n\t */\n\tvar deviceIsBlackBerry10 = navigator.userAgent.indexOf('BB10') > 0;\n\n\t/**\n\t * Determine whether a given element requires a native click.\n\t *\n\t * @param {EventTarget|Element} target Target DOM element\n\t * @returns {boolean} Returns true if the element needs a native click\n\t */\n\tFastClick.prototype.needsClick = function(target) {\n\t\tswitch (target.nodeName.toLowerCase()) {\n\n\t\t// Don't send a synthetic click to disabled inputs (issue #62)\n\t\tcase 'button':\n\t\tcase 'select':\n\t\tcase 'textarea':\n\t\t\tif (target.disabled) {\n\t\t\t\treturn true;\n\t\t\t}\n\n\t\t\tbreak;\n\t\tcase 'input':\n\n\t\t\t// File inputs need real clicks on iOS 6 due to a browser bug (issue #68)\n\t\t\tif ((deviceIsIOS && target.type === 'file') || target.disabled) {\n\t\t\t\treturn true;\n\t\t\t}\n\n\t\t\tbreak;\n\t\tcase 'label':\n\t\tcase 'iframe': // iOS8 homescreen apps can prevent events bubbling into frames\n\t\tcase 'video':\n\t\t\treturn true;\n\t\t}\n\n\t\treturn (/\\bneedsclick\\b/).test(target.className);\n\t};\n\n\n\t/**\n\t * Determine whether a given element requires a call to focus to simulate click into element.\n\t *\n\t * @param {EventTarget|Element} target Target DOM element\n\t * @returns {boolean} Returns true if the element requires a call to focus to simulate native click.\n\t */\n\tFastClick.prototype.needsFocus = function(target) {\n\t\tswitch (target.nodeName.toLowerCase()) {\n\t\tcase 'textarea':\n\t\t\treturn true;\n\t\tcase 'select':\n\t\t\treturn !deviceIsAndroid;\n\t\tcase 'input':\n\t\t\tswitch (target.type) {\n\t\t\tcase 'button':\n\t\t\tcase 'checkbox':\n\t\t\tcase 'file':\n\t\t\tcase 'image':\n\t\t\tcase 'radio':\n\t\t\tcase 'submit':\n\t\t\t\treturn false;\n\t\t\t}\n\n\t\t\t// No point in attempting to focus disabled inputs\n\t\t\treturn !target.disabled && !target.readOnly;\n\t\tdefault:\n\t\t\treturn (/\\bneedsfocus\\b/).test(target.className);\n\t\t}\n\t};\n\n\n\t/**\n\t * Send a click event to the specified element.\n\t *\n\t * @param {EventTarget|Element} targetElement\n\t * @param {Event} event\n\t */\n\tFastClick.prototype.sendClick = function(targetElement, event) {\n\t\tvar clickEvent, touch;\n\n\t\t// On some Android devices activeElement needs to be blurred otherwise the synthetic click will have no effect (#24)\n\t\tif (document.activeElement && document.activeElement !== targetElement) {\n\t\t\tdocument.activeElement.blur();\n\t\t}\n\n\t\ttouch = event.changedTouches[0];\n\n\t\t// Synthesise a click event, with an extra attribute so it can be tracked\n\t\tclickEvent = document.createEvent('MouseEvents');\n\t\tclickEvent.initMouseEvent(this.determineEventType(targetElement), true, true, window, 1, touch.screenX, touch.screenY, touch.clientX, touch.clientY, false, false, false, false, 0, null);\n\t\tclickEvent.forwardedTouchEvent = true;\n\t\ttargetElement.dispatchEvent(clickEvent);\n\t};\n\n\tFastClick.prototype.determineEventType = function(targetElement) {\n\n\t\t//Issue #159: Android Chrome Select Box does not open with a synthetic click event\n\t\tif (deviceIsAndroid && targetElement.tagName.toLowerCase() === 'select') {\n\t\t\treturn 'mousedown';\n\t\t}\n\n\t\treturn 'click';\n\t};\n\n\n\t/**\n\t * @param {EventTarget|Element} targetElement\n\t */\n\tFastClick.prototype.focus = function(targetElement) {\n\t\tvar length;\n\n\t\t// Issue #160: on iOS 7, some input elements (e.g. date datetime month) throw a vague TypeError on setSelectionRange. These elements don't have an integer value for the selectionStart and selectionEnd properties, but unfortunately that can't be used for detection because accessing the properties also throws a TypeError. Just check the type instead. Filed as Apple bug #15122724.\n\t\tif (deviceIsIOS && targetElement.setSelectionRange && targetElement.type.indexOf('date') !== 0 && targetElement.type !== 'time' && targetElement.type !== 'month') {\n\t\t\tlength = targetElement.value.length;\n\t\t\ttargetElement.setSelectionRange(length, length);\n\t\t} else {\n\t\t\ttargetElement.focus();\n\t\t}\n\t};\n\n\n\t/**\n\t * Check whether the given target element is a child of a scrollable layer and if so, set a flag on it.\n\t *\n\t * @param {EventTarget|Element} targetElement\n\t */\n\tFastClick.prototype.updateScrollParent = function(targetElement) {\n\t\tvar scrollParent, parentElement;\n\n\t\tscrollParent = targetElement.fastClickScrollParent;\n\n\t\t// Attempt to discover whether the target element is contained within a scrollable layer. Re-check if the\n\t\t// target element was moved to another parent.\n\t\tif (!scrollParent || !scrollParent.contains(targetElement)) {\n\t\t\tparentElement = targetElement;\n\t\t\tdo {\n\t\t\t\tif (parentElement.scrollHeight > parentElement.offsetHeight) {\n\t\t\t\t\tscrollParent = parentElement;\n\t\t\t\t\ttargetElement.fastClickScrollParent = parentElement;\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\n\t\t\t\tparentElement = parentElement.parentElement;\n\t\t\t} while (parentElement);\n\t\t}\n\n\t\t// Always update the scroll top tracker if possible.\n\t\tif (scrollParent) {\n\t\t\tscrollParent.fastClickLastScrollTop = scrollParent.scrollTop;\n\t\t}\n\t};\n\n\n\t/**\n\t * @param {EventTarget} targetElement\n\t * @returns {Element|EventTarget}\n\t */\n\tFastClick.prototype.getTargetElementFromEventTarget = function(eventTarget) {\n\n\t\t// On some older browsers (notably Safari on iOS 4.1 - see issue #56) the event target may be a text node.\n\t\tif (eventTarget.nodeType === Node.TEXT_NODE) {\n\t\t\treturn eventTarget.parentNode;\n\t\t}\n\n\t\treturn eventTarget;\n\t};\n\n\n\t/**\n\t * On touch start, record the position and scroll offset.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.onTouchStart = function(event) {\n\t\tvar targetElement, touch, selection;\n\n\t\t// Ignore multiple touches, otherwise pinch-to-zoom is prevented if both fingers are on the FastClick element (issue #111).\n\t\tif (event.targetTouches.length > 1) {\n\t\t\treturn true;\n\t\t}\n\n\t\ttargetElement = this.getTargetElementFromEventTarget(event.target);\n\t\ttouch = event.targetTouches[0];\n\n\t\tif (deviceIsIOS) {\n\n\t\t\t// Only trusted events will deselect text on iOS (issue #49)\n\t\t\tselection = window.getSelection();\n\t\t\tif (selection.rangeCount && !selection.isCollapsed) {\n\t\t\t\treturn true;\n\t\t\t}\n\n\t\t\tif (!deviceIsIOS4) {\n\n\t\t\t\t// Weird things happen on iOS when an alert or confirm dialog is opened from a click event callback (issue #23):\n\t\t\t\t// when the user next taps anywhere else on the page, new touchstart and touchend events are dispatched\n\t\t\t\t// with the same identifier as the touch event that previously triggered the click that triggered the alert.\n\t\t\t\t// Sadly, there is an issue on iOS 4 that causes some normal touch events to have the same identifier as an\n\t\t\t\t// immediately preceeding touch event (issue #52), so this fix is unavailable on that platform.\n\t\t\t\t// Issue 120: touch.identifier is 0 when Chrome dev tools 'Emulate touch events' is set with an iOS device UA string,\n\t\t\t\t// which causes all touch events to be ignored. As this block only applies to iOS, and iOS identifiers are always long,\n\t\t\t\t// random integers, it's safe to to continue if the identifier is 0 here.\n\t\t\t\tif (touch.identifier && touch.identifier === this.lastTouchIdentifier) {\n\t\t\t\t\tevent.preventDefault();\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\n\t\t\t\tthis.lastTouchIdentifier = touch.identifier;\n\n\t\t\t\t// If the target element is a child of a scrollable layer (using -webkit-overflow-scrolling: touch) and:\n\t\t\t\t// 1) the user does a fling scroll on the scrollable layer\n\t\t\t\t// 2) the user stops the fling scroll with another tap\n\t\t\t\t// then the event.target of the last 'touchend' event will be the element that was under the user's finger\n\t\t\t\t// when the fling scroll was started, causing FastClick to send a click event to that layer - unless a check\n\t\t\t\t// is made to ensure that a parent layer was not scrolled before sending a synthetic click (issue #42).\n\t\t\t\tthis.updateScrollParent(targetElement);\n\t\t\t}\n\t\t}\n\n\t\tthis.trackingClick = true;\n\t\tthis.trackingClickStart = event.timeStamp;\n\t\tthis.targetElement = targetElement;\n\n\t\tthis.touchStartX = touch.pageX;\n\t\tthis.touchStartY = touch.pageY;\n\n\t\t// Prevent phantom clicks on fast double-tap (issue #36)\n\t\tif ((event.timeStamp - this.lastClickTime) < this.tapDelay) {\n\t\t\tevent.preventDefault();\n\t\t}\n\n\t\treturn true;\n\t};\n\n\n\t/**\n\t * Based on a touchmove event object, check whether the touch has moved past a boundary since it started.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.touchHasMoved = function(event) {\n\t\tvar touch = event.changedTouches[0], boundary = this.touchBoundary;\n\n\t\tif (Math.abs(touch.pageX - this.touchStartX) > boundary || Math.abs(touch.pageY - this.touchStartY) > boundary) {\n\t\t\treturn true;\n\t\t}\n\n\t\treturn false;\n\t};\n\n\n\t/**\n\t * Update the last position.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.onTouchMove = function(event) {\n\t\tif (!this.trackingClick) {\n\t\t\treturn true;\n\t\t}\n\n\t\t// If the touch has moved, cancel the click tracking\n\t\tif (this.targetElement !== this.getTargetElementFromEventTarget(event.target) || this.touchHasMoved(event)) {\n\t\t\tthis.trackingClick = false;\n\t\t\tthis.targetElement = null;\n\t\t}\n\n\t\treturn true;\n\t};\n\n\n\t/**\n\t * Attempt to find the labelled control for the given label element.\n\t *\n\t * @param {EventTarget|HTMLLabelElement} labelElement\n\t * @returns {Element|null}\n\t */\n\tFastClick.prototype.findControl = function(labelElement) {\n\n\t\t// Fast path for newer browsers supporting the HTML5 control attribute\n\t\tif (labelElement.control !== undefined) {\n\t\t\treturn labelElement.control;\n\t\t}\n\n\t\t// All browsers under test that support touch events also support the HTML5 htmlFor attribute\n\t\tif (labelElement.htmlFor) {\n\t\t\treturn document.getElementById(labelElement.htmlFor);\n\t\t}\n\n\t\t// If no for attribute exists, attempt to retrieve the first labellable descendant element\n\t\t// the list of which is defined here: http://www.w3.org/TR/html5/forms.html#category-label\n\t\treturn labelElement.querySelector('button, input:not([type=hidden]), keygen, meter, output, progress, select, textarea');\n\t};\n\n\n\t/**\n\t * On touch end, determine whether to send a click event at once.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.onTouchEnd = function(event) {\n\t\tvar forElement, trackingClickStart, targetTagName, scrollParent, touch, targetElement = this.targetElement;\n\n\t\tif (!this.trackingClick) {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Prevent phantom clicks on fast double-tap (issue #36)\n\t\tif ((event.timeStamp - this.lastClickTime) < this.tapDelay) {\n\t\t\tthis.cancelNextClick = true;\n\t\t\treturn true;\n\t\t}\n\n\t\tif ((event.timeStamp - this.trackingClickStart) > this.tapTimeout) {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Reset to prevent wrong click cancel on input (issue #156).\n\t\tthis.cancelNextClick = false;\n\n\t\tthis.lastClickTime = event.timeStamp;\n\n\t\ttrackingClickStart = this.trackingClickStart;\n\t\tthis.trackingClick = false;\n\t\tthis.trackingClickStart = 0;\n\n\t\t// On some iOS devices, the targetElement supplied with the event is invalid if the layer\n\t\t// is performing a transition or scroll, and has to be re-detected manually. Note that\n\t\t// for this to function correctly, it must be called *after* the event target is checked!\n\t\t// See issue #57; also filed as rdar://13048589 .\n\t\tif (deviceIsIOSWithBadTarget) {\n\t\t\ttouch = event.changedTouches[0];\n\n\t\t\t// In certain cases arguments of elementFromPoint can be negative, so prevent setting targetElement to null\n\t\t\ttargetElement = document.elementFromPoint(touch.pageX - window.pageXOffset, touch.pageY - window.pageYOffset) || targetElement;\n\t\t\ttargetElement.fastClickScrollParent = this.targetElement.fastClickScrollParent;\n\t\t}\n\n\t\ttargetTagName = targetElement.tagName.toLowerCase();\n\t\tif (targetTagName === 'label') {\n\t\t\tforElement = this.findControl(targetElement);\n\t\t\tif (forElement) {\n\t\t\t\tthis.focus(targetElement);\n\t\t\t\tif (deviceIsAndroid) {\n\t\t\t\t\treturn false;\n\t\t\t\t}\n\n\t\t\t\ttargetElement = forElement;\n\t\t\t}\n\t\t} else if (this.needsFocus(targetElement)) {\n\n\t\t\t// Case 1: If the touch started a while ago (best guess is 100ms based on tests for issue #36) then focus will be triggered anyway. Return early and unset the target element reference so that the subsequent click will be allowed through.\n\t\t\t// Case 2: Without this exception for input elements tapped when the document is contained in an iframe, then any inputted text won't be visible even though the value attribute is updated as the user types (issue #37).\n\t\t\tif ((event.timeStamp - trackingClickStart) > 100 || (deviceIsIOS && window.top !== window && targetTagName === 'input')) {\n\t\t\t\tthis.targetElement = null;\n\t\t\t\treturn false;\n\t\t\t}\n\n\t\t\tthis.focus(targetElement);\n\t\t\tthis.sendClick(targetElement, event);\n\n\t\t\t// Select elements need the event to go through on iOS 4, otherwise the selector menu won't open.\n\t\t\t// Also this breaks opening selects when VoiceOver is active on iOS6, iOS7 (and possibly others)\n\t\t\tif (!deviceIsIOS || targetTagName !== 'select') {\n\t\t\t\tthis.targetElement = null;\n\t\t\t\tevent.preventDefault();\n\t\t\t}\n\n\t\t\treturn false;\n\t\t}\n\n\t\tif (deviceIsIOS && !deviceIsIOS4) {\n\n\t\t\t// Don't send a synthetic click event if the target element is contained within a parent layer that was scrolled\n\t\t\t// and this tap is being used to stop the scrolling (usually initiated by a fling - issue #42).\n\t\t\tscrollParent = targetElement.fastClickScrollParent;\n\t\t\tif (scrollParent && scrollParent.fastClickLastScrollTop !== scrollParent.scrollTop) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\n\t\t// Prevent the actual click from going though - unless the target node is marked as requiring\n\t\t// real clicks or if it is in the whitelist in which case only non-programmatic clicks are permitted.\n\t\tif (!this.needsClick(targetElement)) {\n\t\t\tevent.preventDefault();\n\t\t\tthis.sendClick(targetElement, event);\n\t\t}\n\n\t\treturn false;\n\t};\n\n\n\t/**\n\t * On touch cancel, stop tracking the click.\n\t *\n\t * @returns {void}\n\t */\n\tFastClick.prototype.onTouchCancel = function() {\n\t\tthis.trackingClick = false;\n\t\tthis.targetElement = null;\n\t};\n\n\n\t/**\n\t * Determine mouse events which should be permitted.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.onMouse = function(event) {\n\n\t\t// If a target element was never set (because a touch event was never fired) allow the event\n\t\tif (!this.targetElement) {\n\t\t\treturn true;\n\t\t}\n\n\t\tif (event.forwardedTouchEvent) {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Programmatically generated events targeting a specific element should be permitted\n\t\tif (!event.cancelable) {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Derive and check the target element to see whether the mouse event needs to be permitted;\n\t\t// unless explicitly enabled, prevent non-touch click events from triggering actions,\n\t\t// to prevent ghost/doubleclicks.\n\t\tif (!this.needsClick(this.targetElement) || this.cancelNextClick) {\n\n\t\t\t// Prevent any user-added listeners declared on FastClick element from being fired.\n\t\t\tif (event.stopImmediatePropagation) {\n\t\t\t\tevent.stopImmediatePropagation();\n\t\t\t} else {\n\n\t\t\t\t// Part of the hack for browsers that don't support Event#stopImmediatePropagation (e.g. Android 2)\n\t\t\t\tevent.propagationStopped = true;\n\t\t\t}\n\n\t\t\t// Cancel the event\n\t\t\tevent.stopPropagation();\n\t\t\tevent.preventDefault();\n\n\t\t\treturn false;\n\t\t}\n\n\t\t// If the mouse event is permitted, return true for the action to go through.\n\t\treturn true;\n\t};\n\n\n\t/**\n\t * On actual clicks, determine whether this is a touch-generated click, a click action occurring\n\t * naturally after a delay after a touch (which needs to be cancelled to avoid duplication), or\n\t * an actual click which should be permitted.\n\t *\n\t * @param {Event} event\n\t * @returns {boolean}\n\t */\n\tFastClick.prototype.onClick = function(event) {\n\t\tvar permitted;\n\n\t\t// It's possible for another FastClick-like library delivered with third-party code to fire a click event before FastClick does (issue #44). In that case, set the click-tracking flag back to false and return early. This will cause onTouchEnd to return early.\n\t\tif (this.trackingClick) {\n\t\t\tthis.targetElement = null;\n\t\t\tthis.trackingClick = false;\n\t\t\treturn true;\n\t\t}\n\n\t\t// Very odd behaviour on iOS (issue #18): if a submit element is present inside a form and the user hits enter in the iOS simulator or clicks the Go button on the pop-up OS keyboard the a kind of 'fake' click event will be triggered with the submit-type input element as the target.\n\t\tif (event.target.type === 'submit' && event.detail === 0) {\n\t\t\treturn true;\n\t\t}\n\n\t\tpermitted = this.onMouse(event);\n\n\t\t// Only unset targetElement if the click is not permitted. This will ensure that the check for !targetElement in onMouse fails and the browser's click doesn't go through.\n\t\tif (!permitted) {\n\t\t\tthis.targetElement = null;\n\t\t}\n\n\t\t// If clicks are permitted, return true for the action to go through.\n\t\treturn permitted;\n\t};\n\n\n\t/**\n\t * Remove all FastClick's event listeners.\n\t *\n\t * @returns {void}\n\t */\n\tFastClick.prototype.destroy = function() {\n\t\tvar layer = this.layer;\n\n\t\tif (deviceIsAndroid) {\n\t\t\tlayer.removeEventListener('mouseover', this.onMouse, true);\n\t\t\tlayer.removeEventListener('mousedown', this.onMouse, true);\n\t\t\tlayer.removeEventListener('mouseup', this.onMouse, true);\n\t\t}\n\n\t\tlayer.removeEventListener('click', this.onClick, true);\n\t\tlayer.removeEventListener('touchstart', this.onTouchStart, false);\n\t\tlayer.removeEventListener('touchmove', this.onTouchMove, false);\n\t\tlayer.removeEventListener('touchend', this.onTouchEnd, false);\n\t\tlayer.removeEventListener('touchcancel', this.onTouchCancel, false);\n\t};\n\n\n\t/**\n\t * Check whether FastClick is needed.\n\t *\n\t * @param {Element} layer The layer to listen on\n\t */\n\tFastClick.notNeeded = function(layer) {\n\t\tvar metaViewport;\n\t\tvar chromeVersion;\n\t\tvar blackberryVersion;\n\t\tvar firefoxVersion;\n\n\t\t// Devices that don't support touch don't need FastClick\n\t\tif (typeof window.ontouchstart === 'undefined') {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Chrome version - zero for other browsers\n\t\tchromeVersion = +(/Chrome\\/([0-9]+)/.exec(navigator.userAgent) || [,0])[1];\n\n\t\tif (chromeVersion) {\n\n\t\t\tif (deviceIsAndroid) {\n\t\t\t\tmetaViewport = document.querySelector('meta[name=viewport]');\n\n\t\t\t\tif (metaViewport) {\n\t\t\t\t\t// Chrome on Android with user-scalable=\"no\" doesn't need FastClick (issue #89)\n\t\t\t\t\tif (metaViewport.content.indexOf('user-scalable=no') !== -1) {\n\t\t\t\t\t\treturn true;\n\t\t\t\t\t}\n\t\t\t\t\t// Chrome 32 and above with width=device-width or less don't need FastClick\n\t\t\t\t\tif (chromeVersion > 31 && document.documentElement.scrollWidth <= window.outerWidth) {\n\t\t\t\t\t\treturn true;\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t// Chrome desktop doesn't need FastClick (issue #15)\n\t\t\t} else {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\n\t\tif (deviceIsBlackBerry10) {\n\t\t\tblackberryVersion = navigator.userAgent.match(/Version\\/([0-9]*)\\.([0-9]*)/);\n\n\t\t\t// BlackBerry 10.3+ does not require Fastclick library.\n\t\t\t// https://github.com/ftlabs/fastclick/issues/251\n\t\t\tif (blackberryVersion[1] >= 10 && blackberryVersion[2] >= 3) {\n\t\t\t\tmetaViewport = document.querySelector('meta[name=viewport]');\n\n\t\t\t\tif (metaViewport) {\n\t\t\t\t\t// user-scalable=no eliminates click delay.\n\t\t\t\t\tif (metaViewport.content.indexOf('user-scalable=no') !== -1) {\n\t\t\t\t\t\treturn true;\n\t\t\t\t\t}\n\t\t\t\t\t// width=device-width (or less than device-width) eliminates click delay.\n\t\t\t\t\tif (document.documentElement.scrollWidth <= window.outerWidth) {\n\t\t\t\t\t\treturn true;\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t\t// IE10 with -ms-touch-action: none or manipulation, which disables double-tap-to-zoom (issue #97)\n\t\tif (layer.style.msTouchAction === 'none' || layer.style.touchAction === 'manipulation') {\n\t\t\treturn true;\n\t\t}\n\n\t\t// Firefox version - zero for other browsers\n\t\tfirefoxVersion = +(/Firefox\\/([0-9]+)/.exec(navigator.userAgent) || [,0])[1];\n\n\t\tif (firefoxVersion >= 27) {\n\t\t\t// Firefox 27+ does not have tap delay if the content is not zoomable - https://bugzilla.mozilla.org/show_bug.cgi?id=922896\n\n\t\t\tmetaViewport = document.querySelector('meta[name=viewport]');\n\t\t\tif (metaViewport && (metaViewport.content.indexOf('user-scalable=no') !== -1 || document.documentElement.scrollWidth <= window.outerWidth)) {\n\t\t\t\treturn true;\n\t\t\t}\n\t\t}\n\n\t\t// IE11: prefixed -ms-touch-action is no longer supported and it's recomended to use non-prefixed version\n\t\t// http://msdn.microsoft.com/en-us/library/windows/apps/Hh767313.aspx\n\t\tif (layer.style.touchAction === 'none' || layer.style.touchAction === 'manipulation') {\n\t\t\treturn true;\n\t\t}\n\n\t\treturn false;\n\t};\n\n\n\t/**\n\t * Factory method for creating a FastClick object\n\t *\n\t * @param {Element} layer The layer to listen on\n\t * @param {Object} [options={}] The options to override the defaults\n\t */\n\tFastClick.attach = function(layer, options) {\n\t\treturn new FastClick(layer, options);\n\t};\n\n\n\tif (true) {\n\n\t\t// AMD. Register as an anonymous module.\n\t\t!(__WEBPACK_AMD_DEFINE_RESULT__ = (function() {\n\t\t\treturn FastClick;\n\t\t}).call(exports, __webpack_require__, exports, module),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\n\t} else {}\n}());\n\n\n//# sourceURL=webpack:///./node_modules/fastclick/lib/fastclick.js?");
-
-/***/ }),
-
-/***/ "./node_modules/fastdom/fastdom.js":
-/*!*****************************************!*\
-  !*** ./node_modules/fastdom/fastdom.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var __WEBPACK_AMD_DEFINE_RESULT__;!(function(win) {\n\n/**\n * FastDom\n *\n * Eliminates layout thrashing\n * by batching DOM read/write\n * interactions.\n *\n * @author Wilson Page <wilsonpage@me.com>\n * @author Kornel Lesinski <kornel.lesinski@ft.com>\n */\n\n'use strict';\n\n/**\n * Mini logger\n *\n * @return {Function}\n */\nvar debug = 0 ? undefined : function() {};\n\n/**\n * Normalized rAF\n *\n * @type {Function}\n */\nvar raf = win.requestAnimationFrame\n  || win.webkitRequestAnimationFrame\n  || win.mozRequestAnimationFrame\n  || win.msRequestAnimationFrame\n  || function(cb) { return setTimeout(cb, 16); };\n\n/**\n * Initialize a `FastDom`.\n *\n * @constructor\n */\nfunction FastDom() {\n  var self = this;\n  self.reads = [];\n  self.writes = [];\n  self.raf = raf.bind(win); // test hook\n  debug('initialized', self);\n}\n\nFastDom.prototype = {\n  constructor: FastDom,\n\n  /**\n   * Adds a job to the read batch and\n   * schedules a new frame if need be.\n   *\n   * @param  {Function} fn\n   * @param  {Object} ctx the context to be bound to `fn` (optional).\n   * @public\n   */\n  measure: function(fn, ctx) {\n    debug('measure');\n    var task = !ctx ? fn : fn.bind(ctx);\n    this.reads.push(task);\n    scheduleFlush(this);\n    return task;\n  },\n\n  /**\n   * Adds a job to the\n   * write batch and schedules\n   * a new frame if need be.\n   *\n   * @param  {Function} fn\n   * @param  {Object} ctx the context to be bound to `fn` (optional).\n   * @public\n   */\n  mutate: function(fn, ctx) {\n    debug('mutate');\n    var task = !ctx ? fn : fn.bind(ctx);\n    this.writes.push(task);\n    scheduleFlush(this);\n    return task;\n  },\n\n  /**\n   * Clears a scheduled 'read' or 'write' task.\n   *\n   * @param {Object} task\n   * @return {Boolean} success\n   * @public\n   */\n  clear: function(task) {\n    debug('clear', task);\n    return remove(this.reads, task) || remove(this.writes, task);\n  },\n\n  /**\n   * Extend this FastDom with some\n   * custom functionality.\n   *\n   * Because fastdom must *always* be a\n   * singleton, we're actually extending\n   * the fastdom instance. This means tasks\n   * scheduled by an extension still enter\n   * fastdom's global task queue.\n   *\n   * The 'super' instance can be accessed\n   * from `this.fastdom`.\n   *\n   * @example\n   *\n   * var myFastdom = fastdom.extend({\n   *   initialize: function() {\n   *     // runs on creation\n   *   },\n   *\n   *   // override a method\n   *   measure: function(fn) {\n   *     // do extra stuff ...\n   *\n   *     // then call the original\n   *     return this.fastdom.measure(fn);\n   *   },\n   *\n   *   ...\n   * });\n   *\n   * @param  {Object} props  properties to mixin\n   * @return {FastDom}\n   */\n  extend: function(props) {\n    debug('extend', props);\n    if (typeof props != 'object') throw new Error('expected object');\n\n    var child = Object.create(this);\n    mixin(child, props);\n    child.fastdom = this;\n\n    // run optional creation hook\n    if (child.initialize) child.initialize();\n\n    return child;\n  },\n\n  // override this with a function\n  // to prevent Errors in console\n  // when tasks throw\n  catch: null\n};\n\n/**\n * Schedules a new read/write\n * batch if one isn't pending.\n *\n * @private\n */\nfunction scheduleFlush(fastdom) {\n  if (!fastdom.scheduled) {\n    fastdom.scheduled = true;\n    fastdom.raf(flush.bind(null, fastdom));\n    debug('flush scheduled');\n  }\n}\n\n/**\n * Runs queued `read` and `write` tasks.\n *\n * Errors are caught and thrown by default.\n * If a `.catch` function has been defined\n * it is called instead.\n *\n * @private\n */\nfunction flush(fastdom) {\n  debug('flush');\n\n  var writes = fastdom.writes;\n  var reads = fastdom.reads;\n  var error;\n\n  try {\n    debug('flushing reads', reads.length);\n    runTasks(reads);\n    debug('flushing writes', writes.length);\n    runTasks(writes);\n  } catch (e) { error = e; }\n\n  fastdom.scheduled = false;\n\n  // If the batch errored we may still have tasks queued\n  if (reads.length || writes.length) scheduleFlush(fastdom);\n\n  if (error) {\n    debug('task errored', error.message);\n    if (fastdom.catch) fastdom.catch(error);\n    else throw error;\n  }\n}\n\n/**\n * We run this inside a try catch\n * so that if any jobs error, we\n * are able to recover and continue\n * to flush the batch until it's empty.\n *\n * @private\n */\nfunction runTasks(tasks) {\n  debug('run tasks');\n  var task; while (task = tasks.shift()) task();\n}\n\n/**\n * Remove an item from an Array.\n *\n * @param  {Array} array\n * @param  {*} item\n * @return {Boolean}\n */\nfunction remove(array, item) {\n  var index = array.indexOf(item);\n  return !!~index && !!array.splice(index, 1);\n}\n\n/**\n * Mixin own properties of source\n * object into the target.\n *\n * @param  {Object} target\n * @param  {Object} source\n */\nfunction mixin(target, source) {\n  for (var key in source) {\n    if (source.hasOwnProperty(key)) target[key] = source[key];\n  }\n}\n\n// There should never be more than\n// one instance of `FastDom` in an app\nvar exports = win.fastdom = (win.fastdom || new FastDom()); // jshint ignore:line\n\n// Expose to CJS & AMD\nif (true) !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return exports; }).call(exports, __webpack_require__, exports, module),\n\t\t\t\t__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));\nelse {}\n\n})( typeof window !== 'undefined' ? window : this);\n\n\n//# sourceURL=webpack:///./node_modules/fastdom/fastdom.js?");
 
 /***/ }),
 
@@ -1792,50 +1262,6 @@ eval("var getNative = __webpack_require__(/*! ./_getNative */ \"./node_modules/l
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_Hash.js":
-/*!**************************************!*\
-  !*** ./node_modules/lodash/_Hash.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var hashClear = __webpack_require__(/*! ./_hashClear */ \"./node_modules/lodash/_hashClear.js\"),\n    hashDelete = __webpack_require__(/*! ./_hashDelete */ \"./node_modules/lodash/_hashDelete.js\"),\n    hashGet = __webpack_require__(/*! ./_hashGet */ \"./node_modules/lodash/_hashGet.js\"),\n    hashHas = __webpack_require__(/*! ./_hashHas */ \"./node_modules/lodash/_hashHas.js\"),\n    hashSet = __webpack_require__(/*! ./_hashSet */ \"./node_modules/lodash/_hashSet.js\");\n\n/**\n * Creates a hash object.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction Hash(entries) {\n  var index = -1,\n      length = entries == null ? 0 : entries.length;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n// Add methods to `Hash`.\nHash.prototype.clear = hashClear;\nHash.prototype['delete'] = hashDelete;\nHash.prototype.get = hashGet;\nHash.prototype.has = hashHas;\nHash.prototype.set = hashSet;\n\nmodule.exports = Hash;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_Hash.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_ListCache.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_ListCache.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var listCacheClear = __webpack_require__(/*! ./_listCacheClear */ \"./node_modules/lodash/_listCacheClear.js\"),\n    listCacheDelete = __webpack_require__(/*! ./_listCacheDelete */ \"./node_modules/lodash/_listCacheDelete.js\"),\n    listCacheGet = __webpack_require__(/*! ./_listCacheGet */ \"./node_modules/lodash/_listCacheGet.js\"),\n    listCacheHas = __webpack_require__(/*! ./_listCacheHas */ \"./node_modules/lodash/_listCacheHas.js\"),\n    listCacheSet = __webpack_require__(/*! ./_listCacheSet */ \"./node_modules/lodash/_listCacheSet.js\");\n\n/**\n * Creates an list cache object.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction ListCache(entries) {\n  var index = -1,\n      length = entries == null ? 0 : entries.length;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n// Add methods to `ListCache`.\nListCache.prototype.clear = listCacheClear;\nListCache.prototype['delete'] = listCacheDelete;\nListCache.prototype.get = listCacheGet;\nListCache.prototype.has = listCacheHas;\nListCache.prototype.set = listCacheSet;\n\nmodule.exports = ListCache;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_ListCache.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_Map.js":
-/*!*************************************!*\
-  !*** ./node_modules/lodash/_Map.js ***!
-  \*************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getNative = __webpack_require__(/*! ./_getNative */ \"./node_modules/lodash/_getNative.js\"),\n    root = __webpack_require__(/*! ./_root */ \"./node_modules/lodash/_root.js\");\n\n/* Built-in method references that are verified to be native. */\nvar Map = getNative(root, 'Map');\n\nmodule.exports = Map;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_Map.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_MapCache.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_MapCache.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var mapCacheClear = __webpack_require__(/*! ./_mapCacheClear */ \"./node_modules/lodash/_mapCacheClear.js\"),\n    mapCacheDelete = __webpack_require__(/*! ./_mapCacheDelete */ \"./node_modules/lodash/_mapCacheDelete.js\"),\n    mapCacheGet = __webpack_require__(/*! ./_mapCacheGet */ \"./node_modules/lodash/_mapCacheGet.js\"),\n    mapCacheHas = __webpack_require__(/*! ./_mapCacheHas */ \"./node_modules/lodash/_mapCacheHas.js\"),\n    mapCacheSet = __webpack_require__(/*! ./_mapCacheSet */ \"./node_modules/lodash/_mapCacheSet.js\");\n\n/**\n * Creates a map cache object to store key-value pairs.\n *\n * @private\n * @constructor\n * @param {Array} [entries] The key-value pairs to cache.\n */\nfunction MapCache(entries) {\n  var index = -1,\n      length = entries == null ? 0 : entries.length;\n\n  this.clear();\n  while (++index < length) {\n    var entry = entries[index];\n    this.set(entry[0], entry[1]);\n  }\n}\n\n// Add methods to `MapCache`.\nMapCache.prototype.clear = mapCacheClear;\nMapCache.prototype['delete'] = mapCacheDelete;\nMapCache.prototype.get = mapCacheGet;\nMapCache.prototype.has = mapCacheHas;\nMapCache.prototype.set = mapCacheSet;\n\nmodule.exports = MapCache;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_MapCache.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_Promise.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/_Promise.js ***!
@@ -1880,17 +1306,6 @@ eval("var ListCache = __webpack_require__(/*! ./_ListCache */ \"./node_modules/l
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_Symbol.js":
-/*!****************************************!*\
-  !*** ./node_modules/lodash/_Symbol.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var root = __webpack_require__(/*! ./_root */ \"./node_modules/lodash/_root.js\");\n\n/** Built-in value references. */\nvar Symbol = root.Symbol;\n\nmodule.exports = Symbol;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_Symbol.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_Uint8Array.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_Uint8Array.js ***!
@@ -1913,17 +1328,6 @@ eval("var getNative = __webpack_require__(/*! ./_getNative */ \"./node_modules/l
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_apply.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/_apply.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * A faster alternative to `Function#apply`, this function invokes `func`\n * with the `this` binding of `thisArg` and the arguments of `args`.\n *\n * @private\n * @param {Function} func The function to invoke.\n * @param {*} thisArg The `this` binding of `func`.\n * @param {Array} args The arguments to invoke `func` with.\n * @returns {*} Returns the result of `func`.\n */\nfunction apply(func, thisArg, args) {\n  switch (args.length) {\n    case 0: return func.call(thisArg);\n    case 1: return func.call(thisArg, args[0]);\n    case 2: return func.call(thisArg, args[0], args[1]);\n    case 3: return func.call(thisArg, args[0], args[1], args[2]);\n  }\n  return func.apply(thisArg, args);\n}\n\nmodule.exports = apply;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_apply.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_arrayFilter.js":
 /*!*********************************************!*\
   !*** ./node_modules/lodash/_arrayFilter.js ***!
@@ -1932,28 +1336,6 @@ eval("/**\n * A faster alternative to `Function#apply`, this function invokes `f
 /***/ (function(module, exports) {
 
 eval("/**\n * A specialized version of `_.filter` for arrays without support for\n * iteratee shorthands.\n *\n * @private\n * @param {Array} [array] The array to iterate over.\n * @param {Function} predicate The function invoked per iteration.\n * @returns {Array} Returns the new filtered array.\n */\nfunction arrayFilter(array, predicate) {\n  var index = -1,\n      length = array == null ? 0 : array.length,\n      resIndex = 0,\n      result = [];\n\n  while (++index < length) {\n    var value = array[index];\n    if (predicate(value, index, array)) {\n      result[resIndex++] = value;\n    }\n  }\n  return result;\n}\n\nmodule.exports = arrayFilter;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_arrayFilter.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_arrayLikeKeys.js":
-/*!***********************************************!*\
-  !*** ./node_modules/lodash/_arrayLikeKeys.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseTimes = __webpack_require__(/*! ./_baseTimes */ \"./node_modules/lodash/_baseTimes.js\"),\n    isArguments = __webpack_require__(/*! ./isArguments */ \"./node_modules/lodash/isArguments.js\"),\n    isArray = __webpack_require__(/*! ./isArray */ \"./node_modules/lodash/isArray.js\"),\n    isBuffer = __webpack_require__(/*! ./isBuffer */ \"./node_modules/lodash/isBuffer.js\"),\n    isIndex = __webpack_require__(/*! ./_isIndex */ \"./node_modules/lodash/_isIndex.js\"),\n    isTypedArray = __webpack_require__(/*! ./isTypedArray */ \"./node_modules/lodash/isTypedArray.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Creates an array of the enumerable property names of the array-like `value`.\n *\n * @private\n * @param {*} value The value to query.\n * @param {boolean} inherited Specify returning inherited property names.\n * @returns {Array} Returns the array of property names.\n */\nfunction arrayLikeKeys(value, inherited) {\n  var isArr = isArray(value),\n      isArg = !isArr && isArguments(value),\n      isBuff = !isArr && !isArg && isBuffer(value),\n      isType = !isArr && !isArg && !isBuff && isTypedArray(value),\n      skipIndexes = isArr || isArg || isBuff || isType,\n      result = skipIndexes ? baseTimes(value.length, String) : [],\n      length = result.length;\n\n  for (var key in value) {\n    if ((inherited || hasOwnProperty.call(value, key)) &&\n        !(skipIndexes && (\n           // Safari 9 has enumerable `arguments.length` in strict mode.\n           key == 'length' ||\n           // Node.js 0.10 has enumerable non-index properties on buffers.\n           (isBuff && (key == 'offset' || key == 'parent')) ||\n           // PhantomJS 2 has enumerable non-index properties on typed arrays.\n           (isType && (key == 'buffer' || key == 'byteLength' || key == 'byteOffset')) ||\n           // Skip index properties.\n           isIndex(key, length)\n        ))) {\n      result.push(key);\n    }\n  }\n  return result;\n}\n\nmodule.exports = arrayLikeKeys;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_arrayLikeKeys.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_arrayMap.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_arrayMap.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * A specialized version of `_.map` for arrays without support for iteratee\n * shorthands.\n *\n * @private\n * @param {Array} [array] The array to iterate over.\n * @param {Function} iteratee The function invoked per iteration.\n * @returns {Array} Returns the new mapped array.\n */\nfunction arrayMap(array, iteratee) {\n  var index = -1,\n      length = array == null ? 0 : array.length,\n      result = Array(length);\n\n  while (++index < length) {\n    result[index] = iteratee(array[index], index, array);\n  }\n  return result;\n}\n\nmodule.exports = arrayMap;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_arrayMap.js?");
 
 /***/ }),
 
@@ -1990,39 +1372,6 @@ eval("var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ \"./no
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_assignValue.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_assignValue.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ \"./node_modules/lodash/_baseAssignValue.js\"),\n    eq = __webpack_require__(/*! ./eq */ \"./node_modules/lodash/eq.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Assigns `value` to `key` of `object` if the existing value is not equivalent\n * using [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)\n * for equality comparisons.\n *\n * @private\n * @param {Object} object The object to modify.\n * @param {string} key The key of the property to assign.\n * @param {*} value The value to assign.\n */\nfunction assignValue(object, key, value) {\n  var objValue = object[key];\n  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||\n      (value === undefined && !(key in object))) {\n    baseAssignValue(object, key, value);\n  }\n}\n\nmodule.exports = assignValue;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_assignValue.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_assocIndexOf.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_assocIndexOf.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var eq = __webpack_require__(/*! ./eq */ \"./node_modules/lodash/eq.js\");\n\n/**\n * Gets the index at which the `key` is found in `array` of key-value pairs.\n *\n * @private\n * @param {Array} array The array to inspect.\n * @param {*} key The key to search for.\n * @returns {number} Returns the index of the matched value, else `-1`.\n */\nfunction assocIndexOf(array, key) {\n  var length = array.length;\n  while (length--) {\n    if (eq(array[length][0], key)) {\n      return length;\n    }\n  }\n  return -1;\n}\n\nmodule.exports = assocIndexOf;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_assocIndexOf.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseAssignValue.js":
-/*!*************************************************!*\
-  !*** ./node_modules/lodash/_baseAssignValue.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var defineProperty = __webpack_require__(/*! ./_defineProperty */ \"./node_modules/lodash/_defineProperty.js\");\n\n/**\n * The base implementation of `assignValue` and `assignMergeValue` without\n * value checks.\n *\n * @private\n * @param {Object} object The object to modify.\n * @param {string} key The key of the property to assign.\n * @param {*} value The value to assign.\n */\nfunction baseAssignValue(object, key, value) {\n  if (key == '__proto__' && defineProperty) {\n    defineProperty(object, key, {\n      'configurable': true,\n      'enumerable': true,\n      'value': value,\n      'writable': true\n    });\n  } else {\n    object[key] = value;\n  }\n}\n\nmodule.exports = baseAssignValue;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseAssignValue.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_baseCreate.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_baseCreate.js ***!
@@ -2056,17 +1405,6 @@ eval("var createBaseFor = __webpack_require__(/*! ./_createBaseFor */ \"./node_m
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_baseGet.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/_baseGet.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var castPath = __webpack_require__(/*! ./_castPath */ \"./node_modules/lodash/_castPath.js\"),\n    toKey = __webpack_require__(/*! ./_toKey */ \"./node_modules/lodash/_toKey.js\");\n\n/**\n * The base implementation of `_.get` without support for default values.\n *\n * @private\n * @param {Object} object The object to query.\n * @param {Array|string} path The path of the property to get.\n * @returns {*} Returns the resolved value.\n */\nfunction baseGet(object, path) {\n  path = castPath(path, object);\n\n  var index = 0,\n      length = path.length;\n\n  while (object != null && index < length) {\n    object = object[toKey(path[index++])];\n  }\n  return (index && index == length) ? object : undefined;\n}\n\nmodule.exports = baseGet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseGet.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_baseGetAllKeys.js":
 /*!************************************************!*\
   !*** ./node_modules/lodash/_baseGetAllKeys.js ***!
@@ -2078,17 +1416,6 @@ eval("var arrayPush = __webpack_require__(/*! ./_arrayPush */ \"./node_modules/l
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_baseGetTag.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_baseGetTag.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var Symbol = __webpack_require__(/*! ./_Symbol */ \"./node_modules/lodash/_Symbol.js\"),\n    getRawTag = __webpack_require__(/*! ./_getRawTag */ \"./node_modules/lodash/_getRawTag.js\"),\n    objectToString = __webpack_require__(/*! ./_objectToString */ \"./node_modules/lodash/_objectToString.js\");\n\n/** `Object#toString` result references. */\nvar nullTag = '[object Null]',\n    undefinedTag = '[object Undefined]';\n\n/** Built-in value references. */\nvar symToStringTag = Symbol ? Symbol.toStringTag : undefined;\n\n/**\n * The base implementation of `getTag` without fallbacks for buggy environments.\n *\n * @private\n * @param {*} value The value to query.\n * @returns {string} Returns the `toStringTag`.\n */\nfunction baseGetTag(value) {\n  if (value == null) {\n    return value === undefined ? undefinedTag : nullTag;\n  }\n  return (symToStringTag && symToStringTag in Object(value))\n    ? getRawTag(value)\n    : objectToString(value);\n}\n\nmodule.exports = baseGetTag;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseGetTag.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_baseHasIn.js":
 /*!*******************************************!*\
   !*** ./node_modules/lodash/_baseHasIn.js ***!
@@ -2097,17 +1424,6 @@ eval("var Symbol = __webpack_require__(/*! ./_Symbol */ \"./node_modules/lodash/
 /***/ (function(module, exports) {
 
 eval("/**\n * The base implementation of `_.hasIn` without support for deep paths.\n *\n * @private\n * @param {Object} [object] The object to query.\n * @param {Array|string} key The key to check.\n * @returns {boolean} Returns `true` if `key` exists, else `false`.\n */\nfunction baseHasIn(object, key) {\n  return object != null && key in Object(object);\n}\n\nmodule.exports = baseHasIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseHasIn.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseIsArguments.js":
-/*!*************************************************!*\
-  !*** ./node_modules/lodash/_baseIsArguments.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ \"./node_modules/lodash/_baseGetTag.js\"),\n    isObjectLike = __webpack_require__(/*! ./isObjectLike */ \"./node_modules/lodash/isObjectLike.js\");\n\n/** `Object#toString` result references. */\nvar argsTag = '[object Arguments]';\n\n/**\n * The base implementation of `_.isArguments`.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an `arguments` object,\n */\nfunction baseIsArguments(value) {\n  return isObjectLike(value) && baseGetTag(value) == argsTag;\n}\n\nmodule.exports = baseIsArguments;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseIsArguments.js?");
 
 /***/ }),
 
@@ -2144,28 +1460,6 @@ eval("var Stack = __webpack_require__(/*! ./_Stack */ \"./node_modules/lodash/_S
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_baseIsNative.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_baseIsNative.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isFunction = __webpack_require__(/*! ./isFunction */ \"./node_modules/lodash/isFunction.js\"),\n    isMasked = __webpack_require__(/*! ./_isMasked */ \"./node_modules/lodash/_isMasked.js\"),\n    isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/lodash/isObject.js\"),\n    toSource = __webpack_require__(/*! ./_toSource */ \"./node_modules/lodash/_toSource.js\");\n\n/**\n * Used to match `RegExp`\n * [syntax characters](http://ecma-international.org/ecma-262/7.0/#sec-patterns).\n */\nvar reRegExpChar = /[\\\\^$.*+?()[\\]{}|]/g;\n\n/** Used to detect host constructors (Safari). */\nvar reIsHostCtor = /^\\[object .+?Constructor\\]$/;\n\n/** Used for built-in method references. */\nvar funcProto = Function.prototype,\n    objectProto = Object.prototype;\n\n/** Used to resolve the decompiled source of functions. */\nvar funcToString = funcProto.toString;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/** Used to detect if a method is native. */\nvar reIsNative = RegExp('^' +\n  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\\\$&')\n  .replace(/hasOwnProperty|(function).*?(?=\\\\\\()| for .+?(?=\\\\\\])/g, '$1.*?') + '$'\n);\n\n/**\n * The base implementation of `_.isNative` without bad shim checks.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a native function,\n *  else `false`.\n */\nfunction baseIsNative(value) {\n  if (!isObject(value) || isMasked(value)) {\n    return false;\n  }\n  var pattern = isFunction(value) ? reIsNative : reIsHostCtor;\n  return pattern.test(toSource(value));\n}\n\nmodule.exports = baseIsNative;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseIsNative.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseIsTypedArray.js":
-/*!**************************************************!*\
-  !*** ./node_modules/lodash/_baseIsTypedArray.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ \"./node_modules/lodash/_baseGetTag.js\"),\n    isLength = __webpack_require__(/*! ./isLength */ \"./node_modules/lodash/isLength.js\"),\n    isObjectLike = __webpack_require__(/*! ./isObjectLike */ \"./node_modules/lodash/isObjectLike.js\");\n\n/** `Object#toString` result references. */\nvar argsTag = '[object Arguments]',\n    arrayTag = '[object Array]',\n    boolTag = '[object Boolean]',\n    dateTag = '[object Date]',\n    errorTag = '[object Error]',\n    funcTag = '[object Function]',\n    mapTag = '[object Map]',\n    numberTag = '[object Number]',\n    objectTag = '[object Object]',\n    regexpTag = '[object RegExp]',\n    setTag = '[object Set]',\n    stringTag = '[object String]',\n    weakMapTag = '[object WeakMap]';\n\nvar arrayBufferTag = '[object ArrayBuffer]',\n    dataViewTag = '[object DataView]',\n    float32Tag = '[object Float32Array]',\n    float64Tag = '[object Float64Array]',\n    int8Tag = '[object Int8Array]',\n    int16Tag = '[object Int16Array]',\n    int32Tag = '[object Int32Array]',\n    uint8Tag = '[object Uint8Array]',\n    uint8ClampedTag = '[object Uint8ClampedArray]',\n    uint16Tag = '[object Uint16Array]',\n    uint32Tag = '[object Uint32Array]';\n\n/** Used to identify `toStringTag` values of typed arrays. */\nvar typedArrayTags = {};\ntypedArrayTags[float32Tag] = typedArrayTags[float64Tag] =\ntypedArrayTags[int8Tag] = typedArrayTags[int16Tag] =\ntypedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =\ntypedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =\ntypedArrayTags[uint32Tag] = true;\ntypedArrayTags[argsTag] = typedArrayTags[arrayTag] =\ntypedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =\ntypedArrayTags[dataViewTag] = typedArrayTags[dateTag] =\ntypedArrayTags[errorTag] = typedArrayTags[funcTag] =\ntypedArrayTags[mapTag] = typedArrayTags[numberTag] =\ntypedArrayTags[objectTag] = typedArrayTags[regexpTag] =\ntypedArrayTags[setTag] = typedArrayTags[stringTag] =\ntypedArrayTags[weakMapTag] = false;\n\n/**\n * The base implementation of `_.isTypedArray` without Node.js optimizations.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.\n */\nfunction baseIsTypedArray(value) {\n  return isObjectLike(value) &&\n    isLength(value.length) && !!typedArrayTags[baseGetTag(value)];\n}\n\nmodule.exports = baseIsTypedArray;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseIsTypedArray.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_baseIteratee.js":
 /*!**********************************************!*\
   !*** ./node_modules/lodash/_baseIteratee.js ***!
@@ -2185,17 +1479,6 @@ eval("var baseMatches = __webpack_require__(/*! ./_baseMatches */ \"./node_modul
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var isPrototype = __webpack_require__(/*! ./_isPrototype */ \"./node_modules/lodash/_isPrototype.js\"),\n    nativeKeys = __webpack_require__(/*! ./_nativeKeys */ \"./node_modules/lodash/_nativeKeys.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * The base implementation of `_.keys` which doesn't treat sparse arrays as dense.\n *\n * @private\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names.\n */\nfunction baseKeys(object) {\n  if (!isPrototype(object)) {\n    return nativeKeys(object);\n  }\n  var result = [];\n  for (var key in Object(object)) {\n    if (hasOwnProperty.call(object, key) && key != 'constructor') {\n      result.push(key);\n    }\n  }\n  return result;\n}\n\nmodule.exports = baseKeys;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseKeys.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseKeysIn.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_baseKeysIn.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/lodash/isObject.js\"),\n    isPrototype = __webpack_require__(/*! ./_isPrototype */ \"./node_modules/lodash/_isPrototype.js\"),\n    nativeKeysIn = __webpack_require__(/*! ./_nativeKeysIn */ \"./node_modules/lodash/_nativeKeysIn.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * The base implementation of `_.keysIn` which doesn't treat sparse arrays as dense.\n *\n * @private\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names.\n */\nfunction baseKeysIn(object) {\n  if (!isObject(object)) {\n    return nativeKeysIn(object);\n  }\n  var isProto = isPrototype(object),\n      result = [];\n\n  for (var key in object) {\n    if (!(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {\n      result.push(key);\n    }\n  }\n  return result;\n}\n\nmodule.exports = baseKeysIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseKeysIn.js?");
 
 /***/ }),
 
@@ -2265,17 +1548,6 @@ eval("var baseGet = __webpack_require__(/*! ./_baseGet */ \"./node_modules/lodas
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_baseRest.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_baseRest.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var identity = __webpack_require__(/*! ./identity */ \"./node_modules/lodash/identity.js\"),\n    overRest = __webpack_require__(/*! ./_overRest */ \"./node_modules/lodash/_overRest.js\"),\n    setToString = __webpack_require__(/*! ./_setToString */ \"./node_modules/lodash/_setToString.js\");\n\n/**\n * The base implementation of `_.rest` which doesn't validate or coerce arguments.\n *\n * @private\n * @param {Function} func The function to apply a rest parameter to.\n * @param {number} [start=func.length-1] The start position of the rest parameter.\n * @returns {Function} Returns the new function.\n */\nfunction baseRest(func, start) {\n  return setToString(overRest(func, start, identity), func + '');\n}\n\nmodule.exports = baseRest;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseRest.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_baseSet.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/_baseSet.js ***!
@@ -2287,50 +1559,6 @@ eval("var assignValue = __webpack_require__(/*! ./_assignValue */ \"./node_modul
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_baseSetToString.js":
-/*!*************************************************!*\
-  !*** ./node_modules/lodash/_baseSetToString.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var constant = __webpack_require__(/*! ./constant */ \"./node_modules/lodash/constant.js\"),\n    defineProperty = __webpack_require__(/*! ./_defineProperty */ \"./node_modules/lodash/_defineProperty.js\"),\n    identity = __webpack_require__(/*! ./identity */ \"./node_modules/lodash/identity.js\");\n\n/**\n * The base implementation of `setToString` without support for hot loop shorting.\n *\n * @private\n * @param {Function} func The function to modify.\n * @param {Function} string The `toString` result.\n * @returns {Function} Returns `func`.\n */\nvar baseSetToString = !defineProperty ? identity : function(func, string) {\n  return defineProperty(func, 'toString', {\n    'configurable': true,\n    'enumerable': false,\n    'value': constant(string),\n    'writable': true\n  });\n};\n\nmodule.exports = baseSetToString;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseSetToString.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseTimes.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_baseTimes.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * The base implementation of `_.times` without support for iteratee shorthands\n * or max array length checks.\n *\n * @private\n * @param {number} n The number of times to invoke `iteratee`.\n * @param {Function} iteratee The function invoked per iteration.\n * @returns {Array} Returns the array of results.\n */\nfunction baseTimes(n, iteratee) {\n  var index = -1,\n      result = Array(n);\n\n  while (++index < n) {\n    result[index] = iteratee(index);\n  }\n  return result;\n}\n\nmodule.exports = baseTimes;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseTimes.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseToString.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_baseToString.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var Symbol = __webpack_require__(/*! ./_Symbol */ \"./node_modules/lodash/_Symbol.js\"),\n    arrayMap = __webpack_require__(/*! ./_arrayMap */ \"./node_modules/lodash/_arrayMap.js\"),\n    isArray = __webpack_require__(/*! ./isArray */ \"./node_modules/lodash/isArray.js\"),\n    isSymbol = __webpack_require__(/*! ./isSymbol */ \"./node_modules/lodash/isSymbol.js\");\n\n/** Used as references for various `Number` constants. */\nvar INFINITY = 1 / 0;\n\n/** Used to convert symbols to primitives and strings. */\nvar symbolProto = Symbol ? Symbol.prototype : undefined,\n    symbolToString = symbolProto ? symbolProto.toString : undefined;\n\n/**\n * The base implementation of `_.toString` which doesn't convert nullish\n * values to empty strings.\n *\n * @private\n * @param {*} value The value to process.\n * @returns {string} Returns the string.\n */\nfunction baseToString(value) {\n  // Exit early for strings to avoid a performance hit in some environments.\n  if (typeof value == 'string') {\n    return value;\n  }\n  if (isArray(value)) {\n    // Recursively convert values (susceptible to call stack limits).\n    return arrayMap(value, baseToString) + '';\n  }\n  if (isSymbol(value)) {\n    return symbolToString ? symbolToString.call(value) : '';\n  }\n  var result = (value + '');\n  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;\n}\n\nmodule.exports = baseToString;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseToString.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_baseUnary.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_baseUnary.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * The base implementation of `_.unary` without support for storing metadata.\n *\n * @private\n * @param {Function} func The function to cap arguments for.\n * @returns {Function} Returns the new capped function.\n */\nfunction baseUnary(func) {\n  return function(value) {\n    return func(value);\n  };\n}\n\nmodule.exports = baseUnary;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_baseUnary.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_cacheHas.js":
 /*!******************************************!*\
   !*** ./node_modules/lodash/_cacheHas.js ***!
@@ -2339,17 +1567,6 @@ eval("/**\n * The base implementation of `_.unary` without support for storing m
 /***/ (function(module, exports) {
 
 eval("/**\n * Checks if a `cache` value for `key` exists.\n *\n * @private\n * @param {Object} cache The cache to query.\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction cacheHas(cache, key) {\n  return cache.has(key);\n}\n\nmodule.exports = cacheHas;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_cacheHas.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_castPath.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_castPath.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isArray = __webpack_require__(/*! ./isArray */ \"./node_modules/lodash/isArray.js\"),\n    isKey = __webpack_require__(/*! ./_isKey */ \"./node_modules/lodash/_isKey.js\"),\n    stringToPath = __webpack_require__(/*! ./_stringToPath */ \"./node_modules/lodash/_stringToPath.js\"),\n    toString = __webpack_require__(/*! ./toString */ \"./node_modules/lodash/toString.js\");\n\n/**\n * Casts `value` to a path array if it's not one.\n *\n * @private\n * @param {*} value The value to inspect.\n * @param {Object} [object] The object to query keys on.\n * @returns {Array} Returns the cast property path array.\n */\nfunction castPath(value, object) {\n  if (isArray(value)) {\n    return value;\n  }\n  return isKey(value, object) ? [value] : stringToPath(toString(value));\n}\n\nmodule.exports = castPath;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_castPath.js?");
 
 /***/ }),
 
@@ -2397,39 +1614,6 @@ eval("/**\n * Copies the values of `source` to `array`.\n *\n * @private\n * @pa
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_copyObject.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_copyObject.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var assignValue = __webpack_require__(/*! ./_assignValue */ \"./node_modules/lodash/_assignValue.js\"),\n    baseAssignValue = __webpack_require__(/*! ./_baseAssignValue */ \"./node_modules/lodash/_baseAssignValue.js\");\n\n/**\n * Copies properties of `source` to `object`.\n *\n * @private\n * @param {Object} source The object to copy properties from.\n * @param {Array} props The property identifiers to copy.\n * @param {Object} [object={}] The object to copy properties to.\n * @param {Function} [customizer] The function to customize copied values.\n * @returns {Object} Returns `object`.\n */\nfunction copyObject(source, props, object, customizer) {\n  var isNew = !object;\n  object || (object = {});\n\n  var index = -1,\n      length = props.length;\n\n  while (++index < length) {\n    var key = props[index];\n\n    var newValue = customizer\n      ? customizer(object[key], source[key], key, object, source)\n      : undefined;\n\n    if (newValue === undefined) {\n      newValue = source[key];\n    }\n    if (isNew) {\n      baseAssignValue(object, key, newValue);\n    } else {\n      assignValue(object, key, newValue);\n    }\n  }\n  return object;\n}\n\nmodule.exports = copyObject;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_copyObject.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_coreJsData.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_coreJsData.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var root = __webpack_require__(/*! ./_root */ \"./node_modules/lodash/_root.js\");\n\n/** Used to detect overreaching core-js shims. */\nvar coreJsData = root['__core-js_shared__'];\n\nmodule.exports = coreJsData;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_coreJsData.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_createAssigner.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_createAssigner.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseRest = __webpack_require__(/*! ./_baseRest */ \"./node_modules/lodash/_baseRest.js\"),\n    isIterateeCall = __webpack_require__(/*! ./_isIterateeCall */ \"./node_modules/lodash/_isIterateeCall.js\");\n\n/**\n * Creates a function like `_.assign`.\n *\n * @private\n * @param {Function} assigner The function to assign values.\n * @returns {Function} Returns the new assigner function.\n */\nfunction createAssigner(assigner) {\n  return baseRest(function(object, sources) {\n    var index = -1,\n        length = sources.length,\n        customizer = length > 1 ? sources[length - 1] : undefined,\n        guard = length > 2 ? sources[2] : undefined;\n\n    customizer = (assigner.length > 3 && typeof customizer == 'function')\n      ? (length--, customizer)\n      : undefined;\n\n    if (guard && isIterateeCall(sources[0], sources[1], guard)) {\n      customizer = length < 3 ? undefined : customizer;\n      length = 1;\n    }\n    object = Object(object);\n    while (++index < length) {\n      var source = sources[index];\n      if (source) {\n        assigner(object, source, index, customizer);\n      }\n    }\n    return object;\n  });\n}\n\nmodule.exports = createAssigner;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_createAssigner.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_createBaseFor.js":
 /*!***********************************************!*\
   !*** ./node_modules/lodash/_createBaseFor.js ***!
@@ -2449,17 +1633,6 @@ eval("/**\n * Creates a base function for methods like `_.forIn` and `_.forOwn`.
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var baseIteratee = __webpack_require__(/*! ./_baseIteratee */ \"./node_modules/lodash/_baseIteratee.js\"),\n    isArrayLike = __webpack_require__(/*! ./isArrayLike */ \"./node_modules/lodash/isArrayLike.js\"),\n    keys = __webpack_require__(/*! ./keys */ \"./node_modules/lodash/keys.js\");\n\n/**\n * Creates a `_.find` or `_.findLast` function.\n *\n * @private\n * @param {Function} findIndexFunc The function to find the collection index.\n * @returns {Function} Returns the new find function.\n */\nfunction createFind(findIndexFunc) {\n  return function(collection, predicate, fromIndex) {\n    var iterable = Object(collection);\n    if (!isArrayLike(collection)) {\n      var iteratee = baseIteratee(predicate, 3);\n      collection = keys(collection);\n      predicate = function(key) { return iteratee(iterable[key], key, iterable); };\n    }\n    var index = findIndexFunc(collection, predicate, fromIndex);\n    return index > -1 ? iterable[iteratee ? collection[index] : index] : undefined;\n  };\n}\n\nmodule.exports = createFind;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_createFind.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_defineProperty.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_defineProperty.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getNative = __webpack_require__(/*! ./_getNative */ \"./node_modules/lodash/_getNative.js\");\n\nvar defineProperty = (function() {\n  try {\n    var func = getNative(Object, 'defineProperty');\n    func({}, '', {});\n    return func;\n  } catch (e) {}\n}());\n\nmodule.exports = defineProperty;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_defineProperty.js?");
 
 /***/ }),
 
@@ -2496,17 +1669,6 @@ eval("var getAllKeys = __webpack_require__(/*! ./_getAllKeys */ \"./node_modules
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_freeGlobal.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_freeGlobal.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */\nvar freeGlobal = typeof global == 'object' && global && global.Object === Object && global;\n\nmodule.exports = freeGlobal;\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./node_modules/lodash/_freeGlobal.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_getAllKeys.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_getAllKeys.js ***!
@@ -2515,17 +1677,6 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `gl
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var baseGetAllKeys = __webpack_require__(/*! ./_baseGetAllKeys */ \"./node_modules/lodash/_baseGetAllKeys.js\"),\n    getSymbols = __webpack_require__(/*! ./_getSymbols */ \"./node_modules/lodash/_getSymbols.js\"),\n    keys = __webpack_require__(/*! ./keys */ \"./node_modules/lodash/keys.js\");\n\n/**\n * Creates an array of own enumerable property names and symbols of `object`.\n *\n * @private\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names and symbols.\n */\nfunction getAllKeys(object) {\n  return baseGetAllKeys(object, keys, getSymbols);\n}\n\nmodule.exports = getAllKeys;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getAllKeys.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_getMapData.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_getMapData.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isKeyable = __webpack_require__(/*! ./_isKeyable */ \"./node_modules/lodash/_isKeyable.js\");\n\n/**\n * Gets the data for `map`.\n *\n * @private\n * @param {Object} map The map to query.\n * @param {string} key The reference key.\n * @returns {*} Returns the map data.\n */\nfunction getMapData(map, key) {\n  var data = map.__data__;\n  return isKeyable(key)\n    ? data[typeof key == 'string' ? 'string' : 'hash']\n    : data.map;\n}\n\nmodule.exports = getMapData;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getMapData.js?");
 
 /***/ }),
 
@@ -2540,17 +1691,6 @@ eval("var isStrictComparable = __webpack_require__(/*! ./_isStrictComparable */ 
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_getNative.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_getNative.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ \"./node_modules/lodash/_baseIsNative.js\"),\n    getValue = __webpack_require__(/*! ./_getValue */ \"./node_modules/lodash/_getValue.js\");\n\n/**\n * Gets the native function at `key` of `object`.\n *\n * @private\n * @param {Object} object The object to query.\n * @param {string} key The key of the method to get.\n * @returns {*} Returns the function if it's native, else `undefined`.\n */\nfunction getNative(object, key) {\n  var value = getValue(object, key);\n  return baseIsNative(value) ? value : undefined;\n}\n\nmodule.exports = getNative;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getNative.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_getPrototype.js":
 /*!**********************************************!*\
   !*** ./node_modules/lodash/_getPrototype.js ***!
@@ -2559,17 +1699,6 @@ eval("var baseIsNative = __webpack_require__(/*! ./_baseIsNative */ \"./node_mod
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var overArg = __webpack_require__(/*! ./_overArg */ \"./node_modules/lodash/_overArg.js\");\n\n/** Built-in value references. */\nvar getPrototype = overArg(Object.getPrototypeOf, Object);\n\nmodule.exports = getPrototype;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getPrototype.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_getRawTag.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_getRawTag.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var Symbol = __webpack_require__(/*! ./_Symbol */ \"./node_modules/lodash/_Symbol.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Used to resolve the\n * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)\n * of values.\n */\nvar nativeObjectToString = objectProto.toString;\n\n/** Built-in value references. */\nvar symToStringTag = Symbol ? Symbol.toStringTag : undefined;\n\n/**\n * A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.\n *\n * @private\n * @param {*} value The value to query.\n * @returns {string} Returns the raw `toStringTag`.\n */\nfunction getRawTag(value) {\n  var isOwn = hasOwnProperty.call(value, symToStringTag),\n      tag = value[symToStringTag];\n\n  try {\n    value[symToStringTag] = undefined;\n    var unmasked = true;\n  } catch (e) {}\n\n  var result = nativeObjectToString.call(value);\n  if (unmasked) {\n    if (isOwn) {\n      value[symToStringTag] = tag;\n    } else {\n      delete value[symToStringTag];\n    }\n  }\n  return result;\n}\n\nmodule.exports = getRawTag;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getRawTag.js?");
 
 /***/ }),
 
@@ -2595,17 +1724,6 @@ eval("var DataView = __webpack_require__(/*! ./_DataView */ \"./node_modules/lod
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_getValue.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_getValue.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Gets the value at `key` of `object`.\n *\n * @private\n * @param {Object} [object] The object to query.\n * @param {string} key The key of the property to get.\n * @returns {*} Returns the property value.\n */\nfunction getValue(object, key) {\n  return object == null ? undefined : object[key];\n}\n\nmodule.exports = getValue;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_getValue.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_hasPath.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/_hasPath.js ***!
@@ -2614,61 +1732,6 @@ eval("/**\n * Gets the value at `key` of `object`.\n *\n * @private\n * @param {
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var castPath = __webpack_require__(/*! ./_castPath */ \"./node_modules/lodash/_castPath.js\"),\n    isArguments = __webpack_require__(/*! ./isArguments */ \"./node_modules/lodash/isArguments.js\"),\n    isArray = __webpack_require__(/*! ./isArray */ \"./node_modules/lodash/isArray.js\"),\n    isIndex = __webpack_require__(/*! ./_isIndex */ \"./node_modules/lodash/_isIndex.js\"),\n    isLength = __webpack_require__(/*! ./isLength */ \"./node_modules/lodash/isLength.js\"),\n    toKey = __webpack_require__(/*! ./_toKey */ \"./node_modules/lodash/_toKey.js\");\n\n/**\n * Checks if `path` exists on `object`.\n *\n * @private\n * @param {Object} object The object to query.\n * @param {Array|string} path The path to check.\n * @param {Function} hasFunc The function to check properties.\n * @returns {boolean} Returns `true` if `path` exists, else `false`.\n */\nfunction hasPath(object, path, hasFunc) {\n  path = castPath(path, object);\n\n  var index = -1,\n      length = path.length,\n      result = false;\n\n  while (++index < length) {\n    var key = toKey(path[index]);\n    if (!(result = object != null && hasFunc(object, key))) {\n      break;\n    }\n    object = object[key];\n  }\n  if (result || ++index != length) {\n    return result;\n  }\n  length = object == null ? 0 : object.length;\n  return !!length && isLength(length) && isIndex(key, length) &&\n    (isArray(object) || isArguments(object));\n}\n\nmodule.exports = hasPath;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hasPath.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_hashClear.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_hashClear.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ \"./node_modules/lodash/_nativeCreate.js\");\n\n/**\n * Removes all key-value entries from the hash.\n *\n * @private\n * @name clear\n * @memberOf Hash\n */\nfunction hashClear() {\n  this.__data__ = nativeCreate ? nativeCreate(null) : {};\n  this.size = 0;\n}\n\nmodule.exports = hashClear;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hashClear.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_hashDelete.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/_hashDelete.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Removes `key` and its value from the hash.\n *\n * @private\n * @name delete\n * @memberOf Hash\n * @param {Object} hash The hash to modify.\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction hashDelete(key) {\n  var result = this.has(key) && delete this.__data__[key];\n  this.size -= result ? 1 : 0;\n  return result;\n}\n\nmodule.exports = hashDelete;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hashDelete.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_hashGet.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/_hashGet.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ \"./node_modules/lodash/_nativeCreate.js\");\n\n/** Used to stand-in for `undefined` hash values. */\nvar HASH_UNDEFINED = '__lodash_hash_undefined__';\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Gets the hash value for `key`.\n *\n * @private\n * @name get\n * @memberOf Hash\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction hashGet(key) {\n  var data = this.__data__;\n  if (nativeCreate) {\n    var result = data[key];\n    return result === HASH_UNDEFINED ? undefined : result;\n  }\n  return hasOwnProperty.call(data, key) ? data[key] : undefined;\n}\n\nmodule.exports = hashGet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hashGet.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_hashHas.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/_hashHas.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ \"./node_modules/lodash/_nativeCreate.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/**\n * Checks if a hash value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf Hash\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction hashHas(key) {\n  var data = this.__data__;\n  return nativeCreate ? (data[key] !== undefined) : hasOwnProperty.call(data, key);\n}\n\nmodule.exports = hashHas;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hashHas.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_hashSet.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/_hashSet.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var nativeCreate = __webpack_require__(/*! ./_nativeCreate */ \"./node_modules/lodash/_nativeCreate.js\");\n\n/** Used to stand-in for `undefined` hash values. */\nvar HASH_UNDEFINED = '__lodash_hash_undefined__';\n\n/**\n * Sets the hash `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf Hash\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the hash instance.\n */\nfunction hashSet(key, value) {\n  var data = this.__data__;\n  this.size += this.has(key) ? 0 : 1;\n  data[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;\n  return this;\n}\n\nmodule.exports = hashSet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_hashSet.js?");
 
 /***/ }),
 
@@ -2683,72 +1746,6 @@ eval("var baseCreate = __webpack_require__(/*! ./_baseCreate */ \"./node_modules
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_isIndex.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/_isIndex.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used as references for various `Number` constants. */\nvar MAX_SAFE_INTEGER = 9007199254740991;\n\n/** Used to detect unsigned integer values. */\nvar reIsUint = /^(?:0|[1-9]\\d*)$/;\n\n/**\n * Checks if `value` is a valid array-like index.\n *\n * @private\n * @param {*} value The value to check.\n * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.\n * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.\n */\nfunction isIndex(value, length) {\n  var type = typeof value;\n  length = length == null ? MAX_SAFE_INTEGER : length;\n\n  return !!length &&\n    (type == 'number' ||\n      (type != 'symbol' && reIsUint.test(value))) &&\n        (value > -1 && value % 1 == 0 && value < length);\n}\n\nmodule.exports = isIndex;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isIndex.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_isIterateeCall.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_isIterateeCall.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var eq = __webpack_require__(/*! ./eq */ \"./node_modules/lodash/eq.js\"),\n    isArrayLike = __webpack_require__(/*! ./isArrayLike */ \"./node_modules/lodash/isArrayLike.js\"),\n    isIndex = __webpack_require__(/*! ./_isIndex */ \"./node_modules/lodash/_isIndex.js\"),\n    isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/lodash/isObject.js\");\n\n/**\n * Checks if the given arguments are from an iteratee call.\n *\n * @private\n * @param {*} value The potential iteratee value argument.\n * @param {*} index The potential iteratee index or key argument.\n * @param {*} object The potential iteratee object argument.\n * @returns {boolean} Returns `true` if the arguments are from an iteratee call,\n *  else `false`.\n */\nfunction isIterateeCall(value, index, object) {\n  if (!isObject(object)) {\n    return false;\n  }\n  var type = typeof index;\n  if (type == 'number'\n        ? (isArrayLike(object) && isIndex(index, object.length))\n        : (type == 'string' && index in object)\n      ) {\n    return eq(object[index], value);\n  }\n  return false;\n}\n\nmodule.exports = isIterateeCall;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isIterateeCall.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_isKey.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/_isKey.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isArray = __webpack_require__(/*! ./isArray */ \"./node_modules/lodash/isArray.js\"),\n    isSymbol = __webpack_require__(/*! ./isSymbol */ \"./node_modules/lodash/isSymbol.js\");\n\n/** Used to match property names within property paths. */\nvar reIsDeepProp = /\\.|\\[(?:[^[\\]]*|([\"'])(?:(?!\\1)[^\\\\]|\\\\.)*?\\1)\\]/,\n    reIsPlainProp = /^\\w*$/;\n\n/**\n * Checks if `value` is a property name and not a property path.\n *\n * @private\n * @param {*} value The value to check.\n * @param {Object} [object] The object to query keys on.\n * @returns {boolean} Returns `true` if `value` is a property name, else `false`.\n */\nfunction isKey(value, object) {\n  if (isArray(value)) {\n    return false;\n  }\n  var type = typeof value;\n  if (type == 'number' || type == 'symbol' || type == 'boolean' ||\n      value == null || isSymbol(value)) {\n    return true;\n  }\n  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||\n    (object != null && value in Object(object));\n}\n\nmodule.exports = isKey;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isKey.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_isKeyable.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/_isKeyable.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Checks if `value` is suitable for use as unique object key.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is suitable, else `false`.\n */\nfunction isKeyable(value) {\n  var type = typeof value;\n  return (type == 'string' || type == 'number' || type == 'symbol' || type == 'boolean')\n    ? (value !== '__proto__')\n    : (value === null);\n}\n\nmodule.exports = isKeyable;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isKeyable.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_isMasked.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_isMasked.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var coreJsData = __webpack_require__(/*! ./_coreJsData */ \"./node_modules/lodash/_coreJsData.js\");\n\n/** Used to detect methods masquerading as native. */\nvar maskSrcKey = (function() {\n  var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || '');\n  return uid ? ('Symbol(src)_1.' + uid) : '';\n}());\n\n/**\n * Checks if `func` has its source masked.\n *\n * @private\n * @param {Function} func The function to check.\n * @returns {boolean} Returns `true` if `func` is masked, else `false`.\n */\nfunction isMasked(func) {\n  return !!maskSrcKey && (maskSrcKey in func);\n}\n\nmodule.exports = isMasked;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isMasked.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_isPrototype.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_isPrototype.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/**\n * Checks if `value` is likely a prototype object.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.\n */\nfunction isPrototype(value) {\n  var Ctor = value && value.constructor,\n      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;\n\n  return value === proto;\n}\n\nmodule.exports = isPrototype;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isPrototype.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_isStrictComparable.js":
 /*!****************************************************!*\
   !*** ./node_modules/lodash/_isStrictComparable.js ***!
@@ -2757,116 +1754,6 @@ eval("/** Used for built-in method references. */\nvar objectProto = Object.prot
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/lodash/isObject.js\");\n\n/**\n * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.\n *\n * @private\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` if suitable for strict\n *  equality comparisons, else `false`.\n */\nfunction isStrictComparable(value) {\n  return value === value && !isObject(value);\n}\n\nmodule.exports = isStrictComparable;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_isStrictComparable.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_listCacheClear.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_listCacheClear.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Removes all key-value entries from the list cache.\n *\n * @private\n * @name clear\n * @memberOf ListCache\n */\nfunction listCacheClear() {\n  this.__data__ = [];\n  this.size = 0;\n}\n\nmodule.exports = listCacheClear;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_listCacheClear.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_listCacheDelete.js":
-/*!*************************************************!*\
-  !*** ./node_modules/lodash/_listCacheDelete.js ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ \"./node_modules/lodash/_assocIndexOf.js\");\n\n/** Used for built-in method references. */\nvar arrayProto = Array.prototype;\n\n/** Built-in value references. */\nvar splice = arrayProto.splice;\n\n/**\n * Removes `key` and its value from the list cache.\n *\n * @private\n * @name delete\n * @memberOf ListCache\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction listCacheDelete(key) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  if (index < 0) {\n    return false;\n  }\n  var lastIndex = data.length - 1;\n  if (index == lastIndex) {\n    data.pop();\n  } else {\n    splice.call(data, index, 1);\n  }\n  --this.size;\n  return true;\n}\n\nmodule.exports = listCacheDelete;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_listCacheDelete.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_listCacheGet.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_listCacheGet.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ \"./node_modules/lodash/_assocIndexOf.js\");\n\n/**\n * Gets the list cache value for `key`.\n *\n * @private\n * @name get\n * @memberOf ListCache\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction listCacheGet(key) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  return index < 0 ? undefined : data[index][1];\n}\n\nmodule.exports = listCacheGet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_listCacheGet.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_listCacheHas.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_listCacheHas.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ \"./node_modules/lodash/_assocIndexOf.js\");\n\n/**\n * Checks if a list cache value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf ListCache\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction listCacheHas(key) {\n  return assocIndexOf(this.__data__, key) > -1;\n}\n\nmodule.exports = listCacheHas;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_listCacheHas.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_listCacheSet.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_listCacheSet.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var assocIndexOf = __webpack_require__(/*! ./_assocIndexOf */ \"./node_modules/lodash/_assocIndexOf.js\");\n\n/**\n * Sets the list cache `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf ListCache\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the list cache instance.\n */\nfunction listCacheSet(key, value) {\n  var data = this.__data__,\n      index = assocIndexOf(data, key);\n\n  if (index < 0) {\n    ++this.size;\n    data.push([key, value]);\n  } else {\n    data[index][1] = value;\n  }\n  return this;\n}\n\nmodule.exports = listCacheSet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_listCacheSet.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_mapCacheClear.js":
-/*!***********************************************!*\
-  !*** ./node_modules/lodash/_mapCacheClear.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var Hash = __webpack_require__(/*! ./_Hash */ \"./node_modules/lodash/_Hash.js\"),\n    ListCache = __webpack_require__(/*! ./_ListCache */ \"./node_modules/lodash/_ListCache.js\"),\n    Map = __webpack_require__(/*! ./_Map */ \"./node_modules/lodash/_Map.js\");\n\n/**\n * Removes all key-value entries from the map.\n *\n * @private\n * @name clear\n * @memberOf MapCache\n */\nfunction mapCacheClear() {\n  this.size = 0;\n  this.__data__ = {\n    'hash': new Hash,\n    'map': new (Map || ListCache),\n    'string': new Hash\n  };\n}\n\nmodule.exports = mapCacheClear;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_mapCacheClear.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_mapCacheDelete.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_mapCacheDelete.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getMapData = __webpack_require__(/*! ./_getMapData */ \"./node_modules/lodash/_getMapData.js\");\n\n/**\n * Removes `key` and its value from the map.\n *\n * @private\n * @name delete\n * @memberOf MapCache\n * @param {string} key The key of the value to remove.\n * @returns {boolean} Returns `true` if the entry was removed, else `false`.\n */\nfunction mapCacheDelete(key) {\n  var result = getMapData(this, key)['delete'](key);\n  this.size -= result ? 1 : 0;\n  return result;\n}\n\nmodule.exports = mapCacheDelete;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_mapCacheDelete.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_mapCacheGet.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_mapCacheGet.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getMapData = __webpack_require__(/*! ./_getMapData */ \"./node_modules/lodash/_getMapData.js\");\n\n/**\n * Gets the map value for `key`.\n *\n * @private\n * @name get\n * @memberOf MapCache\n * @param {string} key The key of the value to get.\n * @returns {*} Returns the entry value.\n */\nfunction mapCacheGet(key) {\n  return getMapData(this, key).get(key);\n}\n\nmodule.exports = mapCacheGet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_mapCacheGet.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_mapCacheHas.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_mapCacheHas.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getMapData = __webpack_require__(/*! ./_getMapData */ \"./node_modules/lodash/_getMapData.js\");\n\n/**\n * Checks if a map value for `key` exists.\n *\n * @private\n * @name has\n * @memberOf MapCache\n * @param {string} key The key of the entry to check.\n * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.\n */\nfunction mapCacheHas(key) {\n  return getMapData(this, key).has(key);\n}\n\nmodule.exports = mapCacheHas;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_mapCacheHas.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_mapCacheSet.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_mapCacheSet.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getMapData = __webpack_require__(/*! ./_getMapData */ \"./node_modules/lodash/_getMapData.js\");\n\n/**\n * Sets the map `key` to `value`.\n *\n * @private\n * @name set\n * @memberOf MapCache\n * @param {string} key The key of the value to set.\n * @param {*} value The value to set.\n * @returns {Object} Returns the map cache instance.\n */\nfunction mapCacheSet(key, value) {\n  var data = getMapData(this, key),\n      size = data.size;\n\n  data.set(key, value);\n  this.size += data.size == size ? 0 : 1;\n  return this;\n}\n\nmodule.exports = mapCacheSet;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_mapCacheSet.js?");
 
 /***/ }),
 
@@ -2892,28 +1779,6 @@ eval("/**\n * A specialized version of `matchesProperty` for source values suita
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_memoizeCapped.js":
-/*!***********************************************!*\
-  !*** ./node_modules/lodash/_memoizeCapped.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var memoize = __webpack_require__(/*! ./memoize */ \"./node_modules/lodash/memoize.js\");\n\n/** Used as the maximum memoize cache size. */\nvar MAX_MEMOIZE_SIZE = 500;\n\n/**\n * A specialized version of `_.memoize` which clears the memoized function's\n * cache when it exceeds `MAX_MEMOIZE_SIZE`.\n *\n * @private\n * @param {Function} func The function to have its output memoized.\n * @returns {Function} Returns the new memoized function.\n */\nfunction memoizeCapped(func) {\n  var result = memoize(func, function(key) {\n    if (cache.size === MAX_MEMOIZE_SIZE) {\n      cache.clear();\n    }\n    return key;\n  });\n\n  var cache = result.cache;\n  return result;\n}\n\nmodule.exports = memoizeCapped;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_memoizeCapped.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_nativeCreate.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_nativeCreate.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var getNative = __webpack_require__(/*! ./_getNative */ \"./node_modules/lodash/_getNative.js\");\n\n/* Built-in method references that are verified to be native. */\nvar nativeCreate = getNative(Object, 'create');\n\nmodule.exports = nativeCreate;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_nativeCreate.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_nativeKeys.js":
 /*!********************************************!*\
   !*** ./node_modules/lodash/_nativeKeys.js ***!
@@ -2925,39 +1790,6 @@ eval("var overArg = __webpack_require__(/*! ./_overArg */ \"./node_modules/lodas
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_nativeKeysIn.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_nativeKeysIn.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * This function is like\n * [`Object.keys`](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)\n * except that it includes inherited enumerable properties.\n *\n * @private\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names.\n */\nfunction nativeKeysIn(object) {\n  var result = [];\n  if (object != null) {\n    for (var key in Object(object)) {\n      result.push(key);\n    }\n  }\n  return result;\n}\n\nmodule.exports = nativeKeysIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_nativeKeysIn.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_nodeUtil.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_nodeUtil.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/* WEBPACK VAR INJECTION */(function(module) {var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ \"./node_modules/lodash/_freeGlobal.js\");\n\n/** Detect free variable `exports`. */\nvar freeExports =  true && exports && !exports.nodeType && exports;\n\n/** Detect free variable `module`. */\nvar freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;\n\n/** Detect the popular CommonJS extension `module.exports`. */\nvar moduleExports = freeModule && freeModule.exports === freeExports;\n\n/** Detect free variable `process` from Node.js. */\nvar freeProcess = moduleExports && freeGlobal.process;\n\n/** Used to access faster Node.js helpers. */\nvar nodeUtil = (function() {\n  try {\n    // Use `util.types` for Node.js 10+.\n    var types = freeModule && freeModule.require && freeModule.require('util').types;\n\n    if (types) {\n      return types;\n    }\n\n    // Legacy `process.binding('util')` for Node.js < 10.\n    return freeProcess && freeProcess.binding && freeProcess.binding('util');\n  } catch (e) {}\n}());\n\nmodule.exports = nodeUtil;\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ \"./node_modules/webpack/buildin/module.js\")(module)))\n\n//# sourceURL=webpack:///./node_modules/lodash/_nodeUtil.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_objectToString.js":
-/*!************************************************!*\
-  !*** ./node_modules/lodash/_objectToString.js ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/**\n * Used to resolve the\n * [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)\n * of values.\n */\nvar nativeObjectToString = objectProto.toString;\n\n/**\n * Converts `value` to a string using `Object.prototype.toString`.\n *\n * @private\n * @param {*} value The value to convert.\n * @returns {string} Returns the converted string.\n */\nfunction objectToString(value) {\n  return nativeObjectToString.call(value);\n}\n\nmodule.exports = objectToString;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_objectToString.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/_overArg.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/_overArg.js ***!
@@ -2966,28 +1798,6 @@ eval("/** Used for built-in method references. */\nvar objectProto = Object.prot
 /***/ (function(module, exports) {
 
 eval("/**\n * Creates a unary function that invokes `func` with its argument transformed.\n *\n * @private\n * @param {Function} func The function to wrap.\n * @param {Function} transform The argument transform.\n * @returns {Function} Returns the new function.\n */\nfunction overArg(func, transform) {\n  return function(arg) {\n    return func(transform(arg));\n  };\n}\n\nmodule.exports = overArg;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_overArg.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_overRest.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_overRest.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var apply = __webpack_require__(/*! ./_apply */ \"./node_modules/lodash/_apply.js\");\n\n/* Built-in method references for those with the same name as other `lodash` methods. */\nvar nativeMax = Math.max;\n\n/**\n * A specialized version of `baseRest` which transforms the rest array.\n *\n * @private\n * @param {Function} func The function to apply a rest parameter to.\n * @param {number} [start=func.length-1] The start position of the rest parameter.\n * @param {Function} transform The rest array transform.\n * @returns {Function} Returns the new function.\n */\nfunction overRest(func, start, transform) {\n  start = nativeMax(start === undefined ? (func.length - 1) : start, 0);\n  return function() {\n    var args = arguments,\n        index = -1,\n        length = nativeMax(args.length - start, 0),\n        array = Array(length);\n\n    while (++index < length) {\n      array[index] = args[start + index];\n    }\n    index = -1;\n    var otherArgs = Array(start + 1);\n    while (++index < start) {\n      otherArgs[index] = args[index];\n    }\n    otherArgs[start] = transform(array);\n    return apply(func, this, otherArgs);\n  };\n}\n\nmodule.exports = overRest;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_overRest.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_root.js":
-/*!**************************************!*\
-  !*** ./node_modules/lodash/_root.js ***!
-  \**************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var freeGlobal = __webpack_require__(/*! ./_freeGlobal */ \"./node_modules/lodash/_freeGlobal.js\");\n\n/** Detect free variable `self`. */\nvar freeSelf = typeof self == 'object' && self && self.Object === Object && self;\n\n/** Used as a reference to the global object. */\nvar root = freeGlobal || freeSelf || Function('return this')();\n\nmodule.exports = root;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_root.js?");
 
 /***/ }),
 
@@ -3032,28 +1842,6 @@ eval("/**\n * Checks if `value` is in the array cache.\n *\n * @private\n * @nam
 /***/ (function(module, exports) {
 
 eval("/**\n * Converts `set` to an array of its values.\n *\n * @private\n * @param {Object} set The set to convert.\n * @returns {Array} Returns the values.\n */\nfunction setToArray(set) {\n  var index = -1,\n      result = Array(set.size);\n\n  set.forEach(function(value) {\n    result[++index] = value;\n  });\n  return result;\n}\n\nmodule.exports = setToArray;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_setToArray.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_setToString.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/_setToString.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseSetToString = __webpack_require__(/*! ./_baseSetToString */ \"./node_modules/lodash/_baseSetToString.js\"),\n    shortOut = __webpack_require__(/*! ./_shortOut */ \"./node_modules/lodash/_shortOut.js\");\n\n/**\n * Sets the `toString` method of `func` to return `string`.\n *\n * @private\n * @param {Function} func The function to modify.\n * @param {Function} string The `toString` result.\n * @returns {Function} Returns `func`.\n */\nvar setToString = shortOut(baseSetToString);\n\nmodule.exports = setToString;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_setToString.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_shortOut.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_shortOut.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used to detect hot functions by number of calls within a span of milliseconds. */\nvar HOT_COUNT = 800,\n    HOT_SPAN = 16;\n\n/* Built-in method references for those with the same name as other `lodash` methods. */\nvar nativeNow = Date.now;\n\n/**\n * Creates a function that'll short out and invoke `identity` instead\n * of `func` when it's called `HOT_COUNT` or more times in `HOT_SPAN`\n * milliseconds.\n *\n * @private\n * @param {Function} func The function to restrict.\n * @returns {Function} Returns the new shortable function.\n */\nfunction shortOut(func) {\n  var count = 0,\n      lastCalled = 0;\n\n  return function() {\n    var stamp = nativeNow(),\n        remaining = HOT_SPAN - (stamp - lastCalled);\n\n    lastCalled = stamp;\n    if (remaining > 0) {\n      if (++count >= HOT_COUNT) {\n        return arguments[0];\n      }\n    } else {\n      count = 0;\n    }\n    return func.apply(undefined, arguments);\n  };\n}\n\nmodule.exports = shortOut;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_shortOut.js?");
 
 /***/ }),
 
@@ -3112,83 +1900,6 @@ eval("var ListCache = __webpack_require__(/*! ./_ListCache */ \"./node_modules/l
 
 /***/ }),
 
-/***/ "./node_modules/lodash/_stringToPath.js":
-/*!**********************************************!*\
-  !*** ./node_modules/lodash/_stringToPath.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var memoizeCapped = __webpack_require__(/*! ./_memoizeCapped */ \"./node_modules/lodash/_memoizeCapped.js\");\n\n/** Used to match property names within property paths. */\nvar rePropName = /[^.[\\]]+|\\[(?:(-?\\d+(?:\\.\\d+)?)|([\"'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2)\\]|(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))/g;\n\n/** Used to match backslashes in property paths. */\nvar reEscapeChar = /\\\\(\\\\)?/g;\n\n/**\n * Converts `string` to a property path array.\n *\n * @private\n * @param {string} string The string to convert.\n * @returns {Array} Returns the property path array.\n */\nvar stringToPath = memoizeCapped(function(string) {\n  var result = [];\n  if (string.charCodeAt(0) === 46 /* . */) {\n    result.push('');\n  }\n  string.replace(rePropName, function(match, number, quote, subString) {\n    result.push(quote ? subString.replace(reEscapeChar, '$1') : (number || match));\n  });\n  return result;\n});\n\nmodule.exports = stringToPath;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_stringToPath.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_toKey.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/_toKey.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isSymbol = __webpack_require__(/*! ./isSymbol */ \"./node_modules/lodash/isSymbol.js\");\n\n/** Used as references for various `Number` constants. */\nvar INFINITY = 1 / 0;\n\n/**\n * Converts `value` to a string key if it's not a string or symbol.\n *\n * @private\n * @param {*} value The value to inspect.\n * @returns {string|symbol} Returns the key.\n */\nfunction toKey(value) {\n  if (typeof value == 'string' || isSymbol(value)) {\n    return value;\n  }\n  var result = (value + '');\n  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;\n}\n\nmodule.exports = toKey;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_toKey.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/_toSource.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/_toSource.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used for built-in method references. */\nvar funcProto = Function.prototype;\n\n/** Used to resolve the decompiled source of functions. */\nvar funcToString = funcProto.toString;\n\n/**\n * Converts `func` to its source code.\n *\n * @private\n * @param {Function} func The function to convert.\n * @returns {string} Returns the source code.\n */\nfunction toSource(func) {\n  if (func != null) {\n    try {\n      return funcToString.call(func);\n    } catch (e) {}\n    try {\n      return (func + '');\n    } catch (e) {}\n  }\n  return '';\n}\n\nmodule.exports = toSource;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/_toSource.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/assignIn.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/assignIn.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var copyObject = __webpack_require__(/*! ./_copyObject */ \"./node_modules/lodash/_copyObject.js\"),\n    createAssigner = __webpack_require__(/*! ./_createAssigner */ \"./node_modules/lodash/_createAssigner.js\"),\n    keysIn = __webpack_require__(/*! ./keysIn */ \"./node_modules/lodash/keysIn.js\");\n\n/**\n * This method is like `_.assign` except that it iterates over own and\n * inherited source properties.\n *\n * **Note:** This method mutates `object`.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @alias extend\n * @category Object\n * @param {Object} object The destination object.\n * @param {...Object} [sources] The source objects.\n * @returns {Object} Returns `object`.\n * @see _.assign\n * @example\n *\n * function Foo() {\n *   this.a = 1;\n * }\n *\n * function Bar() {\n *   this.c = 3;\n * }\n *\n * Foo.prototype.b = 2;\n * Bar.prototype.d = 4;\n *\n * _.assignIn({ 'a': 0 }, new Foo, new Bar);\n * // => { 'a': 1, 'b': 2, 'c': 3, 'd': 4 }\n */\nvar assignIn = createAssigner(function(object, source) {\n  copyObject(source, keysIn(source), object);\n});\n\nmodule.exports = assignIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/assignIn.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/constant.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/constant.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Creates a function that returns `value`.\n *\n * @static\n * @memberOf _\n * @since 2.4.0\n * @category Util\n * @param {*} value The value to return from the new function.\n * @returns {Function} Returns the new constant function.\n * @example\n *\n * var objects = _.times(2, _.constant({ 'a': 1 }));\n *\n * console.log(objects);\n * // => [{ 'a': 1 }, { 'a': 1 }]\n *\n * console.log(objects[0] === objects[1]);\n * // => true\n */\nfunction constant(value) {\n  return function() {\n    return value;\n  };\n}\n\nmodule.exports = constant;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/constant.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/eq.js":
-/*!***********************************!*\
-  !*** ./node_modules/lodash/eq.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Performs a\n * [`SameValueZero`](http://ecma-international.org/ecma-262/7.0/#sec-samevaluezero)\n * comparison between two values to determine if they are equivalent.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to compare.\n * @param {*} other The other value to compare.\n * @returns {boolean} Returns `true` if the values are equivalent, else `false`.\n * @example\n *\n * var object = { 'a': 1 };\n * var other = { 'a': 1 };\n *\n * _.eq(object, object);\n * // => true\n *\n * _.eq(object, other);\n * // => false\n *\n * _.eq('a', 'a');\n * // => true\n *\n * _.eq('a', Object('a'));\n * // => false\n *\n * _.eq(NaN, NaN);\n * // => true\n */\nfunction eq(value, other) {\n  return value === other || (value !== value && other !== other);\n}\n\nmodule.exports = eq;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/eq.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/extend.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/extend.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__(/*! ./assignIn */ \"./node_modules/lodash/assignIn.js\");\n\n\n//# sourceURL=webpack:///./node_modules/lodash/extend.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/find.js":
 /*!*************************************!*\
   !*** ./node_modules/lodash/find.js ***!
@@ -3211,17 +1922,6 @@ eval("var baseFindIndex = __webpack_require__(/*! ./_baseFindIndex */ \"./node_m
 
 /***/ }),
 
-/***/ "./node_modules/lodash/get.js":
-/*!************************************!*\
-  !*** ./node_modules/lodash/get.js ***!
-  \************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseGet = __webpack_require__(/*! ./_baseGet */ \"./node_modules/lodash/_baseGet.js\");\n\n/**\n * Gets the value at `path` of `object`. If the resolved value is\n * `undefined`, the `defaultValue` is returned in its place.\n *\n * @static\n * @memberOf _\n * @since 3.7.0\n * @category Object\n * @param {Object} object The object to query.\n * @param {Array|string} path The path of the property to get.\n * @param {*} [defaultValue] The value returned for `undefined` resolved values.\n * @returns {*} Returns the resolved value.\n * @example\n *\n * var object = { 'a': [{ 'b': { 'c': 3 } }] };\n *\n * _.get(object, 'a[0].b.c');\n * // => 3\n *\n * _.get(object, ['a', '0', 'b', 'c']);\n * // => 3\n *\n * _.get(object, 'a.b.c', 'default');\n * // => 'default'\n */\nfunction get(object, path, defaultValue) {\n  var result = object == null ? undefined : baseGet(object, path);\n  return result === undefined ? defaultValue : result;\n}\n\nmodule.exports = get;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/get.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/hasIn.js":
 /*!**************************************!*\
   !*** ./node_modules/lodash/hasIn.js ***!
@@ -3230,50 +1930,6 @@ eval("var baseGet = __webpack_require__(/*! ./_baseGet */ \"./node_modules/lodas
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var baseHasIn = __webpack_require__(/*! ./_baseHasIn */ \"./node_modules/lodash/_baseHasIn.js\"),\n    hasPath = __webpack_require__(/*! ./_hasPath */ \"./node_modules/lodash/_hasPath.js\");\n\n/**\n * Checks if `path` is a direct or inherited property of `object`.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Object\n * @param {Object} object The object to query.\n * @param {Array|string} path The path to check.\n * @returns {boolean} Returns `true` if `path` exists, else `false`.\n * @example\n *\n * var object = _.create({ 'a': _.create({ 'b': 2 }) });\n *\n * _.hasIn(object, 'a');\n * // => true\n *\n * _.hasIn(object, 'a.b');\n * // => true\n *\n * _.hasIn(object, ['a', 'b']);\n * // => true\n *\n * _.hasIn(object, 'b');\n * // => false\n */\nfunction hasIn(object, path) {\n  return object != null && hasPath(object, path, baseHasIn);\n}\n\nmodule.exports = hasIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/hasIn.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/identity.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/identity.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * This method returns the first argument it receives.\n *\n * @static\n * @since 0.1.0\n * @memberOf _\n * @category Util\n * @param {*} value Any value.\n * @returns {*} Returns `value`.\n * @example\n *\n * var object = { 'a': 1 };\n *\n * console.log(_.identity(object) === object);\n * // => true\n */\nfunction identity(value) {\n  return value;\n}\n\nmodule.exports = identity;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/identity.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isArguments.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/isArguments.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseIsArguments = __webpack_require__(/*! ./_baseIsArguments */ \"./node_modules/lodash/_baseIsArguments.js\"),\n    isObjectLike = __webpack_require__(/*! ./isObjectLike */ \"./node_modules/lodash/isObjectLike.js\");\n\n/** Used for built-in method references. */\nvar objectProto = Object.prototype;\n\n/** Used to check objects for own properties. */\nvar hasOwnProperty = objectProto.hasOwnProperty;\n\n/** Built-in value references. */\nvar propertyIsEnumerable = objectProto.propertyIsEnumerable;\n\n/**\n * Checks if `value` is likely an `arguments` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an `arguments` object,\n *  else `false`.\n * @example\n *\n * _.isArguments(function() { return arguments; }());\n * // => true\n *\n * _.isArguments([1, 2, 3]);\n * // => false\n */\nvar isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsArguments : function(value) {\n  return isObjectLike(value) && hasOwnProperty.call(value, 'callee') &&\n    !propertyIsEnumerable.call(value, 'callee');\n};\n\nmodule.exports = isArguments;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isArguments.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isArray.js":
-/*!****************************************!*\
-  !*** ./node_modules/lodash/isArray.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Checks if `value` is classified as an `Array` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an array, else `false`.\n * @example\n *\n * _.isArray([1, 2, 3]);\n * // => true\n *\n * _.isArray(document.body.children);\n * // => false\n *\n * _.isArray('abc');\n * // => false\n *\n * _.isArray(_.noop);\n * // => false\n */\nvar isArray = Array.isArray;\n\nmodule.exports = isArray;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isArray.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isArrayLike.js":
-/*!********************************************!*\
-  !*** ./node_modules/lodash/isArrayLike.js ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var isFunction = __webpack_require__(/*! ./isFunction */ \"./node_modules/lodash/isFunction.js\"),\n    isLength = __webpack_require__(/*! ./isLength */ \"./node_modules/lodash/isLength.js\");\n\n/**\n * Checks if `value` is array-like. A value is considered array-like if it's\n * not a function and has a `value.length` that's an integer greater than or\n * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is array-like, else `false`.\n * @example\n *\n * _.isArrayLike([1, 2, 3]);\n * // => true\n *\n * _.isArrayLike(document.body.children);\n * // => true\n *\n * _.isArrayLike('abc');\n * // => true\n *\n * _.isArrayLike(_.noop);\n * // => false\n */\nfunction isArrayLike(value) {\n  return value != null && isLength(value.length) && !isFunction(value);\n}\n\nmodule.exports = isArrayLike;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isArrayLike.js?");
 
 /***/ }),
 
@@ -3288,17 +1944,6 @@ eval("var isArrayLike = __webpack_require__(/*! ./isArrayLike */ \"./node_module
 
 /***/ }),
 
-/***/ "./node_modules/lodash/isBuffer.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isBuffer.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(/*! ./_root */ \"./node_modules/lodash/_root.js\"),\n    stubFalse = __webpack_require__(/*! ./stubFalse */ \"./node_modules/lodash/stubFalse.js\");\n\n/** Detect free variable `exports`. */\nvar freeExports =  true && exports && !exports.nodeType && exports;\n\n/** Detect free variable `module`. */\nvar freeModule = freeExports && typeof module == 'object' && module && !module.nodeType && module;\n\n/** Detect the popular CommonJS extension `module.exports`. */\nvar moduleExports = freeModule && freeModule.exports === freeExports;\n\n/** Built-in value references. */\nvar Buffer = moduleExports ? root.Buffer : undefined;\n\n/* Built-in method references for those with the same name as other `lodash` methods. */\nvar nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined;\n\n/**\n * Checks if `value` is a buffer.\n *\n * @static\n * @memberOf _\n * @since 4.3.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.\n * @example\n *\n * _.isBuffer(new Buffer(2));\n * // => true\n *\n * _.isBuffer(new Uint8Array(2));\n * // => false\n */\nvar isBuffer = nativeIsBuffer || stubFalse;\n\nmodule.exports = isBuffer;\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../webpack/buildin/module.js */ \"./node_modules/webpack/buildin/module.js\")(module)))\n\n//# sourceURL=webpack:///./node_modules/lodash/isBuffer.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/isEqual.js":
 /*!****************************************!*\
   !*** ./node_modules/lodash/isEqual.js ***!
@@ -3307,50 +1952,6 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var baseIsEqual = __webpack_require__(/*! ./_baseIsEqual */ \"./node_modules/lodash/_baseIsEqual.js\");\n\n/**\n * Performs a deep comparison between two values to determine if they are\n * equivalent.\n *\n * **Note:** This method supports comparing arrays, array buffers, booleans,\n * date objects, error objects, maps, numbers, `Object` objects, regexes,\n * sets, strings, symbols, and typed arrays. `Object` objects are compared\n * by their own, not inherited, enumerable properties. Functions and DOM\n * nodes are compared by strict equality, i.e. `===`.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to compare.\n * @param {*} other The other value to compare.\n * @returns {boolean} Returns `true` if the values are equivalent, else `false`.\n * @example\n *\n * var object = { 'a': 1 };\n * var other = { 'a': 1 };\n *\n * _.isEqual(object, other);\n * // => true\n *\n * object === other;\n * // => false\n */\nfunction isEqual(value, other) {\n  return baseIsEqual(value, other);\n}\n\nmodule.exports = isEqual;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isEqual.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isFunction.js":
-/*!*******************************************!*\
-  !*** ./node_modules/lodash/isFunction.js ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ \"./node_modules/lodash/_baseGetTag.js\"),\n    isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/lodash/isObject.js\");\n\n/** `Object#toString` result references. */\nvar asyncTag = '[object AsyncFunction]',\n    funcTag = '[object Function]',\n    genTag = '[object GeneratorFunction]',\n    proxyTag = '[object Proxy]';\n\n/**\n * Checks if `value` is classified as a `Function` object.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a function, else `false`.\n * @example\n *\n * _.isFunction(_);\n * // => true\n *\n * _.isFunction(/abc/);\n * // => false\n */\nfunction isFunction(value) {\n  if (!isObject(value)) {\n    return false;\n  }\n  // The use of `Object#toString` avoids issues with the `typeof` operator\n  // in Safari 9 which returns 'object' for typed arrays and other constructors.\n  var tag = baseGetTag(value);\n  return tag == funcTag || tag == genTag || tag == asyncTag || tag == proxyTag;\n}\n\nmodule.exports = isFunction;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isFunction.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isLength.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isLength.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/** Used as references for various `Number` constants. */\nvar MAX_SAFE_INTEGER = 9007199254740991;\n\n/**\n * Checks if `value` is a valid array-like length.\n *\n * **Note:** This method is loosely based on\n * [`ToLength`](http://ecma-international.org/ecma-262/7.0/#sec-tolength).\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.\n * @example\n *\n * _.isLength(3);\n * // => true\n *\n * _.isLength(Number.MIN_VALUE);\n * // => false\n *\n * _.isLength(Infinity);\n * // => false\n *\n * _.isLength('3');\n * // => false\n */\nfunction isLength(value) {\n  return typeof value == 'number' &&\n    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;\n}\n\nmodule.exports = isLength;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isLength.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isObject.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isObject.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Checks if `value` is the\n * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)\n * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is an object, else `false`.\n * @example\n *\n * _.isObject({});\n * // => true\n *\n * _.isObject([1, 2, 3]);\n * // => true\n *\n * _.isObject(_.noop);\n * // => true\n *\n * _.isObject(null);\n * // => false\n */\nfunction isObject(value) {\n  var type = typeof value;\n  return value != null && (type == 'object' || type == 'function');\n}\n\nmodule.exports = isObject;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isObject.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isObjectLike.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/isObjectLike.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * Checks if `value` is object-like. A value is object-like if it's not `null`\n * and has a `typeof` result of \"object\".\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is object-like, else `false`.\n * @example\n *\n * _.isObjectLike({});\n * // => true\n *\n * _.isObjectLike([1, 2, 3]);\n * // => true\n *\n * _.isObjectLike(_.noop);\n * // => false\n *\n * _.isObjectLike(null);\n * // => false\n */\nfunction isObjectLike(value) {\n  return value != null && typeof value == 'object';\n}\n\nmodule.exports = isObjectLike;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isObjectLike.js?");
 
 /***/ }),
 
@@ -3365,28 +1966,6 @@ eval("var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ \"./node_modules
 
 /***/ }),
 
-/***/ "./node_modules/lodash/isSymbol.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/isSymbol.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseGetTag = __webpack_require__(/*! ./_baseGetTag */ \"./node_modules/lodash/_baseGetTag.js\"),\n    isObjectLike = __webpack_require__(/*! ./isObjectLike */ \"./node_modules/lodash/isObjectLike.js\");\n\n/** `Object#toString` result references. */\nvar symbolTag = '[object Symbol]';\n\n/**\n * Checks if `value` is classified as a `Symbol` primitive or object.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a symbol, else `false`.\n * @example\n *\n * _.isSymbol(Symbol.iterator);\n * // => true\n *\n * _.isSymbol('abc');\n * // => false\n */\nfunction isSymbol(value) {\n  return typeof value == 'symbol' ||\n    (isObjectLike(value) && baseGetTag(value) == symbolTag);\n}\n\nmodule.exports = isSymbol;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isSymbol.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/isTypedArray.js":
-/*!*********************************************!*\
-  !*** ./node_modules/lodash/isTypedArray.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ \"./node_modules/lodash/_baseIsTypedArray.js\"),\n    baseUnary = __webpack_require__(/*! ./_baseUnary */ \"./node_modules/lodash/_baseUnary.js\"),\n    nodeUtil = __webpack_require__(/*! ./_nodeUtil */ \"./node_modules/lodash/_nodeUtil.js\");\n\n/* Node.js helper references. */\nvar nodeIsTypedArray = nodeUtil && nodeUtil.isTypedArray;\n\n/**\n * Checks if `value` is classified as a typed array.\n *\n * @static\n * @memberOf _\n * @since 3.0.0\n * @category Lang\n * @param {*} value The value to check.\n * @returns {boolean} Returns `true` if `value` is a typed array, else `false`.\n * @example\n *\n * _.isTypedArray(new Uint8Array);\n * // => true\n *\n * _.isTypedArray([]);\n * // => false\n */\nvar isTypedArray = nodeIsTypedArray ? baseUnary(nodeIsTypedArray) : baseIsTypedArray;\n\nmodule.exports = isTypedArray;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/isTypedArray.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/keys.js":
 /*!*************************************!*\
   !*** ./node_modules/lodash/keys.js ***!
@@ -3395,28 +1974,6 @@ eval("var baseIsTypedArray = __webpack_require__(/*! ./_baseIsTypedArray */ \"./
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ \"./node_modules/lodash/_arrayLikeKeys.js\"),\n    baseKeys = __webpack_require__(/*! ./_baseKeys */ \"./node_modules/lodash/_baseKeys.js\"),\n    isArrayLike = __webpack_require__(/*! ./isArrayLike */ \"./node_modules/lodash/isArrayLike.js\");\n\n/**\n * Creates an array of the own enumerable property names of `object`.\n *\n * **Note:** Non-object values are coerced to objects. See the\n * [ES spec](http://ecma-international.org/ecma-262/7.0/#sec-object.keys)\n * for more details.\n *\n * @static\n * @since 0.1.0\n * @memberOf _\n * @category Object\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names.\n * @example\n *\n * function Foo() {\n *   this.a = 1;\n *   this.b = 2;\n * }\n *\n * Foo.prototype.c = 3;\n *\n * _.keys(new Foo);\n * // => ['a', 'b'] (iteration order is not guaranteed)\n *\n * _.keys('hi');\n * // => ['0', '1']\n */\nfunction keys(object) {\n  return isArrayLike(object) ? arrayLikeKeys(object) : baseKeys(object);\n}\n\nmodule.exports = keys;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/keys.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/keysIn.js":
-/*!***************************************!*\
-  !*** ./node_modules/lodash/keysIn.js ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var arrayLikeKeys = __webpack_require__(/*! ./_arrayLikeKeys */ \"./node_modules/lodash/_arrayLikeKeys.js\"),\n    baseKeysIn = __webpack_require__(/*! ./_baseKeysIn */ \"./node_modules/lodash/_baseKeysIn.js\"),\n    isArrayLike = __webpack_require__(/*! ./isArrayLike */ \"./node_modules/lodash/isArrayLike.js\");\n\n/**\n * Creates an array of the own and inherited enumerable property names of `object`.\n *\n * **Note:** Non-object values are coerced to objects.\n *\n * @static\n * @memberOf _\n * @since 3.0.0\n * @category Object\n * @param {Object} object The object to query.\n * @returns {Array} Returns the array of property names.\n * @example\n *\n * function Foo() {\n *   this.a = 1;\n *   this.b = 2;\n * }\n *\n * Foo.prototype.c = 3;\n *\n * _.keysIn(new Foo);\n * // => ['a', 'b', 'c'] (iteration order is not guaranteed)\n */\nfunction keysIn(object) {\n  return isArrayLike(object) ? arrayLikeKeys(object, true) : baseKeysIn(object);\n}\n\nmodule.exports = keysIn;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/keysIn.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/memoize.js":
-/*!****************************************!*\
-  !*** ./node_modules/lodash/memoize.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var MapCache = __webpack_require__(/*! ./_MapCache */ \"./node_modules/lodash/_MapCache.js\");\n\n/** Error message constants. */\nvar FUNC_ERROR_TEXT = 'Expected a function';\n\n/**\n * Creates a function that memoizes the result of `func`. If `resolver` is\n * provided, it determines the cache key for storing the result based on the\n * arguments provided to the memoized function. By default, the first argument\n * provided to the memoized function is used as the map cache key. The `func`\n * is invoked with the `this` binding of the memoized function.\n *\n * **Note:** The cache is exposed as the `cache` property on the memoized\n * function. Its creation may be customized by replacing the `_.memoize.Cache`\n * constructor with one whose instances implement the\n * [`Map`](http://ecma-international.org/ecma-262/7.0/#sec-properties-of-the-map-prototype-object)\n * method interface of `clear`, `delete`, `get`, `has`, and `set`.\n *\n * @static\n * @memberOf _\n * @since 0.1.0\n * @category Function\n * @param {Function} func The function to have its output memoized.\n * @param {Function} [resolver] The function to resolve the cache key.\n * @returns {Function} Returns the new memoized function.\n * @example\n *\n * var object = { 'a': 1, 'b': 2 };\n * var other = { 'c': 3, 'd': 4 };\n *\n * var values = _.memoize(_.values);\n * values(object);\n * // => [1, 2]\n *\n * values(other);\n * // => [3, 4]\n *\n * object.a = 2;\n * values(object);\n * // => [1, 2]\n *\n * // Modify the result cache.\n * values.cache.set(object, ['a', 'b']);\n * values(object);\n * // => ['a', 'b']\n *\n * // Replace `_.memoize.Cache`.\n * _.memoize.Cache = WeakMap;\n */\nfunction memoize(func, resolver) {\n  if (typeof func != 'function' || (resolver != null && typeof resolver != 'function')) {\n    throw new TypeError(FUNC_ERROR_TEXT);\n  }\n  var memoized = function() {\n    var args = arguments,\n        key = resolver ? resolver.apply(this, args) : args[0],\n        cache = memoized.cache;\n\n    if (cache.has(key)) {\n      return cache.get(key);\n    }\n    var result = func.apply(this, args);\n    memoized.cache = cache.set(key, result) || cache;\n    return result;\n  };\n  memoized.cache = new (memoize.Cache || MapCache);\n  return memoized;\n}\n\n// Expose `MapCache`.\nmemoize.Cache = MapCache;\n\nmodule.exports = memoize;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/memoize.js?");
 
 /***/ }),
 
@@ -3464,17 +2021,6 @@ eval("/**\n * This method returns a new empty array.\n *\n * @static\n * @member
 
 /***/ }),
 
-/***/ "./node_modules/lodash/stubFalse.js":
-/*!******************************************!*\
-  !*** ./node_modules/lodash/stubFalse.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("/**\n * This method returns `false`.\n *\n * @static\n * @memberOf _\n * @since 4.13.0\n * @category Util\n * @returns {boolean} Returns `false`.\n * @example\n *\n * _.times(2, _.stubFalse);\n * // => [false, false]\n */\nfunction stubFalse() {\n  return false;\n}\n\nmodule.exports = stubFalse;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/stubFalse.js?");
-
-/***/ }),
-
 /***/ "./node_modules/lodash/toFinite.js":
 /*!*****************************************!*\
   !*** ./node_modules/lodash/toFinite.js ***!
@@ -3516,17 +2062,6 @@ eval("var isObject = __webpack_require__(/*! ./isObject */ \"./node_modules/loda
 /***/ (function(module, exports, __webpack_require__) {
 
 eval("var copyObject = __webpack_require__(/*! ./_copyObject */ \"./node_modules/lodash/_copyObject.js\"),\n    keysIn = __webpack_require__(/*! ./keysIn */ \"./node_modules/lodash/keysIn.js\");\n\n/**\n * Converts `value` to a plain object flattening inherited enumerable string\n * keyed properties of `value` to own properties of the plain object.\n *\n * @static\n * @memberOf _\n * @since 3.0.0\n * @category Lang\n * @param {*} value The value to convert.\n * @returns {Object} Returns the converted plain object.\n * @example\n *\n * function Foo() {\n *   this.b = 2;\n * }\n *\n * Foo.prototype.c = 3;\n *\n * _.assign({ 'a': 1 }, new Foo);\n * // => { 'a': 1, 'b': 2 }\n *\n * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));\n * // => { 'a': 1, 'b': 2, 'c': 3 }\n */\nfunction toPlainObject(value) {\n  return copyObject(value, keysIn(value));\n}\n\nmodule.exports = toPlainObject;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/toPlainObject.js?");
-
-/***/ }),
-
-/***/ "./node_modules/lodash/toString.js":
-/*!*****************************************!*\
-  !*** ./node_modules/lodash/toString.js ***!
-  \*****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("var baseToString = __webpack_require__(/*! ./_baseToString */ \"./node_modules/lodash/_baseToString.js\");\n\n/**\n * Converts `value` to a string. An empty string is returned for `null`\n * and `undefined` values. The sign of `-0` is preserved.\n *\n * @static\n * @memberOf _\n * @since 4.0.0\n * @category Lang\n * @param {*} value The value to convert.\n * @returns {string} Returns the converted string.\n * @example\n *\n * _.toString(null);\n * // => ''\n *\n * _.toString(-0);\n * // => '-0'\n *\n * _.toString([1, 2, 3]);\n * // => '1,2,3'\n */\nfunction toString(value) {\n  return value == null ? '' : baseToString(value);\n}\n\nmodule.exports = toString;\n\n\n//# sourceURL=webpack:///./node_modules/lodash/toString.js?");
 
 /***/ }),
 
@@ -3905,146 +2440,6 @@ eval("function E () {\n  // Keep this empty so it's easier to inherit from\n  //
 
 eval("module.exports = function() {\n\tthrow new Error(\"define cannot be used indirect\");\n};\n\n\n//# sourceURL=webpack:///(webpack)/buildin/amd-define.js?");
 
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/global.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/global.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("var g;\n\n// This works in non-strict mode\ng = (function() {\n\treturn this;\n})();\n\ntry {\n\t// This works if eval is allowed (see CSP)\n\tg = g || new Function(\"return this\")();\n} catch (e) {\n\t// This works if the window reference is available\n\tif (typeof window === \"object\") g = window;\n}\n\n// g can still be undefined, but nothing to do about it...\n// We return undefined, instead of nothing here, so it's\n// easier to handle this case. if(!global) { ...}\n\nmodule.exports = g;\n\n\n//# sourceURL=webpack:///(webpack)/buildin/global.js?");
-
-/***/ }),
-
-/***/ "./node_modules/webpack/buildin/module.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/module.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\tmodule.deprecate = function() {};\n\t\tmodule.paths = [];\n\t\t// module.parent = undefined by default\n\t\tif (!module.children) module.children = [];\n\t\tObject.defineProperty(module, \"loaded\", {\n\t\t\tenumerable: true,\n\t\t\tget: function() {\n\t\t\t\treturn module.l;\n\t\t\t}\n\t\t});\n\t\tObject.defineProperty(module, \"id\", {\n\t\t\tenumerable: true,\n\t\t\tget: function() {\n\t\t\t\treturn module.i;\n\t\t\t}\n\t\t});\n\t\tmodule.webpackPolyfill = 1;\n\t}\n\treturn module;\n};\n\n\n//# sourceURL=webpack:///(webpack)/buildin/module.js?");
-
-/***/ }),
-
-/***/ "./src/js/app.js":
-/*!***********************!*\
-  !*** ./src/js/app.js ***!
-  \***********************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var cssuseragent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! cssuseragent */ \"./node_modules/cssuseragent/cssua.js\");\n/* harmony import */ var cssuseragent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(cssuseragent__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var fastclick__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fastclick */ \"./node_modules/fastclick/lib/fastclick.js\");\n/* harmony import */ var fastclick__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fastclick__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _webcomponent_props__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./webcomponent-props */ \"./src/js/webcomponent-props.js\");\n/* harmony import */ var _webcomponent_import__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./webcomponent-import */ \"./src/js/webcomponent-import.js\");\n/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main */ \"./src/js/main.js\");\n// import some dependencies like polyfills, etc...\n\n // main application entry point\n\n\n\n\n\n//# sourceURL=webpack:///./src/js/app.js?");
-
-/***/ }),
-
-/***/ "./src/js/features/contact-code.js":
-/*!*****************************************!*\
-  !*** ./src/js/features/contact-code.js ***!
-  \*****************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\n/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! coffeekraken-s-notification-component */ \"./node_modules/coffeekraken-s-notification-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_1__);\n\n\naxios__WEBPACK_IMPORTED_MODULE_0___default.a.interceptors.response.use(function (response) {\n  return response;\n}, function (error) {\n  return Promise.reject(error.response);\n});\nvar $code = document.querySelector('s-codemirror#contact-code');\n$code.setProps({\n  updateOn: 'run',\n  compile: function compile(value) {\n    return new Promise(function (resolve, reject) {\n      var values = {};\n\n      try {\n        values = JSON.parse(value);\n      } catch (e) {\n        coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_1___default.a.notify({\n          title: 'Woops',\n          body: e,\n          dismissable: true,\n          timeout: 10000,\n          side: 't',\n          type: 'error'\n        });\n        reject();\n        return;\n      }\n\n      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/contact', values).then(function (response) {\n        resolve({\n          data: value\n        });\n        $code.setProp('value', \"{ \\\"message\\\": \\\"\".concat(response.data.message, \"\\\" }\"));\n      }).catch(function (error) {\n        coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_1___default.a.notify({\n          title: 'Woops',\n          body: error.data.message,\n          dismissable: true,\n          timeout: 10000,\n          side: 't',\n          type: 'error'\n        });\n        reject();\n      });\n    });\n  }\n});\n\n//# sourceURL=webpack:///./src/js/features/contact-code.js?");
-
-/***/ }),
-
-/***/ "./src/js/features/logo.js":
-/*!*********************************!*\
-  !*** ./src/js/features/logo.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-eval("var $logo = document.querySelector('#logo');\ndocument.body.addEventListener('app:ready', function () {\n  setTimeout(function () {\n    $logo.play();\n  }, 500);\n});\n\n//# sourceURL=webpack:///./src/js/features/logo.js?");
-
-/***/ }),
-
-/***/ "./src/js/main.js":
-/*!************************!*\
-  !*** ./src/js/main.js ***!
-  \************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _features_contact_code__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./features/contact-code */ \"./src/js/features/contact-code.js\");\n/* harmony import */ var _features_logo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./features/logo */ \"./src/js/features/logo.js\");\n/* harmony import */ var _features_logo__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_features_logo__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./router */ \"./src/js/router.js\");\n\n\n\n\n//# sourceURL=webpack:///./src/js/main.js?");
-
-/***/ }),
-
-/***/ "./src/js/pages/contact.js":
-/*!*********************************!*\
-  !*** ./src/js/pages/contact.js ***!
-  \*********************************/
-/*! exports provided: contactEnterHandler, contactLeaveHandler */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"contactEnterHandler\", function() { return contactEnterHandler; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"contactLeaveHandler\", function() { return contactLeaveHandler; });\nfunction contactEnterHandler() {\n  document.querySelector('s-slideshow.content').goTo('contact');\n  document.body.classList.add('page-contact');\n}\nfunction contactLeaveHandler() {\n  document.body.classList.remove('page-contact');\n}\n\n//# sourceURL=webpack:///./src/js/pages/contact.js?");
-
-/***/ }),
-
-/***/ "./src/js/pages/projects.js":
-/*!**********************************!*\
-  !*** ./src/js/pages/projects.js ***!
-  \**********************************/
-/*! exports provided: projectsEnterHandler, projectsLeaveHandler */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"projectsEnterHandler\", function() { return projectsEnterHandler; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"projectsLeaveHandler\", function() { return projectsLeaveHandler; });\nfunction projectsEnterHandler() {\n  document.querySelector('s-slideshow.content').goTo('projects');\n}\nfunction projectsLeaveHandler() {}\n\n//# sourceURL=webpack:///./src/js/pages/projects.js?");
-
-/***/ }),
-
-/***/ "./src/js/router.js":
-/*!**************************!*\
-  !*** ./src/js/router.js ***!
-  \**************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var navigo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! navigo */ \"./node_modules/navigo/lib/navigo.min.js\");\n/* harmony import */ var navigo__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(navigo__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _pages_contact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./pages/contact */ \"./src/js/pages/contact.js\");\n/* harmony import */ var _pages_projects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/projects */ \"./src/js/pages/projects.js\");\n\n\n\nvar root = '/';\nvar useHash = false;\nvar hash = '#';\nvar router = new navigo__WEBPACK_IMPORTED_MODULE_0___default.a(root, useHash, hash);\nrouter.hooks({\n  before: function before(done) {\n    if (window.isIntroRunning) {\n      document.body.addEventListener('app:ready', function () {\n        done();\n      });\n      return;\n    }\n\n    done();\n  }\n});\nrouter.on('contact', _pages_contact__WEBPACK_IMPORTED_MODULE_1__[\"contactEnterHandler\"], {\n  leave: _pages_contact__WEBPACK_IMPORTED_MODULE_1__[\"contactLeaveHandler\"]\n}).on('', _pages_projects__WEBPACK_IMPORTED_MODULE_2__[\"projectsEnterHandler\"]).resolve();\n\n//# sourceURL=webpack:///./src/js/router.js?");
-
-/***/ }),
-
-/***/ "./src/js/webcomponent-import.js":
-/*!***************************************!*\
-  !*** ./src/js/webcomponent-import.js ***!
-  \***************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var coffeekraken_sugar_js_utils_is_mobile__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! coffeekraken-sugar/js/utils/is/mobile */ \"./node_modules/coffeekraken-sugar/js/utils/is/mobile.js\");\n/* harmony import */ var coffeekraken_sugar_js_utils_is_mobile__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_sugar_js_utils_is_mobile__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var coffeekraken_sugar_js_utils_is_chrome__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! coffeekraken-sugar/js/utils/is/chrome */ \"./node_modules/coffeekraken-sugar/js/utils/is/chrome.js\");\n/* harmony import */ var coffeekraken_sugar_js_utils_is_chrome__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_sugar_js_utils_is_chrome__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var coffeekraken_s_icon_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! coffeekraken-s-icon-component */ \"./node_modules/coffeekraken-s-icon-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_icon_component__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_icon_component__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var coffeekraken_s_validator_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! coffeekraken-s-validator-component */ \"./node_modules/coffeekraken-s-validator-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_validator_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_validator_component__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var coffeekraken_s_slideshow_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! coffeekraken-s-slideshow-component */ \"./node_modules/coffeekraken-s-slideshow-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_slideshow_component__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_slideshow_component__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var coffeekraken_s_ajax_form_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! coffeekraken-s-ajax-form-component */ \"./node_modules/coffeekraken-s-ajax-form-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_ajax_form_component__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_ajax_form_component__WEBPACK_IMPORTED_MODULE_5__);\n/* harmony import */ var coffeekraken_s_recaptcha_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! coffeekraken-s-recaptcha-component */ \"./node_modules/coffeekraken-s-recaptcha-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_recaptcha_component__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_recaptcha_component__WEBPACK_IMPORTED_MODULE_6__);\n/* harmony import */ var coffeekraken_s_bodymovin_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! coffeekraken-s-bodymovin-component */ \"./node_modules/coffeekraken-s-bodymovin-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_bodymovin_component__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_bodymovin_component__WEBPACK_IMPORTED_MODULE_7__);\n/* harmony import */ var coffeekraken_s_codemirror_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! coffeekraken-s-codemirror-component */ \"./node_modules/coffeekraken-s-codemirror-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_codemirror_component__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_codemirror_component__WEBPACK_IMPORTED_MODULE_8__);\n/* harmony import */ var coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! coffeekraken-s-notification-component */ \"./node_modules/coffeekraken-s-notification-component/dist/index.js\");\n/* harmony import */ var coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_s_notification_component__WEBPACK_IMPORTED_MODULE_9__);\n\n\n\n\n\n\n\n\n\n\n\nif (!coffeekraken_sugar_js_utils_is_mobile__WEBPACK_IMPORTED_MODULE_0___default()()) {\n  __webpack_require__.e(/*! import() */ 4).then(__webpack_require__.t.bind(null, /*! coffeekraken-s-atv-card-component */ \"./node_modules/coffeekraken-s-atv-card-component/dist/index.js\", 7));\n  __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.t.bind(null, /*! coffeekraken-s-spring-snap-component */ \"./node_modules/coffeekraken-s-spring-snap-component/dist/index.js\", 7));\n}\n\nif (coffeekraken_sugar_js_utils_is_chrome__WEBPACK_IMPORTED_MODULE_1___default()()) {\n  __webpack_require__.e(/*! import() */ 3).then(__webpack_require__.t.bind(null, /*! coffeekraken-s-motion-blur-component */ \"./node_modules/coffeekraken-s-motion-blur-component/dist/index.js\", 7));\n} // check out https://github.com/coffeekraken for more components\n\n//# sourceURL=webpack:///./src/js/webcomponent-import.js?");
-
-/***/ }),
-
-/***/ "./src/js/webcomponent-props.js":
-/*!**************************************!*\
-  !*** ./src/js/webcomponent-props.js ***!
-  \**************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var coffeekraken_sugar_js_dom_dispatchEvent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! coffeekraken-sugar/js/dom/dispatchEvent */ \"./node_modules/coffeekraken-sugar/js/dom/dispatchEvent.js\");\n/* harmony import */ var coffeekraken_sugar_js_dom_dispatchEvent__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_sugar_js_dom_dispatchEvent__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var coffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! coffeekraken-sugar/js/core/SWebComponent */ \"./node_modules/coffeekraken-sugar/js/core/SWebComponent.js\");\n/* harmony import */ var coffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(coffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1__);\n\n // icons\n\ncoffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1___default.a.setDefaultProps({\n  driver: 'fontawesome'\n}, 's-icon'); // transition start on slideshow items\n\nvar isFirst = true;\ncoffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1___default.a.setDefaultProps({\n  onChange: function onChange(comp) {\n    if (!isFirst) {\n      // avoid trigger motion blur on first change event\n      Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(function ($slide) {\n        coffeekraken_sugar_js_dom_dispatchEvent__WEBPACK_IMPORTED_MODULE_0___default()($slide, 'transitionstart');\n      });\n    }\n\n    isFirst = false;\n  }\n}, 's-slideshow'); // s-validator\n\ncoffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1___default.a.setDefaultProps({\n  on: 'keyup'\n}, 's-validator'); // recaptcha\n\ncoffeekraken_sugar_js_core_SWebComponent__WEBPACK_IMPORTED_MODULE_1___default.a.setDefaultProps({\n  sitekey: '6LfLqYkUAAAAADaAhZIBuIcnIR8EoCzccIPcQslj'\n}, 's-recaptcha');\n\n//# sourceURL=webpack:///./src/js/webcomponent-props.js?");
-
-/***/ }),
-
-/***/ 0:
-/*!*****************************!*\
-  !*** multi ./src/js/app.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__(/*! ./src/js/app.js */\"./src/js/app.js\");\n\n\n//# sourceURL=webpack:///multi_./src/js/app.js?");
-
 /***/ })
 
-/******/ });
+}]);

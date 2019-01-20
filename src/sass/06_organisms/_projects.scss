@@ -25,6 +25,7 @@
       'f f z'
       'g g z';
   }
+
   @include g-state(desktop) {
     grid-template-areas:
       'a a z'
@@ -99,6 +100,7 @@
 
   @include g-state(tablet) {
     @include s-ratio(21/9);
+
     overflow: visible;
   }
 }

@@ -8,11 +8,6 @@ axios.interceptors.response.use(
 
 const $code = document.querySelector('s-codemirror#contact-code')
 
-let codeInitialValue = ''
-setTimeout(() => {
-  codeInitialValue = $code.value
-})
-
 $code.setProps({
   updateOn: 'run',
   compile: value =>
@@ -20,7 +15,7 @@ $code.setProps({
       let values = {}
       try {
         values = JSON.parse(value)
-      } catch(e) {
+      } catch (e) {
         SNotificationComponent.notify({
           title: 'Woops',
           body: e,
@@ -34,7 +29,7 @@ $code.setProps({
       }
       axios
         .post('/contact', values)
-        .then((response) => {
+        .then(response => {
           resolve({
             data: value
           })

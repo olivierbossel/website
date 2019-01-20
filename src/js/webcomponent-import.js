@@ -10,6 +10,7 @@ import 'coffeekraken-s-notification-component'
 
 if (!isMobile()) {
   import('coffeekraken-s-atv-card-component')
+  import('coffeekraken-s-glitch-component')
 }
 
 if (isChrome()) {

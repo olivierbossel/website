@@ -15791,14 +15791,6 @@ body.preview {
   z-index: 1;
 }
 
-.projects s-glitch {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
 .projects__grid {
   display: grid;
   grid-gap: 0.76923rem;
@@ -15830,6 +15822,14 @@ body.preview {
   display: block;
   height: 0;
   padding-top: 66.66667%;
+}
+
+.projects__grid-item s-atv-card {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .projects__grid-item:hover s-atv-card {
@@ -15948,7 +15948,6 @@ body.loaded .projects__grid-item:nth-child(10) {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 1;
   padding: 1.53846rem;
   background: #2b3438;
   color: white;

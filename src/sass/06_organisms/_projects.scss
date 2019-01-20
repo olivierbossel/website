@@ -1,10 +1,6 @@
 .projects {
   position: relative;
   z-index: 1;
-
-  s-glitch {
-    @include s-fit(absolute);
-  }
 }
 
 .projects__grid {
@@ -29,7 +25,6 @@
       'f f z'
       'g g z';
   }
-
   @include g-state(desktop) {
     grid-template-areas:
       'a a z'
@@ -45,6 +40,10 @@
   opacity: 0;
 
   @include s-translate(0, 50%);
+
+  s-atv-card {
+    @include s-fit(absolute);
+  }
 
   &:hover {
     s-atv-card {
@@ -100,7 +99,6 @@
 
   @include g-state(tablet) {
     @include s-ratio(21/9);
-
     overflow: visible;
   }
 }
@@ -118,7 +116,6 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 1;
   padding: s-space(default);
   background: s-color(secondary);
   color: white;

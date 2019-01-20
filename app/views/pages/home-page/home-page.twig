@@ -12,21 +12,21 @@
               <div class="projects__grid">
                 {% for project in projects %}
                   <div class="projects__grid-item">
-                    <a class="project" href="{{ project.url }}" target="_blank">
-                      <article class="project">
-                        <s-glitch min-timeout="0" max-timeout="100" min-duration="100" max-duration="200" glitch-on-hover=".project">
+                    <s-atv-card amount="1" perspective="{{ (loop.index == 1) ? '700' : '400' }}">
+                      <a class="project" href="{{ project.url }}" target="_blank">
+                        <article class="project">
                           <figure class="project__img">
                             <img src="{{ project.image.src }}" alt="Coffeekraken Sugar" />
                           </figure>
-                        </s-glitch>
-                        <div class="project__metas">
-                          <h2 class="project__title m-b-smaller">{{ project.title }}</h2>
-                          <p class="p">
-                            {{ project.description }}
-                          </p>
-                        </div>
-                      </article>
-                    </a>
+                          <div class="project__metas">
+                            <h2 class="project__title m-b-smaller">{{ project.title }}</h2>
+                            <p class="p">
+                              {{ project.description }}
+                            </p>
+                          </div>
+                        </article>
+                      </a>
+                    </s-atv-card>
                   </div>
                 {% endfor %}
               </div>

@@ -221,14 +221,16 @@
       {% endfor %}
     {% endif %}
 
-    {% if foot.webfonts %}
+    {% block foot %}{% endblock %}
+
+    {% if webfonts %}
       <!-- Webfonts -->
       <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
       <script>
         WebFont.load({
           google: {
             families: [
-              {% for webfont in foot.webfonts %}
+              {% for webfont in webfonts %}
                 '{{ webfont }}',
               {% endfor %}
             ]
@@ -236,8 +238,6 @@
         });
       </script>
     {% endif %}
-
-    {% block foot %}{% endblock %}
 
   {% endif %}
 

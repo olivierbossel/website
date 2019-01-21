@@ -14,7 +14,8 @@ let isFirst = true
 SWebComponent.setDefaultProps(
   {
     onChange: comp => {
-      if (!isFirst) { // avoid trigger motion blur on first change event
+      if (!isFirst) {
+        // avoid trigger motion blur on first change event
         Array.from(comp.querySelectorAll('[s-slideshow-slide]')).forEach(
           $slide => {
             dispatchEvent($slide, 'transitionstart')
@@ -41,4 +42,21 @@ SWebComponent.setDefaultProps(
     sitekey: '6LfLqYkUAAAAADaAhZIBuIcnIR8EoCzccIPcQslj'
   },
   's-recaptcha'
+)
+
+// glitch
+SWebComponent.setDefaultProps(
+  {
+    mountDependencies: [
+      function() {
+        return new Promise(resolve => {
+          document.body.addEventListener('app:ready', () => {
+            console.log('ready')
+            resolve()
+          })
+        })
+      }
+    ]
+  },
+  's-glitch'
 )

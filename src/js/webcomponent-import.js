@@ -7,7 +7,6 @@ import 'coffeekraken-s-sprite-transition-component'
 import 'coffeekraken-s-bodymovin-component'
 import 'coffeekraken-s-codemirror-component'
 import 'coffeekraken-s-notification-component'
-import 'coffeekraken-s-router-component'
 
 if (!isMobile()) {
   import('coffeekraken-s-atv-card-component')

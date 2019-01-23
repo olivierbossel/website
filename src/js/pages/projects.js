@@ -1,4 +1,4 @@
-export function projectsHandler() {
+export function projectsEnterHandler() {
   document.querySelector('s-slideshow.content').goTo('projects')
 }
-export function projectsLeave() {}
+export function projectsLeaveHandler() {}

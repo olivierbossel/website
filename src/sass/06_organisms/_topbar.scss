@@ -9,16 +9,16 @@
     opacity: 1;
   }
 
-  a[href=''] {
+  a[href='/'] {
     display: none;
   }
 
   .page-contact & {
-    a[href=''] {
+    a[href='/'] {
       display: inline-block;
     }
 
-    a[href='contact'] {
+    a[href='/contact'] {
       display: none;
     }
   }

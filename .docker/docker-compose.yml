@@ -1,6 +1,6 @@
 version: '2'
 services:
-  web:
+  olivierbossel-website-web:
     build: .
     container_name: olivierbossel_website
     command: bash -c "./up.sh"
@@ -8,7 +8,7 @@ services:
       VIRTUAL_HOST: olivierbossel.com
       VIRTUAL_PORT: 8888
     ports:
-      - "8888:80"
+      - '8888:80'
     env_file:
       - ./.env
     volumes:

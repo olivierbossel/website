@@ -61,6 +61,8 @@
     "pretty-quick-commit": "pretty-quick --staged > /dev/null 2>&1",
     "prettier": "prettier --write src/**/*.{scss,js}",
     "test": "jest",
+    "deploy": "npm run deploy:jerome",
+    "deploy:jerome": "ansible-playbook .ansible/deploy-jerome.yml -i .ansible/inventory.yml",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:fix": "npm run lint:js:fix && npm run lint:css:fix",
     "lint:js": "eslint 'src/**/*.js'",

@@ -13,7 +13,9 @@
     'd'
     'e'
     'f'
-    'g';
+    'g'
+    'h'
+    'i';
 
   @include g-state(tablet) {
     grid-template-areas:
@@ -23,14 +25,18 @@
       'd d z'
       'e e z'
       'f f z'
-      'g g z';
+      'g g z'
+      'h h z'
+      'i i z';
   }
 
   @include g-state(desktop) {
     grid-template-areas:
       'a a z'
-      'b c f'
-      'd e g';
+      'b c z'
+      'd e z'
+      'f g z'
+      'h i z';
   }
 }
 
@@ -96,6 +102,14 @@
 
   &:nth-child(7) {
     grid-area: g;
+  }
+
+  &:nth-child(8) {
+    grid-area: h;
+  }
+
+  &:nth-child(9) {
+    grid-area: i;
   }
 
   @include g-state(tablet) {

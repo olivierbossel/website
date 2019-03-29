@@ -1,0 +1,17 @@
+---
+- hosts: jerome
+  tasks:
+    # - name: Build production dist
+    #   shell: npm run dist:prod
+    #   args:
+    #     chdir: ../
+    #   delegate_to: localhost
+    - name: Deploy files to jerome
+      synchronize:
+        src: ../../
+        dest: /data/olivierbossel/website
+        delete: true
+    - name: (Re)start docker container
+      shell: ./start.sh
+      args:
+        chdir: /data/olivierbossel/website/.docker

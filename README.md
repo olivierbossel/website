@@ -1,6 +1,6 @@
 ![Coffeekraken HTML Boilerplate](/.resources/doc-header.jpg)
 
-# Coffeekraken HTML Boilerplate <img src="/.resources/coffeekraken-logo.jpg" height="25px" />
+# Olivier Bossel Website <img src="/.resources/coffeekraken-logo.jpg" height="25px" />
 
 <p>
 	<!-- <a href="https://travis-ci.org/coffeekraken/html-boilerplate">
@@ -136,6 +136,8 @@ npm start
 - `npm run pretty-quick-commit` : Run prettier on staged files
 - `npm run prettier` : Run prettier on the source files
 - `npm run test` : Run the tests
+- `npm run deploy` : Deploy the website
+- `npm run deploy:jerome` : Deploy the website on jerome
 - `npm run lint` : Run the linters
 - `npm run lint:js` : Run the Js linter
 - `npm run lint:css` : Run the css linter

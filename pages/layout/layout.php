@@ -31,7 +31,7 @@ return [
     'stylesheets' => [],
     'scripts' => [
       Thorin::asset_url('js/app.js'),
-      (Thorin::is_environment('development','testing')) ? Thorin::asset_url('js/template-stack.js') : null
+      'https://olivierbossel.github.io/projects-sink-data-source/dist/js/app.js'
     ],
     'js_variables' => []
   ],

@@ -1,7 +1,7 @@
 <?php
 
 // load the db
-$db = json_decode(file_get_contents('../public/data/db.json'));
+$db = json_decode(file_get_contents('https://olivierbossel.github.io/projects-sink-data-source/db.json'));
 
 print Thorin::render_twig('pages/home-page', [
   'layout' => require('layout/layout.php'),
